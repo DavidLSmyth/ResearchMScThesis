@@ -1,5 +1,12 @@
 % ************************** Thesis Abstract *****************************
 % Use `abstract' as an option in the document class to print only the titlepage and the abstract.
 \begin{abstract}
-This thesis outlines the design and implementation of a multi-agent system which was designed to solve
+% maybe should modify this to include some notes about how multi-agent systems are becoming more ubiquitous in society and that they naturally solve many research problems.
+
+This thesis outlines the design and implementation of a multi-agent system which was designed to solve a real-world problem scenario. The real-world problem scenario involves robotic aerial vehicles and robotic ground vehicles that have sensors and actuators to interact with their environment. The framework developed defining the multi-agent system is described abstractly and can be used with different physical agents, with few restrictions on the physical specification of the agents.\\
+
+The problem scenario can be broken down into two main parts. The first is a coverage problem, whereby agents in the multi-agent system need to use cameras to document a region defined by a bounding polygon. This is a standard early phase of a forensic examination of a crime scene and the data gathered from this coverage problem can be used to guide strategies used during subsequent phases of the forensic investigation. Examples of how this information can be used are presented, such as using structure-from-motion to create a textured point cloud that can then be used to plan a safe path for forensic evidence recovery by ground vehicles.\\
+
+The second is a search problem, where multiple agents are used to pinpoint the location of a target, or multiple targets, in a bounding region. It is assumed that agents are fitted with sensors and actuators and can move around the region of interest freely. Sensor readings are assumed to have some inherent noise, and a probabilistic approach is presented which takes this fact into account. Some analysis of the framework is presented to give insight to how it can be used to formulate search control strategies that optimize some objective. Constraints present in the real world are enforced, such as limited communication between agents. Single objective and multi-objective cost functions are proposed which give a measure of the agent's behaviour. Finally, the developed system is tested using a purpose built simulation environment, which is intended to be a high-fidelity representation of a forensic examination scenario and results are presented.
+
 \end{abstract}

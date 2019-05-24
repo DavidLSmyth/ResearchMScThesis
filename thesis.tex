@@ -74,9 +74,9 @@
 %
 % `PageStyleII': Chapter Name on Even Side (Left Even) in Header. Section Number
 % and Section Name in Header on Odd Side (Right Odd). Page numbering in footer
-
+%set the page style to have page number at bottom, titles at top as set out by NUIG guidelines(http://www.nuigalway.ie/media/graduatestudies/files/university_guidelines_for_research_degree_programmes.pdf): Pages must be numbered consecutively, with page numbers located centrally at the bottom, and chapter headers at the top, of each page
 % Uncomment to change page style
-%\pagestyle{PageStyleII}
+\pagestyle{PageStyleII}
 
 % ********************************** Preamble **********************************
 % Preamble: Contains packages and user-defined commands and settings
@@ -109,18 +109,22 @@
 % ******************************** Front Matter ********************************
 \begin{document}
 
+
+
 \frontmatter
 
 \maketitle
 
 %\include{Dedication/dedication}
-\include{Declaration/declaration}
+%\include{Declaration/declaration}
 %\include{Acknowledgement/acknowledgement}
 \include{Abstract/abstract}
+%include summary of Contents
 
 % *********************** Adding TOC and List of Figures ***********************
 
 \tableofcontents
+\include{Declaration/declaration}
 
 \listoffigures
 
@@ -138,7 +142,7 @@
 \include{Chapter2/chapter2}
 \include{Chapter3/chapter3}
 \include{Chapter4/chapter4}
-%\include{Chapter5/chapter5}
+\include{Chapter5/chapter5}
 %\include{Chapter6/chapter6}
 %\include{Chapter7/chapter7}
 

@@ -5,7 +5,7 @@
 % Set {innerside margin / outerside margin / topmargin / bottom margin}  and
 % other page dimensions
 \ifsetCustomMargin
-  \RequirePackage[left=37mm,right=30mm,top=35mm,bottom=30mm]{geometry}
+  \RequirePackage[left=40mm,right=30mm,top=35mm,bottom=30mm]{geometry}
   \setFancyHdr % To apply fancy header after geometry package is loaded
 \fi
 
@@ -160,17 +160,17 @@
 % *********************** Configure Draft Mode **********************************
 
 % Uncomment to disable figures in `draft'
-%\setkeys{Gin}{draft=true}  % set draft to false to enable figures in `draft'
+\setkeys{Gin}{draft=true}  % set draft to false to enable figures in `draft'
 
 % These options are active only during the draft mode
 % Default text is "Draft"
-%\SetDraftText{DRAFT}
+\SetDraftText{DRAFT}
 
 % Default Watermark location is top. Location (top/bottom)
-%\SetDraftWMPosition{bottom}
+\SetDraftWMPosition{bottom}
 
 % Draft Version - default is v1.0
-%\SetDraftVersion{v1.1}
+\SetDraftVersion{v1.1}
 
 % Draft Text grayscale value (should be between 0-black and 1-white)
 % Default value is 0.75
@@ -193,3 +193,17 @@
 % *****************************************************************************
 % ******************* Better enumeration my MB*************
 \usepackage{enumitem}
+
+
+% ***********Define a new command to flag work as incomplete***********
+\newcommand{\workinprogress}{\textit{**************** This part of the thesis is a work in progress, changes will be made and much of what you see are just ideas. High level feedback welcome. ****************}\newline}
+
+% ***********Define a new command to flag work as incomplete***********
+\newcommand{\placeholder}{\textit{**************** This work is mostly a placeholder and will be properly filled out in future. Much of this can just be ignored. ****************}\newline}
+
+% ***********Define a new command to flag work as incomplete***********
+\newcommand{\completedwork}{\textit{**************** David is happy that this work is reasonably complete. Detailed feedback welcome. ****************}\newline}
+
+\newcommand{\michaelapproves}{\textit{**************** Michael has read over this section and is happy with it. ****************}}
+
+\newcommand{\frankapproves}{\textit{**************** Frank has read over this section and is happy with it. ****************}}

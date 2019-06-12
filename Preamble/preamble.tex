@@ -117,9 +117,9 @@
 
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
 
-%\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
+\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
 %\addbibresource{References/references} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
-
+\addbibresource{References/NonMendeleyReferences.bib} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
 \fi
 
 % changes the default name `Bibliography` -> `References'
@@ -160,7 +160,7 @@
 % *********************** Configure Draft Mode **********************************
 
 % Uncomment to disable figures in `draft'
-\setkeys{Gin}{draft=true}  % set draft to false to enable figures in `draft'
+\setkeys{Gin}{draft=false}  % set draft to false to enable figures in `draft'
 
 % These options are active only during the draft mode
 % Default text is "Draft"
@@ -180,13 +180,13 @@
 % ******************************** Todo Notes **********************************
 %% Uncomment the following lines to have todonotes.
 
-%\ifsetDraft
-%	\usepackage[colorinlistoftodos]{todonotes}
-%	\newcommand{\mynote}[1]{\todo[author=kks32,size=\small,inline,color=green!40]{#1}}
-%\else
-%	\newcommand{\mynote}[1]{}
-%	\newcommand{\listoftodos}{}
-%\fi
+\ifsetDraft
+	\usepackage[colorinlistoftodos]{todonotes}
+	\newcommand{\mynote}[1]{\todo[author=kks32,size=\small,inline,color=green!40]{#1}}
+\else
+	\newcommand{\mynote}[1]{}
+	\newcommand{\listoftodos}{}
+\fi
 
 % Example todo: \mynote{Hey! I have a note}
 

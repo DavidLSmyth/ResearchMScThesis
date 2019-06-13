@@ -902,6 +902,7 @@ wish to left align your text}
 \newcommand{\@nomenclaturesuperscripts}{Superscripts}
 \newcommand{\@nomenclaturesubscripts}{Subscripts}
 \newcommand{\@nomenclatureothers}{Other Symbols}
+\newcommand{\@nomenclatureagent}{Agent terminology}
 
 
 % These macros define an environment for front matter that is always
@@ -1046,7 +1047,8 @@ wish to left align your text}
 \ifthenelse{\equal{#1}{Z}}{\item[\textbf{\@nomenclatureacronyms}]}{%
 \ifthenelse{\equal{#1}{R}}{\item[\textbf{\@nomenclaturesuperscripts}]}{%
 \ifthenelse{\equal{#1}{S}}{\item[\textbf{\@nomenclaturesubscripts}]}{%
-\ifthenelse{\equal{#1}{X}}{\item[\textbf{\@nomenclatureothers}]}
+\ifthenelse{\equal{#1}{X}}{\item[\textbf{\@nomenclatureothers}]}{%
+\ifthenelse{\equal{#1}{Y}}{\item[\textbf{\@nomenclatureagent}]}
 {}
 }% matches mathematical symbols > X
 }% matches Subscripts           > S
@@ -1054,6 +1056,7 @@ wish to left align your text}
 }% matches Abbreviations        > Z
 }% matches Greek Symbols        > G
 }% matches Roman Symbols        > A
+} % matches Agent Symbols       > Y
 
 % To add nomenclature in the header
 \renewcommand{\nompreamble}{\markboth{\nomname}{\nomname}}

@@ -1,0 +1,22 @@
+The design of the virtual environment began with identifying key phenomena that would need to be present, or integrated in future iterations. This was based on an operational scenario that was outlined in the ROCSAFE project specification\cite{rocsafeNUIG}. Numerous operational scenarios are described that represent distinct classes of CBRNe threat; we picked the one that would be most easily modified for general-purpose use. The core components that the simulation of this scenario requires were identified: 
+\begin{itemize}
+    \item The ability to place arbitrary physical objects in the scenario in various configurations
+    \item The ability to render high-quality images from the scenario from arbitrary locations at arbitrary resolutions.
+    \item Multiple heterogeneous simulated aerial vehicles, with a high-level API for sensing and navigation for each vehicle. The API should not be platform-specific.
+    \item Simulated sensor readings from the aerial vehicles, including position, velocity, altitude, ... that depend on the state of the aerial vehicle in the environment. For example, if the aerial vehicle is close to a source of radiation, the simulated sensor reading should be high.
+    \item Simulation software should have a permissive licence and should permit publications with details of the software.
+\end{itemize}
+\note{More can be added to this list.}
+In order to provide this functionality, it is clear that using existing tools would be desirable, as writing the boiler plate code necessary to implement such complexity would be extensive. Games engines have been used extensively for simulations of physical phenomena, with a growing interest in niche areas. Examples include generating high-fidelity training data for computer vision algorithms, \cite{QiuUnrealCV:Engine}, deep learning algorithms\cite{GaidonVirtualAnalysis} and automated crowd size estimation algorithms\cite{Lee2018DigitalCrowds}.\par
+
+Most mature games engines offer a common core functionality. This includes some kind of rendering engine for 3D graphics, a physics engine that deals with phenomena such as collision, a sound engine, networking abilities, memory management, threading, cinematics and animation, and some in-built AI capabilities. Referring to the above list, this meant that an emphasis was placed on choosing an engine with some capability to implement simulated aerial vehicles with the necessary additional details. Specific functionality can commonly be added to games engines using plugins, which are usually specific to an individual games engine. A number of simulation plugins were explored, with an overview provided in \cite{Ebeid2018ASimulators}: 
+\begin{itemize}
+    \item Gazebo
+    \item Airsim
+    \item Morse
+    \item jMAVSim
+    \item HackFlightSim
+\end{itemize}
+    
+
+Deciding on a suitable games engine mostly dep

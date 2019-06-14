@@ -903,6 +903,7 @@ wish to left align your text}
 \newcommand{\@nomenclaturesubscripts}{Subscripts}
 \newcommand{\@nomenclatureothers}{Other Symbols}
 \newcommand{\@nomenclatureagent}{Agent terminology}
+\newcommand{\@nomenclatureforensics}{Forensic terminology}
 
 
 % These macros define an environment for front matter that is always
@@ -1048,6 +1049,7 @@ wish to left align your text}
 \ifthenelse{\equal{#1}{R}}{\item[\textbf{\@nomenclaturesuperscripts}]}{%
 \ifthenelse{\equal{#1}{S}}{\item[\textbf{\@nomenclaturesubscripts}]}{%
 \ifthenelse{\equal{#1}{X}}{\item[\textbf{\@nomenclatureothers}]}{%
+\ifthenelse{\equal{#1}{F}}{\item[\textbf{\@nomenclatureforensics}]}{%
 \ifthenelse{\equal{#1}{Y}}{\item[\textbf{\@nomenclatureagent}]}
 {}
 }% matches mathematical symbols > X
@@ -1056,6 +1058,7 @@ wish to left align your text}
 }% matches Abbreviations        > Z
 }% matches Greek Symbols        > G
 }% matches Roman Symbols        > A
+} % matches Forensic Symbols    > F
 } % matches Agent Symbols       > Y
 
 % To add nomenclature in the header

@@ -1,8 +1,11 @@
-In order to develop autonomous routing algorithms for RAVs and RGVs, we used the AirSim \cite{airsim2017fsr} plugin for UE4. We chose to use AirSim over other plugins for the following reasons: 
+In order to add high-level autonomous aerial vehicle support to the simulation environment, we used the AirSim \cite{ShahAirSim:Vehicles} plugin for UE4. We chose to use AirSim in the simulation environment for the following reasons: 
 \begin{itemize}
-\item AirSim has APIs for C++, Python and C\# which allows flexibility in the language used to control vehicles.
+\item AirSim has high-level navigation and sensor APIs for C++, Python and C\#.
 \item AirSim provides the ability to run multiple RAVs in the same environment.
 \item AirSim has been open-sourced with an MIT licence and was designed to be easily extended.
-\item The AirSim API provides convenient access to unmodified images, depth maps and segmented images.
+\item AirSim  provides an API to render unmodified images, depth maps and segmented images.
+\item AirSim is highly modular in its approach to modelling sensors and actuators, which means that it can easily be extended with domain-specific functionality.
 \end{itemize}
-AirSim internally models RAVs using different low-level modules outlined in \cite{airsim2017fsr} and exposes the RAV as a blueprint that we extended to sense radiation placed in the environment and to provide debugging lines for the drone flight path, as shown in Figure \ref{fig:agentRoutes}. 
+AirSim internally models RAVs using different low-level modules outlined in \cite{ShahAirSim:Vehicles}. Details of how to integrate AirSim into a custom UE4 project can be found here.  \note{It might be worth discussing how airsim actually models the state of the drone and its ability to integrate with PX4 over mavlink}. Once the plugin had been successfully integrated into the project, some additional functionality was added to meet some of the design objectives, described in the subsequent section.
+
+\subsubsection{Modifications and Extensions}

@@ -1,4 +1,5 @@
 \nomenclature[]{UE4}{Unreal Engine 4}
+\nomenclature[]{RAV}{Robotic Aerial Vehicle}
 \note{It might make sense to move some of this to the lit. review}
 
 \subsubsection{Evaluation Criteria}
@@ -10,6 +11,7 @@ In order to design the virtual environment, it was important to first identify t
     \item Multiple heterogeneous simulated aerial vehicles, with a high-level API for sensing and navigation for each vehicle. The API should not be platform-specific.
     \item Simulated sensor readings from the aerial vehicles, including position, velocity, altitude, ... that depend on the state of the aerial vehicle in the environment. For example, if the aerial vehicle is close to a source of radiation, the simulated sensor reading should be high.
     \item Simulation software should have a permissive licence and should permit publications that include details of the software.
+    \item The ability to run the simulations at an increased speed without corrupting the fidelity of the sensor/actuator functionality.
 \end{itemize}
 \note{More can be added to this list.}
 
@@ -28,16 +30,32 @@ Other notable simulation platforms that were not seriously considered include \h
 
 \subsubsection{Unreal Engine Design Process}
 \note{might need to re-word this. This section should be about the design process that was used once Unreal Engine had be determined the platform of choice to develop with}
-The design process of any simulation or game using Unreal Engine 4 should follow certain good practices in order to avoid some common pitfalls that can cause serious delays in development. \cite 
+The design process of any simulation or game using UE4 should follow certain good practices in order to avoid some common pitfalls that can cause serious delays in development. Once a level has been built using UE4, it can be labor-intensive to radically alter it\cite[p.~454]{Rouse2005GamePractice}. This suggests that care should be taken to ensure to plan the design process so that consistent and efficient results can be achieved.
 
-Unfortunately, most material related to design of simulations and games using UE4 are highly qualitative, addressing questions like "what does the player actually want and how can that be delivered?" rather than describing how the process should proceed.
+Unfortunately, most material related to design of simulations and games using UE4 are highly qualitative, addressing questions like "what does the player actually want and how can that be delivered?" rather than describing how the process should proceed. Some good level design practices are noted in \cite{Rouse2005GamePractice}, although many are not applicable to the design of a serious simulation:
+\begin{enumerate}
+    \item Pencil and paper sketches of the level's general layout can be a very good idea in order to avoid the perils of "designing yourself into a corner". As an example, this could manifest itself as underestimating the proximity between two high-level objects (e.g. a hall and a room) which may lead to a large-scale redesign further down the design process.
+    \item During the first pass, don't worry overly about textures and geometry, focus on ensuring that the layout is realistic.
+    \item Refine the architecture once a realistic layout has been identified
+    \item Add basic gameplay once the physical layout has taken shape. This avoids a tight coupling between the two.
+    \item The final step will be to refine gameplay and aesthetics.
+\end{enumerate}
 
-
-
-To ensure that the design process meet
-
-We identified the assets that would be necessary to develop the environment to our specification. These assets were acquired from websites such as 
+Using these concepts as a basis, the design process for the simulation environment proceeded roughly as follows, bearing in mind the evaluation criteria identified at the start of the chapter:
+\begin{enumerate}
+    \item A sketch of the layout was drawn up based on and operational scenario outlined in the ROCSAFE project proposal\cite{rocsafeNUIG}.
+    \item We identified the assets that would be necessary to develop the environment to our specification. These assets were acquired from websites such as 
 \href{http://www.cgtrader.com}{CGTrader}\footnote{\href {http://www.cgtrader.com}{https://www.cgtrader.com}}
 and 
-\href{https://3dwarehouse.sketchup.com/?hl=en}{Google 3D warehouse}\footnote{\href {https://3dwarehouse.sketchup.com/?hl=en}{https://www.3dwarehouse.sketchup.com}}. The assets were imported into \emph{Autodesk 3DS} in order to ensure that textures were of sufficient quality to facilitate the planned image processing on collected images. They were then imported into UE4 as static meshes and placed into the scene according to the specification. In order to ensure that this process was scalar and modular, we ensured that static meshes could be replaced by simply importing a new mesh which retains the position of the original in the environment. 
+\href{https://3dwarehouse.sketchup.com/?hl=en}{Google 3D warehouse}\footnote{\href {https://3dwarehouse.sketchup.com/?hl=en}{https://www.3dwarehouse.sketchup.com}}.
+\item The assets were imported into \emph{Autodesk 3DS} in order to ensure that textures were of sufficient quality to facilitate the planned image processing on collected images.
+\item They were then imported into UE4 as static meshes and placed into the scene according to the sketch. In order to ensure that this process, we ensured that static meshes could be replaced by simply importing a new mesh which retains the position of the original in the environment. 
+\item Rendered images were qualitatively evaluated to determine their suitablility.
+\item The environment was archived before integrating "gameplay" and dynamics.
+\item The Airsim\cite{ShahAirSim:Vehicles} plugin was integrated. This step is non-trivial and details of how this was done is outlined in the next section.
+\end{enumerate} 
+\note{Would be good to discuss some of the challenges met while developing the simulation and how they were overcome}
+\subsubsection{Results Without Dynamic Elements}
+This process was carried out iteratively and the results of the developed world excluding the dynamic elements are discussed here. 
 
+%Talk about how well static world matches specification, how well rendered images perform for training some object detection etc.

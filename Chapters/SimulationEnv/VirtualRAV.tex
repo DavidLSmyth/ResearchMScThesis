@@ -1,0 +1,8 @@
+In order to develop autonomous routing algorithms for RAVs and RGVs, we used the AirSim \cite{airsim2017fsr} plugin for UE4. We chose to use AirSim over other plugins for the following reasons: 
+\begin{itemize}
+\item AirSim has APIs for C++, Python and C\# which allows flexibility in the language used to control vehicles.
+\item AirSim provides the ability to run multiple RAVs in the same environment.
+\item AirSim has been open-sourced with an MIT licence and was designed to be easily extended.
+\item The AirSim API provides convenient access to unmodified images, depth maps and segmented images.
+\end{itemize}
+AirSim internally models RAVs using different low-level modules outlined in \cite{airsim2017fsr} and exposes the RAV as a blueprint that we extended to sense radiation placed in the environment and to provide debugging lines for the drone flight path, as shown in Figure \ref{fig:agentRoutes}. 

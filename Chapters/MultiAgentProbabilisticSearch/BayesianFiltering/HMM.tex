@@ -1,3 +1,25 @@
 \nomenclature[]{HMM}{Hidden Markov Model}
 \placeholder{}
-Hidden Markov Models appear frequently in AI literature as they provide an abstract framework to deal with stochastic processes, which themselves are pervasive in their use as a tool to model real-world phenomena. HMMs specifically deal with Markov chains, ... A brief overview of them will be provided here in order to provide some context for later discussion.
+\note{Could discuss: \newline  Background
+\begin{itemize}
+    \item What HMMs are
+    \item why they're useful in AI
+    \item the different commonly used HMMs. 
+\end{itemize}
+\newline Use in my research:
+\begin{itemize}
+    \item How the problem can naturally be described by a HMM
+    \item Lead into discussion of how DBN is a more natural way to describe the problem and how it leads to efficient factorization of densities for state estimation
+\end{itemize}}
+Hidden Markov Models appear frequently in AI literature as they provide an abstract framework to deal with stochastic processes, which themselves are pervasive in their use as a tool to model real-world phenomena. This chapter will outline what HMMs are and their use in literature describing target localization algorithms.
+
+It in instructive to understand what is meant by a stochastic process for some of the concepts mentioned in this thesis. The high-level details will be discussed here and the reader can refer to a text on probability theory for a fuller explanation, for example \cite{papoulis02}. A random process can be described as a family of random variables indexed by a set $\tau$: $\{X_t\}_{t\in\tau}$. In their common usage, modelling the evolution of a random system through discrete time steps, $\tau$=$\mathbb N$. Common phenomena modelled by stochastic processes include the growth of a bacterial population and the movement of a gas molecule.\par
+
+A first-order discrete-time Markov process is a stochastic process that describes a system which is in a given state at each time step, with the state changing randomly between steps. The steps are elements of the natural numbers and the random process is a mapping from the natural numbers to states. First-order Markov processes have the additional property that the probability distribution of the n$_{th}$ random variable in the process is conditionally independent of all previous probability distributions in the sequence but the $n-1_{st}$: $P(X_t = x_t | X_{t-1} = x_{t-1}, X_{t-2} = x_{t-2}, ... , X_{1} = x_{1}) = P(X_t = x_t | X_{t-1} = x_{t-1})$. This is often referred to as the Markov Property or the memoryless property of Markov processes. 
+
+HMMs are used to represent probabilities over sequences of observations generated from a stochastic process \cite{Ghahramani2001ANNETWORKS}
+
+
+A comprehensive overview of HMMs are given in \cite{Ghahramani2001ANNETWORKS} A stochastic process is 
+
+HMMs specifically deal with Markov chains, ... A brief overview of them will be provided here in order to provide some context for later discussion.\par

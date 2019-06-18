@@ -118,8 +118,9 @@
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
 
 \RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
+
 %\addbibresource{References/references} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
-\addbibresource{References/NonMendeleyReferences.bib} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
+%\addbibresource{References/NonMendeleyReferences.bib} %Location of references.bib only for biblatex, Do not omit the .bib extension from the filename.
 \fi
 
 % changes the default name `Bibliography` -> `References'
@@ -212,3 +213,8 @@
 \newcommand{\michaelapproves}{\michaelnote{I have read over this section and don't think it needs any more work.}}
 
 \newcommand{\frankapproves}{\franknote{I have read over this section and don't think it needs any more work.}}
+
+
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}

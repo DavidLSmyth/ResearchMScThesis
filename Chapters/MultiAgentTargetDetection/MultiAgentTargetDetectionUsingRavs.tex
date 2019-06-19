@@ -1,0 +1,39 @@
+%First define the problem to be solved
+\subsubsection{Problem Setup}
+As mentioned in the introduction, major problems in hazardous scene management include localizing sources of hazardous materials and localizing potential sources of evidence. The reasons these are difficult problems, in the context of the ROCSAFE project, are:
+\begin{itemize}
+    \item Hazardous materials may belong to different classes of threat, as outlined in the CBRN acronym. If the nature of the threat is uncertain, the wrong preventative measures may be taken and personnel may be put at risk. 
+    \item Evidence localization usually requires moving a sensor to within close proximity to the evidence. If a human is responsible for this, there is a chance that they will accidentally tamper with the evidence, possibly yielding it unusable.
+    \item Since these scenarios are highly dangerous, the area to search may be large. This means that the process of localization may be painstaking and time-consuming for humans.
+\end{itemize}
+We propose a system that can aid the execution of these tasks using a system of automated unmanned aerial vehicles (UAVs). \par
+
+These localization problems can be described using abstract language which allows them to be approached using a common framework, with only minor implementation details necessary to specify which problem is being addressed. The framework developed uses a lot of the machinery outlined in the Background Knowledge chapter. The localization problems are often referred to \textit{target detection} in the literature. The particular instance of the problem that this thesis investigates can be described as follows:
+Given a region of space to explore and a set of heterogeneous autonomous aerial vehicles with sensing capabilities, devise a search strategy which will return either the locations of the targets if one or more is present or return that no targets are present. %not sure whether I should mentioned about battery etc. here or to let the discussion lead to this naturally.
+\par
+
+A simpler version of this problem was first approached, where either a single source of evidence is assumed to either be present or not. As outlined in the literature review, this problem has been approached before by treating the problem as a 2 Time Slice Dynamic Bayesian Network (2TDBN). We initially made the following simplifying assumptions:
+\begin{itemize}
+    \item The UAVs have unlimited battery capacity.
+    \item The region that the UAVs need to search can be approximated by a polygon.
+    \item The sensor specificity and sensitivity are known or can be estimated for a given resolution (e.g. 1m). These are assumed to be greater than 50\% for the given resolution.
+    \item The UAVs operate over a discrete spatial grid spanning the region to search, which is determined by the sensor resolution.
+    \item The UAVs are assumed to have a GPS sensor that is accurate to beyond the sensor resolution (implying that the UAV moves to discrete grid locations without drift).
+    \item The target is assumed to be small enough to occupy only one grid cell at a time. It is also assumed to not lie across grid cells.
+\end{itemize}
+While these assumptions are unrealistic, they are convenient because they simplify the design of the system and subsequent analysis. Some ramifications of these assumptions are addressed later in the chapter, at section x. They are in line with some assumptions made in related works \cite{ChungASearch}, \cite{Waharte2010SupportingUAVs}, % find additional citations in mendeley
+
+%Outline experimental setup
+\subsubsection{Experimental Setup}
+In order to prototype the system to aid development, a simple experimental testbed was set up. This involved the following software components:
+\begin{itemize}
+    \item A 2-Dimensional grid coordinate system
+    \item An evidence source simulator which simulates the readings that a sensor would observe given the sensitivity and specificity 
+\end{itemize}
+These components were designed in a modular fashion to distinguish the agent from its environment, as shown in figure \ref{fig:agent_env_interaction}. This seems like an obvious and intuitive notion, but can be easily overlooked while writing code. For example, the agent may have an internal representation of the grid environment in which it operates which should be completely independent of the actual grid environment which is run in the simulation. 
+
+%Discuss solutions explored - not sure how to address the modularity associated with this.
+
+
+%Discuss Results and evaluation
+

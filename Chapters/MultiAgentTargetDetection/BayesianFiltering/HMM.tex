@@ -13,7 +13,7 @@
     \item Lead into discussion of how DBN is a more natural way to describe the problem and how it leads to efficient factorization of densities for state estimation
 \end{itemize}
 }
-Hidden Markov Models appear frequently in AI literature as they provide an abstract framework to deal with stochastic processes, which themselves are pervasive in their use as a tool to model real-world phenomena. This chapter will outline what HMMs are and their use in literature describing target localization algorithms. A general overview of HMMs can be found in \cite{Murphy1994DynamicLearning}\cite{Ghahramani2001ANNETWORKS}.
+Hidden Markov Models appear frequently in AI literature as they provide an abstract framework to deal with stochastic processes, which themselves are pervasive in their use as a tool to model real-world phenomena. This chapter will outline what HMMs are and their use in literature describing target localization algorithms. A general overview of HMMs can be found in \cite{Murphy1994DynamicLearning} and \cite{Ghahramani2001ANNETWORKS}.
 
 \subsubsection{Markov Processes}
 It is instructive to understand what is meant by a stochastic process for some of the concepts mentioned in this thesis. The high-level details will be discussed here and the reader can refer to a text on probability theory for a fuller explanation, for example \cite{papoulis02}. A random process can be described as a family of random variables indexed by a set $\tau$: $\{X_t\}_{t\in\tau}$. Commonly in AI, stochastic processes model the evolution of a random system through \textit{discrete} time steps: $\tau$=$\mathbb N$. Common phenomena modelled by stochastic processes include the growth of a bacterial population and the movement of a gas molecule.\par
@@ -28,7 +28,7 @@ A first-order discrete-time Markov process is a stochastic process that describe
 Some obvious results are worth pointing out; as for any stochastic matrix, by the axioms of probability theory, the sum of conditional probabilities across {$\displaystyle \sum _{j=1}^{S}T_{i,j}=1$} and the transition probabilities over k timesteps can be described by the $k_{th}$ power of the transition matrix: ${(T^k)}_{i,j}$ = $P(X_{t+k} = j | X_{t} = i)$. Markov processes are often described by graphical models, for example Figure \ref{fig:markov-processes}.
 \begin{figure}[b]
     \centering
-    \includegraphics{Chapters/MultiAgentProbabilisticSearch/BayesianFiltering/Figs/markov-processes.eps}
+    \includegraphics{Chapters/MultiAgentTargetDetection/BayesianFiltering/Figs/markov-processes.eps}
     \caption{First (a) and second (b) order Markov processes \cite{AIAMA}}
     \label{fig:markov-processes}
 \end{figure}
@@ -37,10 +37,10 @@ $P(X_{1:t}) = P(X_1, X_2, ..., X_t) = P(X_1)\times P(X_2 | X_1)\times P(X_3 | X_
 \par
 
 \subsubsection{HMM Description}
-Hidden Markov Models (HMMs) are models that build on the Markov Process model, which describe the evolution of a random system in the language of probability theory. HMMs assume that the system being modeled can be described by a Markov process, but that the states of this process are unobservable. This means that it isn't possible to determine the state of the system exactly at any given point in time. However, it is possible to make an observation of a random variable that is related to the hidden state which yields information about the hidden state. This is visualised in Figure \ref{fig:hmm}
+Hidden Markov Models (HMMs) are models that build on the Markov Process model, which describe the evolution of a random system in the language of probability theory. HMMs assume that the system being modeled can be described by a Markov process, but that the states of this process are unobservable. This means that it is not possible to determine the state of the system exactly at any given point in time. However, it is possible to make an observation of a random variable that is related to the hidden state which yields information about the hidden state. This is visualised in Figure \ref{fig:hmm}
 \begin{figure}[]
     \centering
-    \includegraphics{Chapters/MultiAgentProbabilisticSearch/BayesianFiltering/Figs/smoothing-dbn.eps}
+    \includegraphics{Chapters/MultiAgentTargetDetection/BayesianFiltering/Figs/smoothing-dbn.eps}
     \caption{A visualisation of a HMM \cite{AIAMA}}
     \label{fig:hmm}
 \end{figure}
@@ -48,14 +48,14 @@ Hidden Markov Models (HMMs) are models that build on the Markov Process model, w
 $
 P(X_{1:t}, E_{1:t}) = P(X_1, X_2, ..., X_t, E_1, E_2, ..., E_t) = P(X_1) \times P(E_1 | X_1) \times
 \prod_{i=2}^{t}{(P(X_i | x_{i-1}) \times P(E_t | X_t))}.
-$Given representation, it is then possible to answer questions such as:
+$Given this representation, it is then possible to answer questions such as:
 \begin{itemize}
     \item Given the HMM, $\lambda$, determine the probability of occurrence of a particular observation sequence, $P(E_{1:t} | \lambda)$
     \item Given a sequence of observations $(E_1, E_2, ..., E_n)$, what is the most likely sequence of hidden states that led to these observations? i.e. find \[\argmax_{X_{1:t}} P(X_{1:t} | E_{1:t})\].
     \item Determine the parameters of $T$ and $O$, given a training set of observations, i.e. find the solution to \[\argmax_{\lambda} P(E_{1:t} | \lambda)\].
-    \item Filtering: What is the current distribution of the hidden state given all previous evidence ('belief state') of the agent at time t: $P(X_t | E_{1:t})$?
-    \item Prediction: What is the distribution of the hidden state in the future, given all evidence to date: $P(X_{t+k} | E_{1:t})$, for some k$>$0?
-    \item Smoothing: What is the distribution of a past state given all observations up to the current point in time: $P(X_k | E_{1:t})$, for some 0 $\leq$ k $<$ t?
+    \item \textit{Filtering}: What is the current distribution of the hidden state given all previous evidence ('belief state') of the agent at time t: $P(X_t | E_{1:t})$?
+    \item \textit{Prediction}: What is the distribution of the hidden state in the future, given all evidence to date: $P(X_{t+k} | E_{1:t})$, for some k$>$0?
+    \item \textit{Smoothing}: What is the distribution of a past state given all observations up to the current point in time: $P(X_k | E_{1:t})$, for some 0 $\leq$ k $<$ t?
 \end{itemize}
 \par
 

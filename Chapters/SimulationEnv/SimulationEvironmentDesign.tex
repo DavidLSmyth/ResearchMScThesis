@@ -3,10 +3,12 @@
 \note{It might make sense to move some of this to the lit. review}
 
 \subsubsection{Evaluation Criteria}
-In order to design the virtual environment, it was important to first identify the criteria that would determine its usefulness. We began with identifying key phenomena that would need to be present, or integrated in future iterations. This was based on an operational scenario that was outlined in the ROCSAFE project specification\cite{rocsafeNUIG}. Numerous operational scenarios are described that represent distinct classes of CBRNe threat; we picked the one that would be most easily modified for general-purpose use. The core components that the simulation of this scenario requires were identified: 
+In order to design the virtual environment, it was important to first identify the criteria that would determine its usefulness. We began with identifying key phenomena that would need to be present, or integrated in future iterations. This was based on an operational scenario that was outlined in the ROCSAFE project specification\cite{rocsafeNUIG}. Numerous operational scenarios are described that represent distinct classes of CBRNe threat; we picked the one that would be most easily modified for general-purpose use.
+%Should talk about the rad. environment here but not sure of dissemination status.
+The core components that the simulation of this scenario requires were identified: 
 \note{This is probably the most important part of this chapter}
 \begin{itemize}
-    \item The ability to place arbitrary physical objects in the scenario in various configurations
+    \item The ability to place arbitrary realistic virtual representations of physical objects in the scenario in various configurations
     \item The ability to render high-quality images from the scenario from arbitrary locations at arbitrary resolutions.
     \item Multiple heterogeneous simulated aerial vehicles, with a high-level API for sensing and navigation for each vehicle. The API should not be platform-specific.
     \item Simulated sensor readings from the aerial vehicles, including position, velocity, altitude, ... that depend on the state of the aerial vehicle in the environment. For example, if the aerial vehicle is close to a source of radiation, the simulated sensor reading should be high.
@@ -16,17 +18,20 @@ In order to design the virtual environment, it was important to first identify t
 \note{More can be added to this list.}
 
 \subsubsection{Pre-existing tools and softwares}
-In order to provide this functionality, it is clear that using existing tools would be desirable, as writing the boiler plate code necessary to implement such complexity would be extensive. Games engines have been used extensively for simulations of physical phenomena, with a growing interest in niche areas. Examples include generating high-fidelity training data for computer vision algorithms, \cite{QiuUnrealCV:Engine}, deep learning algorithms\cite{GaidonVirtualAnalysis} and automated crowd size estimation algorithms\cite{Lee2018DigitalCrowds}, target tracking algorithms \cite{Mueller2016ATracking}. Most mature games engines offer a common core functionality. This includes some kind of rendering engine for 3D graphics, a physics engine that deals with phenomena such as collision, a sound engine, networking abilities, memory management, threading, cinematics and animation, and some in-built AI capabilities. Referring to the above list, this meant that an emphasis was placed on choosing software with some capability to implement simulated aerial vehicles with the necessary additional details. Specific functionality can commonly be added to games engines using plugins, which are usually specific to an individual games engine.Other standalone simulation tools also exist and their use was considered.\par
+In order to provide this functionality, it is clear that using existing tools would be desirable, as writing the boiler plate code necessary to implement such complexity would be extensive. Games engines have been used extensively for simulations of physical phenomena, with a growing interest in niche areas. Examples include generating high-fidelity training data for computer vision algorithms, \cite{QiuUnrealCV:Engine}, deep learning algorithms \cite{GaidonVirtualAnalysis} and automated crowd size estimation algorithms \cite{Lee2018DigitalCrowds}, target tracking algorithms \cite{Mueller2016ATracking}. Most mature games engines offer a common core functionality. This includes some kind of rendering engine for 3D graphics, a physics engine that deals with phenomena such as collision, a sound engine, networking abilities, memory management, threading, cinematics and animation. Referring to the above list, this meant that an emphasis was placed on choosing software with some capability to implement simulated aerial vehicles with the necessary additional details. Specific functionality can commonly be added to games engines using plugins, which are usually specific to an individual games engine. Other standalone simulation tools also exist and their use was considered.\par
 
-The simulation softwares whose potential use for designing a custom simulation environment for disaster scene management which were investigated are as follows, with an overview of each provided in \cite{Ebeid2018ASimulators} and \cite{ShahAirSim:Vehicles}: 
+The simulation softwares whose potential use for designing a custom simulation environment for disaster scene management that were investigated were the following, with an overview of each provided in \cite{Ebeid2018ASimulators} and \cite{ShahAirSim:Vehicles}: 
 \begin{itemize}
+%Provide a brief description of each.
     \item Gazebo
     \item Airsim
     \item jMAVSim
     \item HackFlightSim
     \item RotorS
 \end{itemize}
-Other notable simulation platforms that were not seriously considered include \href{https://www.openrobots.org/wiki/morse}{Morse}\footnote{\href {https://www.openrobots.org/wiki/morse}{https://www.openrobots.org/wiki/morse}} and \href{https://github.com/paparazzi/paparazzi}{New Paparazzi Simulator}\footnote{\href {https://github.com/paparazzi/paparazzi}{https://github.com/paparazzi/paparazzi}}. Unreal Engine 4 with the Airsim plugin was chosen to develop the simulation since the documentation for both suggested that it was most suitable in relation to the design requirements/evaluation criteria outlined above.\par
+Other notable simulation platforms that were not seriously considered include \href{https://www.openrobots.org/wiki/morse}{Morse}\footnote{\href {https://www.openrobots.org/wiki/morse}{https://www.openrobots.org/wiki/morse}} and \href{https://github.com/paparazzi/paparazzi}{New Paparazzi Simulator}\footnote{\href {https://github.com/paparazzi/paparazzi}{https://github.com/paparazzi/paparazzi}}.
+%Discuss why these weren't considered
+UE4 with the Airsim plugin was chosen to develop the simulation since the documentation for both suggested that it was most suitable in relation to the design requirements/evaluation criteria outlined above.\par
 
 \subsubsection{Unreal Engine Design Process}
 \note{might need to re-word this. This section should be about the design process that was used once Unreal Engine had be determined the platform of choice to develop with}
@@ -35,7 +40,7 @@ The design process of any simulation or game using UE4 should follow certain goo
 Unfortunately, most material related to design of simulations and games using UE4 are highly qualitative, addressing questions like "what does the player actually want and how can that be delivered?" rather than describing how the process should proceed. Some good level design practices are noted in \cite{Rouse2005GamePractice}, although many are not applicable to the design of a serious simulation:
 \begin{enumerate}
     \item Pencil and paper sketches of the level's general layout can be a very good idea in order to avoid the perils of "designing yourself into a corner". As an example, this could manifest itself as underestimating the proximity between two high-level objects (e.g. a hall and a room) which may lead to a large-scale redesign further down the design process.
-    \item During the first pass, don't worry overly about textures and geometry, focus on ensuring that the layout is realistic.
+    \item During the first pass, do not worry overly about textures and geometry, focus on ensuring that the layout is realistic.
     \item Refine the architecture once a realistic layout has been identified
     \item Add basic gameplay once the physical layout has taken shape. This avoids a tight coupling between the two.
     \item The final step will be to refine gameplay and aesthetics.
@@ -43,16 +48,16 @@ Unfortunately, most material related to design of simulations and games using UE
 
 Using these concepts as a basis, the design process for the simulation environment proceeded roughly as follows, bearing in mind the evaluation criteria identified at the start of the chapter:
 \begin{enumerate}
-    \item A sketch of the layout was drawn up based on and operational scenario outlined in the ROCSAFE project proposal\cite{rocsafeNUIG}.
+    \item A sketch of the layout was drawn up based on an operational scenario outlined in the ROCSAFE project proposal \cite{rocsafeNUIG}, which is outlined in section x.
     \item We identified the assets that would be necessary to develop the environment to our specification. These assets were acquired from websites such as 
 \href{http://www.cgtrader.com}{CGTrader}\footnote{\href {http://www.cgtrader.com}{https://www.cgtrader.com}}
 and 
 \href{https://3dwarehouse.sketchup.com/?hl=en}{Google 3D warehouse}\footnote{\href {https://3dwarehouse.sketchup.com/?hl=en}{https://www.3dwarehouse.sketchup.com}}.
 \item The assets were imported into \emph{Autodesk 3DS} in order to ensure that textures were of sufficient quality to facilitate the planned image processing on collected images.
-\item They were then imported into UE4 as static meshes and placed into the scene according to the sketch. In order to ensure that this process, we ensured that static meshes could be replaced by simply importing a new mesh which retains the position of the original in the environment. 
+\item They were then imported into UE4 as static meshes and placed into the scene according to the sketch. In order to ensure that this process can scale, we ensured that static meshes could be replaced by simply importing a new mesh which retains the position of the original in the environment. 
 \item Rendered images were qualitatively evaluated to determine their suitablility.
 \item The environment was archived before integrating "gameplay" and dynamics.
-\item The Airsim\cite{ShahAirSim:Vehicles} plugin was integrated. This step is non-trivial and details of how this was done is outlined in the next section.
+\item The Airsim \cite{ShahAirSim:Vehicles} plugin was integrated. This step is non-trivial and details of how this was done is outlined in the next section.
 \end{enumerate} 
 \note{Would be good to discuss some of the challenges met while developing the simulation and how they were overcome}
 \subsubsection{Results Without Dynamic Elements}

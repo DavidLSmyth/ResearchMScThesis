@@ -1,17 +1,63 @@
 %Want to introduce the problem to allow for a discussion that makes sense. Ideally will frame a problem so that it suggests that having a high-fidelity simulation environment would be very useful for the project and in general.
-According to \citeauthor{Shannon1998INTRODUCTIONSIMULATION}, a software simulation can be defined as \textit{ the process of designing
+According to \citeauthor{Shannon1998INTRODUCTIONSIMULATION}, simulation can be defined as \textit{ the process of designing
 a model of a real system and conducting experiments with
 this model for the purpose of understanding the behavior of
 the system and /or evaluating various strategies for the
-operation of the system}.Simulations written with software are usually created in order to gain insight into the system's dynamics and to evaluate results of using a method intended for use in the real world. This is usually because the may be too time-consuming or expensive to test in the real world. Software simulations are increasingly used for a wide variety of tasks, from planning new roads to alleviate traffic \cite{Pell2017TrendsSimulation} to developing self-driving vehicles \cite{Dosovitskiy2017CARLA:Simulator}]. 
+operation of the system}. Simulations written with software are usually created in order to gain insight into the system's dynamics and to evaluate results of using a method intended for use in the real world. This is usually because the may be too time-consuming or expensive to test in the real world. Software simulations are being used increasingly for a wide variety of tasks, from planning new roads to alleviate traffic \cite{Pell2017TrendsSimulation} to developing self-driving vehicles \cite{Dosovitskiy2017CARLA:Simulator}. 
 
-Designing simulations allows the developer of an agent-based system to abstract away details of the real-world conditions that the agents will act in and focus on the salient aspects that the agents are concerned with, in order to prototype, train, test analyse and validate. Simulations are typically of high value when data required to design system:
+Designing simulations allows the developer of an agent-based system to abstract away details of the real-world conditions that the agents will act in and focus on the salient aspects that the agents are concerned with, in order to prototype, train, test analyse and validate. Advantages of simulations are listed \cite{Shannon1998INTRODUCTIONSIMULATION} Simulations are typically of high value when data required to design system:
 \begin{itemize}
     \item Costs a lot of money to generate.
     \item Is dangerous to generate.
     \item Is time consuming/laborious to generate.
     \item The system has a well-known stochastic element which makes generating a sufficiently large sample size difficult.
 \end{itemize}
+
+%We can test new designs, layouts, etc. without committing resources to their implementation.
+
+%It can be used to explore new staffing policies, operating procedures, decision rules, organizational structures, information flows, etc. without disrupting the ongoing operations.
+
+%Simulation allows us to identify bottlenecks in information, material and product flows and test options for increasing the flow rates.
+
+%It allows us to test hypothesis about how or why certain phenomena occur in the system
+
+%Simulation allows us to control time. Thus we can operate the system for several months or years of experience in a matter of seconds allowing us to quickly look at long time horizons or we can slow down phenomena for study.
+
+%It allows us to gain insights into how a modeled system actually works and understanding of which variables are most important to performance.
+
+%Simulation's great strength is its ability to let us experiment with new and unfamiliar situations and to answer "what if" questions.
+
+
+%Disadvantages
+%Simulation modeling is an art that requires specialized training and therefore skill levels of practitioners vary widely. The utility of the study depends upon the quality of the model and the skill of the modeler.
+
+%Gathering highly reliable input data can be time consuming and the resulting data is sometimes highly questionable. Simulation cannot compensate for inadequate data or poor management decisions.
+
+%Simulation models are input-output models, i.e. they yield the probable output of a system for a given input. They are therefore "run" rather than solved. They do not yield an optimal solution, rather they serve as a tool for analysis of the behavior of a system under conditions specified by the experimenter.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 The domain which motivated the development of the technologies proposed in this thesis satisfies all of the above requirements, which naturally motivates the design of a simulation environment. \par
 
 Simulations have been used extensively to model complex systems since the invention of the modern computer. Simulation technology has gained traction since the proposal of the Markov Chain Monte Carlo method by Stansislaw Ulam and John Von Neumann in the late 1940s \cite{Robert2011AIncomplete}. Key properties of a simulation 

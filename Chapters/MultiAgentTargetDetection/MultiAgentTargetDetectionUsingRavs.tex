@@ -48,18 +48,17 @@ These components were designed in a modular fashion to distinguish the agent fro
 %Discuss solutions explored - not sure how to address the modularity associated with this.
 \subsection{Problem Decomposition}
 The target detection problem described in this thesis naturally decomposes into a number of sub-problems. %These components aren't independent, might be worth discussing how the components interact.
-Since the problem must be solved using an agent, the most obvious first step is to consider how to design the agent function, as discussed in the \ref{Background} chapter. A model-based agent would clearly be a good place to start, since using previous sensor percepts would intuitively help guide the search process. A goal-based agent would seem to be a good fit on initial contemplation, however there is an outstanding issue that cannot easily be addressed: defining a goal state cannot be done directly, since the agent's sensors are assumed to be noisy. This means that just because a positive reading is reported doesn't mean that the search can be terminated, due to that fact that the sensor reading could be spurious. Therefore, a model-based, utility-based agent is the obvious choice of agent design, since a utility function can help guide that agent towards a  without knowing the exact specification of the goal state
-
+Since the problem must be solved using an agent, the most obvious first step is to consider how to design the agent function, as discussed in chapter \ref{Background}. A model-based agent would clearly be a good place to start, since using previous sensor percepts would intuitively help guide the search process. A goal-based agent would seem to be a good fit on initial contemplation, however there is an outstanding issue that cannot easily be addressed: defining a goal state cannot be done directly, since the agent's sensors are assumed to be noisy. This means that just because a positive reading is reported doesn't mean that the search can be terminated, due to that fact that the sensor reading could be spurious. Therefore, a model-based, utility-based agent is the obvious choice of agent design, since a utility function can help guide that agent towards a  without knowing the exact specification of the goal state. A good example of the architecture of a model-based, utility-based agent is shown in figure \ref{fig:model_based_utility_based}.
 \begin{figure}
     \centering
     \includegraphics{Chapters/MultiAgentTargetDetection/BayesianFiltering/Figs/utility-based-agent.eps}
     \caption{Figure based on Model-Based, Utility-Based Agent Architecture (Russell and Norvig)\cite[p.~54]{AIAMA}}
-    \label{fig:agent_env_interaction}
+    \label{fig:model_based_utility_based}
 \end{figure}
-
+One component is obviously the world model, which is the agent's internal representation of the world and it's dynamics. The agent maintains an internal state
 \subsubsection{Battery Capacity Constraints}
 
-\subsubsection{Mutiple Targets}
+\subsubsection{Multiple Targets}
 
 \subsubsection{Multiple UAVs}
 

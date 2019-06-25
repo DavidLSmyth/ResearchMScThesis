@@ -1,66 +1,61 @@
 %Want to introduce the problem to allow for a discussion that makes sense. Ideally will frame a problem so that it suggests that having a high-fidelity simulation environment would be very useful for the project and in general.
-According to \citeauthor{Shannon1998INTRODUCTIONSIMULATION}, simulation can be defined as \textit{ the process of designing
+\subsection{Key Aspects of Simulation Environments}
+According to \citeauthor{Shannon1998INTRODUCTIONSIMULATION} \cite{Shannon1998INTRODUCTIONSIMULATION}, simulation can be defined as \textit{ the process of designing
 a model of a real system and conducting experiments with
 this model for the purpose of understanding the behavior of
 the system and /or evaluating various strategies for the
-operation of the system}. Simulations written with software are usually created in order to gain insight into the system's dynamics and to evaluate results of using a method intended for use in the real world. This is usually because the may be too time-consuming or expensive to test in the real world. Software simulations are being used increasingly for a wide variety of tasks, from planning new roads to alleviate traffic \cite{Pell2017TrendsSimulation} to developing self-driving vehicles \cite{Dosovitskiy2017CARLA:Simulator}. 
+operation of the system}. Simulations have been used extensively to model complex systems since the invention of the modern computer, gaining traction since the proposal of the Markov Chain Monte Carlo method by Stansislaw Ulam and John Von Neumann in the late 1940s \cite{Robert2011AIncomplete}. Simulations written with software are usually created in order to gain insight into the system's dynamics and to evaluate results of using a method intended for use in the real world. This is usually because proposed methods may be too time-consuming or expensive to test in the real world. Software simulations are being used increasingly for a wide variety of tasks, from planning new roads to alleviate traffic \cite{Pell2017TrendsSimulation} to developing self-driving vehicles \cite{Dosovitskiy2017CARLA:Simulator}. 
 
-Designing simulations allows the developer of an agent-based system to abstract away details of the real-world conditions that the agents will act in and focus on the salient aspects that the agents are concerned with, in order to prototype, train, test analyse and validate. Advantages of simulations are listed \cite{Shannon1998INTRODUCTIONSIMULATION} Simulations are typically of high value when data required to design system:
+Designing simulations allows the developer of an agent-based system to abstract away details of the real-world conditions that the agents will act in and focus on the salient aspects that the agents are concerned with, in order to prototype, train, test analyse and validate. General advantages of simulations are listed in  \cite{Shannon1998INTRODUCTIONSIMULATION}, with the most notable being:
+\begin{itemize}
+    \item \textit{It can be used to explore operating procedures, decision rules, organizational structures, etc. without disrupting the ongoing operations.}
+    \item \textit{Simulation allows us to control time. Thus we can operate the system for several months or years of experience in a matter of seconds allowing us to quickly look at long time horizons or we can slow down phenomena for study.}
+    \item \textit{It allows us to gain insights into how a modeled system actually works and understanding of which variables are most important to performance.}
+    \item \textit{Simulation's great strength is its ability to let us experiment with new and unfamiliar situations and to answer "what if" questions.}
+\end{itemize}
+
+
+\note{Following paragraph doesn't really belong here but does help tie everything together}
+
+ In relation to designing intelligent agents, often the trade-off between exploration and exploitation is referenced. Exploration or "information gathering" \cite{AIAMA} can be considered as the agent posing a "what if" question in order to learn the consequences of performing action, and exploitation can be considered as an agent using gathered or previous knowledge to choose actions to take that maximize its performance measure, as outlined in section \ref{AgencySubsection}. As stated above, simulation environments are highly suited to answering "what if" questions, which has motivated the use of using simulations to design systems of autonomous agents in the literature, for example the simulation environment used in the 
+\href{https://multiagentcontest.org/}{Multi-Agent Programming Contest.}\footnote{\href {https://multiagentcontest.org/}{https://multiagentcontest.org/}}
+
+
+
+\subsection{Using Game Engines to Design and Generate Simulation Environments}\label{GameEngineReview}
+Since computer games are effectively simulations, the technologies used to create them have also been used to create simulations for a more serious purpose, often referred to in the literature as \textit{serious games}. Serious games usually refer to games that have been specifically designed to provide training to professionals working in an industry where extensive training is necessary but difficult, expensive or dangerous to provide. An overview and taxonomy of serious games is provided by \citeauthor{Laamarti2014AnGames} \cite{Laamarti2014AnGames}. More recently, games have been used to train learning agents, described in \ref{AgencySubsection}. This is because game engines have reached a level of maturity that can provide high-fidelity percepts to agents in order to replicate the true environment they would like to perform in. Initially, manufacturing created a demand for simulation technology, since taking a manufacturing plant offline in order to integrate new robotics technology could cost a company a significant amount of money. Simulink, developed by Matlab, was initially a popular tool to develop models of dynamical systems, but it's limitations include ...
+
+Since highly influential papers related to 
+
+
+Modern-day games are commonly written using a \textit{game engine}, rather than being designed from the bottom up as a singular entity. There is no strict definition for what constitutes a game engine, but the term usually describes a software development environment which typically provides functionality including some kind of rendering engine for 3D graphics, a physics engine that deals with phenomena such as collision, a sound engine, networking abilities, memory management, threading, cinematics and animation. This functionality is necessary in most modern games and has been developed to economise the process of game development.\par
+
+
+
+\subsection{AirSim Simulator}
+
+
+
+Games engines have developed
+In the context of ROCSAFE and 
+
+
+
+We have identified the following aspects of the real-world scenario we hope to address as causing issues in developing our system:
+This motivates the development of a high-fidelity simulation to circumvent these limitations.
+
+
+
+Simulations are typically of high value when data required to design system:
 \begin{itemize}
     \item Costs a lot of money to generate.
     \item Is dangerous to generate.
     \item Is time consuming/laborious to generate.
     \item The system has a well-known stochastic element which makes generating a sufficiently large sample size difficult.
 \end{itemize}
-
-%We can test new designs, layouts, etc. without committing resources to their implementation.
-
-%It can be used to explore new staffing policies, operating procedures, decision rules, organizational structures, information flows, etc. without disrupting the ongoing operations.
-
-%Simulation allows us to identify bottlenecks in information, material and product flows and test options for increasing the flow rates.
-
-%It allows us to test hypothesis about how or why certain phenomena occur in the system
-
-%Simulation allows us to control time. Thus we can operate the system for several months or years of experience in a matter of seconds allowing us to quickly look at long time horizons or we can slow down phenomena for study.
-
-%It allows us to gain insights into how a modeled system actually works and understanding of which variables are most important to performance.
-
-%Simulation's great strength is its ability to let us experiment with new and unfamiliar situations and to answer "what if" questions.
-
-
-%Disadvantages
-%Simulation modeling is an art that requires specialized training and therefore skill levels of practitioners vary widely. The utility of the study depends upon the quality of the model and the skill of the modeler.
-
-%Gathering highly reliable input data can be time consuming and the resulting data is sometimes highly questionable. Simulation cannot compensate for inadequate data or poor management decisions.
-
-%Simulation models are input-output models, i.e. they yield the probable output of a system for a given input. They are therefore "run" rather than solved. They do not yield an optimal solution, rather they serve as a tool for analysis of the behavior of a system under conditions specified by the experimenter.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 The domain which motivated the development of the technologies proposed in this thesis satisfies all of the above requirements, which naturally motivates the design of a simulation environment. \par
 
-Simulations have been used extensively to model complex systems since the invention of the modern computer. Simulation technology has gained traction since the proposal of the Markov Chain Monte Carlo method by Stansislaw Ulam and John Von Neumann in the late 1940s \cite{Robert2011AIncomplete}. Key properties of a simulation 
+ Key properties of a simulation 
 
 %Intelligent agents are frequently designed to solve problems which usually would be on or more of: labour intensive, monotonous, repetitive or time consuming. In order to accomplish these tasks, agents may need to use data from 
 

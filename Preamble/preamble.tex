@@ -72,7 +72,7 @@
 % uncommenting the following line
 % This is for people stuck with older versions of texlive
 %\usepackage{sty/caption/subcaption}
-\usepackage{subcaption}
+%\usepackage{subcaption}
 
 % ********************************** Tables ************************************
 \usepackage{booktabs} % For professional looking tables
@@ -161,7 +161,7 @@
 % *********************** Configure Draft Mode **********************************
 
 % Uncomment to disable figures in `draft'
-\setkeys{Gin}{draft=false}  % set draft to false to enable figures in `draft'
+\setkeys{Gin}{draft=true}  % set draft to false to enable figures in `draft'
 
 % These options are active only during the draft mode
 % Default text is "Draft"
@@ -228,7 +228,11 @@
 
 \newcolumntype{M}[1]{D{.}{.}{1.#1}}
 
+\usepackage{subfig}
+
 \usepackage{verbatim}
 \usepackage{bibentry}
 \usepackage{natbib}
 \nobibliography*
+
+

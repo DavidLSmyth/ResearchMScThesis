@@ -101,7 +101,7 @@ and
 \note{Would be good to discuss some of the challenges met while developing the simulation and how they were overcome}
 
 
-\subsection{Results Without Dynamic Elements}
+\subsection{Design Process Without Dynamic Elements}
 This process was carried out iteratively and the results of the developed world excluding the dynamic elements are discussed here. Most changes took place in the UE4 Editor\note{maybe cite}. The chronological development of the virtual world is shown in figure \ref{virutalEnvDevelopment}. The figures on the i$_{th}$ row corresponds to the i$_{th}$ distinct version of the physical layout of the virtual world. The first iteration has many flaws that were improved throughout the development process. The major problems were:
 \begin{itemize}
     \item Rendered images were of poor quality due to incorrect UV texture mappings %UV mapping is a technique used to "wrap" a 2D image texture onto a 3D mesh. 
@@ -114,6 +114,8 @@ Although a human may recognise the scene as a derailed train, it does not captur
 
 \note{Might be worth making the margins wider for table of images. Also might be worth recording images again with fixed exposure and orientations for consistency. Come back to this once talked about it with Michael and Frank. Different versions of environment listed at bottom of this file.}
 
+\pagebreak
+\note{Will ideally have all of these figures on a single page}
 \begin{figure}
 \label{fig:virutalEnvDevelopment}
 \centering
@@ -138,21 +140,86 @@ Although a human may recognise the scene as a derailed train, it does not captur
 \end{figure}
 \pagebreak
 
+
+
 \note{Might not be necessary to talk about all of these things}
-\subsubsection{Texture Blending}
+
+\subsubsection{Blueprint Visual Scripting System}
+UE4 uses a visual scripting system to provide a lot of functionality, known as Blueprints. Blueprints provide a node-based interface to create gameplay elements. In order to develop different aspects of a game, the system provides a visual approach to scripting, and many of the tools available in standard written scripting languages are available, such as typed variables, arrays, structs, loops, etc. Blueprints were used extensively in the subsequent sections, as well as C++ code, in order to develop the simulation.
+
+
+\subsubsection{Materials}
 \note{grass, rail tracks}
-In order to produce realistic textures, it is necessary to 
+
+%\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
+%\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/resized_HighresScreenshot00001.png}} \\
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.4\textwidth]{Chapters/SimulationEnv/Figs/BlendedMaterialsVSNotBlendedMaterials/PoorTextures.png}
+    \label{fig:PoorTextures}
+    \includegraphics[width=0.4\textwidth]{Chapters/SimulationEnv/Figs/BlendedMaterialsVSNotBlendedMaterials/HighQualityMaterial.png}
+    \label{fig:GoodTextures}
+    \caption{Contrast between initial and final materials used in simulation environment.}
+\end{wrapfigure}
+
+
+In order to produce realistic materials, it is necessary to blend and layer different textures. UE4 has highly sophisticated tools for modifying materials to achieve a high-fidelity output. Details of creating materials can be found in the 
+\href{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{UE4 Documentation}\footnote{\href {https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}}. The landscape in the first iteration of the virtual environment consisted of a single uniform texture, with no layering or blending. This is shown in figure \ref{fig:PoorTextures}. Subsequent versions used multiple layers and blending in order to create a higher-fidelity material. This is shown in figures \ref{fig:LayerBlendNode} and \ref{fig:LandscapeMaterialBlueprint}, where a Landscape Layer Blend node is used to combine individual textures to create the landscape material. An overview of materials in UE4 can be found here. \note{add link to material docs}
+
+\begin{figure}
+\centering
+\begin{tabular}{cc}
+\subfloat[Layers blended into Landscape Layer Blend Node]{\includegraphics[width=4cm]{Chapters/SimulationEnv/Figs/BlendedMaterialsVSNotBlendedMaterials/LayerBlend.PNG}}\label{fig:LayerBlendNode} &
+
+
+\subfloat[Blueprint used to create landscape material]{\includegraphics[width=4cm]{Chapters/SimulationEnv/Figs/BlendedMaterialsVSNotBlendedMaterials/LandscapeMaterial.PNG}}\label{fig:LandscapeMaterialBlueprint}
+\end{tabular}
+\caption{test}
+\end{figure}
+
 
 \subsubsection{Splines}
-\note{Rail and wall}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.4\textwidth]{Chapters/SimulationEnv/Figs/SplineVSNoSplineExamples/PerfectlyStraightRail.png}
+    \label{fig:StraightRail}
+    \includegraphics[width=0.4\textwidth]{Chapters/SimulationEnv/Figs/SplineVSNoSplineExamples/resized_SplineExample1.png}
+    \label{fig:SplinedRail}
+    \caption{Contrast between initial and final materials used in simulation environment.}
+    
+\end{wrapfigure}
+
+Uniformity tends to be rare in the real world; perfectly straight lines don't often occur naturally. For this reason UE4 offers tools to create splines, which can deform a terrain along it. Splines are typically used to model roads and paths, but the Landscape Spline system is very flexible and can be used to model many different phenomena. In the initial stages of the simulation environment, only a perfectly straight section of rail could sourced for use in the environment, as shown in figure \ref{fig:StraightRail}. The spline tool allowed for much more realistic construction of the section of rail and accompanying wall, as shown in figure \ref{fig:SplinedRail}. It was also used to create the road and the bridge section. \note{maybe provide link to docs}
+
+
 
 \subsubsection{Shadows}
 
-\subsubsection{Foliage Tools}
+\subsubsection{Foliage}
+Similar to the argument made in relation to splines, it is rare to have uniformly configured foliage in the real world. In order to address this, there exist foliage generation and editing tools in UE4 editor. Version 4.18 of the editor onwards contains the Procedural Foliage Tool \note{maybe add a link}, which is the most convenient way to add swathes of foliage to a scene. We opted to use the foliage painter tool, which allows the user to effectively paint foliage directly onto a landscape. It allows the user to specify a number of parameters to achieve the required density, scaling, etc. The results of applying foliage to the scene are visible in figures \ref{}, \ref{} and \ref{} respectively.
 \note{Non-uniform trees, grass, etc.}
+
+
 
 \subsubsection{Landscape Editing}
 \note{Discuss here how dirt track was created using}
+Creating a realistic landscape in UE4 serves a number of purposes. In order to allow the potential simulation of the operation of ground vehicles, it is necessary to model the terrain realistically so that difficulties that may be experienced in the real world, such as steep climbs or highly uneven surfaces, may be taken into account. UE4 provides a suite of landscaping tools that allows the user to create a highly variable landscape. The tools facilitate raising and flattening, smoothing, random noise and simulated erosion, as well as other more detailed modifications. These were used to create the railway embankment, the rutted path leading onto the rail tracks and the riverbank and riverbed, shown in figures \ref{}, \ref{} and \ref{} respectively.
+
+\begin{figure}
+\centering
+\begin{tabular}{ccc}
+\subfloat[Rutted Track]{\includegraphics[width=4.5cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/RuttedTrack.png}}\label{fig:RuttedTrack} &
+
+
+\subfloat[Rail embankment]{\includegraphics[width=4.5cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/RailwayEmbankment.png}}\label{fig:LandscapeMaterialBlueprint} &
+
+\subfloat[Riverbank]{\includegraphics[width=4.5cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/Bridge.png}}\label{fig:LandscapeMaterialBlueprint}
+
+\end{tabular}
+\caption{test}
+\end{figure}
 
 \subsubsection{Asset Sourcing}
 An asset can be described as a piece of content for an Unreal Engine project, which has been serialized to a file. Assets can be re-used and modified in the UE4 editor, but are usually created using external software. UE4 uses assets that come in the Filmbox (fbx) format, which is a proprietary file format owned by Autodesk. Conversion tools do exist from other common asset formats to fbx, but results can vary. Due to limited funding, time and experience, we decided to avoid creating assets from scratch but rather use assets that were free to use. Searching for free assets is a labor-intensive process, as it consisted of a number of steps:
@@ -167,7 +234,7 @@ An asset can be described as a piece of content for an Unreal Engine project, wh
     
     \item Once a potentially suitable asset had been identified based on it's description and preview, it was downloaded in the Filmbox (fbx) format if possible. Otherwise, it was downloaded in whatever format was available. 
     \item The asset was opened in Autodesk \note{add reference} and visually inspected for suitability. If the textures and geometry were not of a sufficient standard the processes was restarted.
-    \item If the asset was deemed suitable from the inspection in Autodesk, then it was exported in Filmbox fomat.
+    \item If the asset was deemed suitable from the inspection in Autodesk, then it was exported in Filmbox format.
     \item The asset was then imported into the UE4 editor. Problems often arose in scaling, incorrect texture mapping and one-sided materials applied to the wrong side of assets. These problems could sometimes be addressed; if not we had to restart the process.
 \end{enumerate}
 

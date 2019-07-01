@@ -19,6 +19,7 @@ The core components that the simulation of this scenario requires were identifie
     \item Simulated sensor readings from the aerial vehicles, including position, velocity, altitude, that depend on the state of the aerial vehicle in the environment. For example, if the aerial vehicle is close to a source of radiation, the simulated sensor reading should be high.
     \item Simulation software should have a permissive licence and should permit publications that include details of the software.
     \item The ability to run the simulations at an increased speed without corrupting the fidelity of the sensor/actuator functionality.
+    \item The ability to quickly change the configuration of the simulation.
 \end{itemize}
 \note{More can be added to this list.}
 
@@ -163,9 +164,9 @@ UE4 uses a visual scripting system to provide a lot of functionality, known as B
     \caption{Contrast between initial and final materials used in simulation environment.}
 \end{wrapfigure}
 
-
-In order to produce realistic materials, it is necessary to blend and layer different textures. UE4 has highly sophisticated tools for modifying materials to achieve a high-fidelity output. Details of creating materials can be found in the 
-\href{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{UE4 Documentation}\footnote{\href {https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}}. The landscape in the first iteration of the virtual environment consisted of a single uniform texture, with no layering or blending. This is shown in figure \ref{fig:PoorTextures}. Subsequent versions used multiple layers and blending in order to create a higher-fidelity material. This is shown in figures \ref{fig:LayerBlendNode} and \ref{fig:LandscapeMaterialBlueprint}, where a Landscape Layer Blend node is used to combine individual textures to create the landscape material. An overview of materials in UE4 can be found here. \note{add link to material docs}
+%https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html
+Materials are made up of a number of components in UE4, which specify aspects such as colour, opacity, roughness, specularity and emissive colours. In order to produce realistic materials, it is necessary to blend and layer different textures as well as identifying the correct parameters for surface normals and specularity, among the other features. UE4 has highly sophisticated tools for modifying materials to achieve a high-fidelity output. Details of creating materials can be found in the 
+\href{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{UE4 Documentation}\footnote{\href {https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}}. The landscape in the first iteration of the virtual environment consisted of a single uniform texture, with none of the parameters mentioned above properly specified. The result of this is shown in figure \ref{fig:PoorTextures}. Subsequent versions used multiple layers and blending in order to create a higher-fidelity material, with relevant parameters tuned. This is shown in figures \ref{fig:LayerBlendNode} and \ref{fig:LandscapeMaterialBlueprint}, where a Landscape Layer Blend node is used to combine individual textures to create the landscape material.
 
 \begin{figure}
 \centering
@@ -191,21 +192,27 @@ In order to produce realistic materials, it is necessary to blend and layer diff
     
 \end{wrapfigure}
 
-Uniformity tends to be rare in the real world; perfectly straight lines don't often occur naturally. For this reason UE4 offers tools to create splines, which can deform a terrain along it. Splines are typically used to model roads and paths, but the Landscape Spline system is very flexible and can be used to model many different phenomena. In the initial stages of the simulation environment, only a perfectly straight section of rail could sourced for use in the environment, as shown in figure \ref{fig:StraightRail}. The spline tool allowed for much more realistic construction of the section of rail and accompanying wall, as shown in figure \ref{fig:SplinedRail}. It was also used to create the road and the bridge section. \note{maybe provide link to docs}
+Uniformity tends to be rare in the real world; perfectly straight lines don't often occur naturally. For this reason UE4 offers tools to create splines, along which the terrain can be deformed. Splines are typically used to model roads and paths, but the Landscape Spline system is very flexible and can be used to model many different phenomena. In the initial stages of the simulation environment, only a perfectly straight section of rail could sourced for use in the environment, as shown in figure \ref{fig:StraightRail}. The spline tool allowed for much more realistic construction of the section of rail and accompanying wall, as shown in figure \ref{fig:SplinedRail}. It was also used to create the road and the bridge section. \note{maybe provide link to docs}
 
-
-
-\subsubsection{Shadows}
 
 \subsubsection{Foliage}
-Similar to the argument made in relation to splines, it is rare to have uniformly configured foliage in the real world. In order to address this, there exist foliage generation and editing tools in UE4 editor. Version 4.18 of the editor onwards contains the Procedural Foliage Tool \note{maybe add a link}, which is the most convenient way to add swathes of foliage to a scene. We opted to use the foliage painter tool, which allows the user to effectively paint foliage directly onto a landscape. It allows the user to specify a number of parameters to achieve the required density, scaling, etc. The results of applying foliage to the scene are visible in figures \ref{}, \ref{} and \ref{} respectively.
+Similar to the argument made in relation to splines, it is rare to have uniformly configured foliage in the real world. In order to address this, there exist foliage generation and editing tools in UE4 editor. Version 4.18 of the editor onwards contains the Procedural Foliage Tool \note{maybe add a link}, which is the most convenient way to add swathes of foliage to a scene. Since we were using other content dependent on UE 4.16, we opted to use the foliage painter tool, which allows the user to effectively paint foliage directly onto a landscape. It allows the user to specify a number of parameters to achieve the required density, scaling and other relevant features. The results of applying foliage to the scene are visible in figures \ref{}, \ref{} and \ref{} respectively.
 \note{Non-uniform trees, grass, etc.}
 
+\begin{figure}
+\centering
+\begin{tabular}{ccc} 
+\subfloat[Layers blended into Landscape Layer Blend Node]{\includegraphics[width=4cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage2.png}}\label{fig:LayerBlendNode} &
 
+\subfloat[Blueprint used to create landscape material]{\includegraphics[width=4cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage5.png}}\label{fig:LandscapeMaterialBlueprint} &
+\subfloat[Blueprint used to create landscape material]{\includegraphics[width=4cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage6.png}}\label{fig:LandscapeMaterialBlueprint}
+\end{tabular}
+\caption{test}
+\end{figure}
 
 \subsubsection{Landscape Editing}
 \note{Discuss here how dirt track was created using}
-Creating a realistic landscape in UE4 serves a number of purposes. In order to allow the potential simulation of the operation of ground vehicles, it is necessary to model the terrain realistically so that difficulties that may be experienced in the real world, such as steep climbs or highly uneven surfaces, may be taken into account. UE4 provides a suite of landscaping tools that allows the user to create a highly variable landscape. The tools facilitate raising and flattening, smoothing, random noise and simulated erosion, as well as other more detailed modifications. These were used to create the railway embankment, the rutted path leading onto the rail tracks and the riverbank and riverbed, shown in figures \ref{}, \ref{} and \ref{} respectively.
+Creating a realistic landscape in UE4 serves a number of purposes. In order to allow the potential simulation of the operation of ground vehicles, it is necessary to model the terrain realistically so that difficulties that may be experienced in the real world, such as steep climbs or highly uneven surfaces, may be taken into account. UE4 provides a suite of landscaping tools that allows the user to create a highly variable landscape. The tools facilitate raising and flattening, smoothing, random noise and simulated erosion, as well as allowing for other more detailed modifications. These were used to create the railway embankment, the rutted path leading onto the rail tracks and the riverbank and riverbed, shown in figures \ref{}, \ref{} and \ref{} respectively.
 
 \begin{figure}
 \centering
@@ -222,7 +229,7 @@ Creating a realistic landscape in UE4 serves a number of purposes. In order to a
 \end{figure}
 
 \subsubsection{Asset Sourcing}
-An asset can be described as a piece of content for an Unreal Engine project, which has been serialized to a file. Assets can be re-used and modified in the UE4 editor, but are usually created using external software. UE4 uses assets that come in the Filmbox (fbx) format, which is a proprietary file format owned by Autodesk. Conversion tools do exist from other common asset formats to fbx, but results can vary. Due to limited funding, time and experience, we decided to avoid creating assets from scratch but rather use assets that were free to use. Searching for free assets is a labor-intensive process, as it consisted of a number of steps:
+An asset can be described as a piece of content for an Unreal Engine project, which has been serialized to a file. Assets can be re-used and modified in the UE4 editor, but are usually created using external software. UE4 uses assets that come in the Filmbox (.fbx) format, which is a proprietary file format owned by Autodesk\note{Do I need to reference this?}. Conversion tools do exist from other common asset file formats to fbx, but results can vary. Due to limited funding, time and experience, we decided to avoid creating assets from scratch but rather used assets that were free to use. Searching for free assets is a labor-intensive process, as it consisted of a number of steps:
 \begin{enumerate}
     \item First, identify possible candidates for a particular type of asset (e.g. a train) based on a search of asset stores that offer free assets. We mainly used \href{https://www.cgtrader.com/}{CGTrader}\footnote{\href {https://www.cgtrader.com/}{https://www.cgtrader.com/}} ,
     
@@ -238,15 +245,13 @@ An asset can be described as a piece of content for an Unreal Engine project, wh
     \item The asset was then imported into the UE4 editor. Problems often arose in scaling, incorrect texture mapping and one-sided materials applied to the wrong side of assets. These problems could sometimes be addressed; if not we had to restart the process.
 \end{enumerate}
 
-
+\subsubsection{Shadows}
+\note{This might not be worth talking about. almost Everything is provided by default}
 
 
 %Talk about how well static world matches specification, how well rendered images perform for training some object detection etc.
 %Also talk about how the environment was packaged and open-sourced with permissive licence for general use
 
-
-\subsection{Releasing the Virtual World}
-\note{Discuss the challenges faced in compiling the game to an executable}
 
 
 % Not sure of exact ordering here

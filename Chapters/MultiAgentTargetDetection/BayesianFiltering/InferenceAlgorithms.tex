@@ -1,63 +1,107 @@
+\note{Make sure it's clear whether using random variables or not}
+\note{Might need to make clear Markov assumptions }
 As discussed, HMMs and DBNs are useful tools for modelling complex random dynamic processes. Typically, models are used to provide some kind of inference about a process, to gain insight into its inner workings. By inference, we mean calculating the probability distributions over variables of interest. Some algorithms will be outlined here that will demonstrate how to calculate both exact and approximate inferences, using general structures for HMMs and DBNs. \par
 
 First HMMs are discussed, as their representation more rigid, meaning that it is easier to exploit their structure generally to perform inference. The first and arguably most useful quantity that we want to compute is 
-\[P(X_t | e_{1:t})\]
-that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. This is the \textit{filtering} problem, mentioned in section \ref{Chapter:HMM}. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because .... The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The well-known forward algorithm for HMMs is shown in algorithm \ref{algo:bayes_filter_observations_only}. 
+\[P(X_t | e_1, e_2, ..., e_t) = P(X_t | e_{1:t})\]
+that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. The notation $e_{1:t}$ denotes the joint distribution of $e_1, e_2, ..., e_t$ This is the \textit{filtering} problem, mentioned in section \ref{Chapter:HMM}. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because .... \note{Explain this carefully}.The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The well-known forward algorithm for HMMs is shown in algorithm \ref{algo:bayes_filter_observations_only}. The derivation is useful to follow as an exercise:
+\subsubsection{HMM Filtering Algorithm Derivation}
+Two well-known probability identities are used in the derivation: 
+\note{Fix the formatting here}
+\begin{center}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\end{center}
+%quad adds space
+\[(a) \quad p(A | B, C) = \frac{p(B | A, C) p(A | C)}{p(B | C)} \quad \text{and} \quad (b) \quad p(A | B) = \int\limits_{C}P(A | B, C) P(C | B)dC\]
 
-%\begin{algorithm}
-%\SetAlgoLined
-%\KwResult{Write here the result }
-% initialization\;
-% \While{While condition}{
-%  instructions\;
-%  \eIf{condition}{
-%   instructions1\;
-%   instructions2\;
-%   }{
-%   instructions3\;
-%  }
-% }
- 
-%\end{algorithm}
+\begin{center}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\end{center}
 
+\[p(x_t | e_{1:t}) = p(x_t | e_{1:t-1}, e_t) \]
+
+\[\text{applying (a) and letting} \quad \eta = \frac{1}{p(e_t | e_{1:t-1})} \quad= \quad \eta p(e_t | e_{t-1}, X_t)p(X_t|e_{1:t-1})\]
+
+\[\quad \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)p(x_t|e_{1:t-1})\]
+
+\[\text{applying (b)} \quad =  \quad \eta p(e_t | X_t)\int_{x_{t-1}}p(x_t|e_{1:t-1}, x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1}\]
+
+\[\text{by the Markov property} \quad = \quad \eta p(e_t | x_t)\int_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1}\]
+
+Note that $\eta$ is a normalizing constant that ensures that the probability distribution integrates to 1, and that the probabilities that need to be calculated can be done so from the parameters specified in the HMM; namely $p(e_t | X_t)$, specified by the sensor model, and $p(X_t | x_{t-1})$, specified by the transition model.
 \begin{algorithm}
-\caption{Generating the RAV Agent Routes}
-\label{alg:bayes_filter_observations_only}
+
 \begin{algorithmic}[1]
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
-\REQUIRE Array of agents, Set of coordinates, Cost function which takes two GPS coordinates and outputs a real number representing the cost of travelling from one to the other. 
-\ENSURE  A key-value container of agents and their corresponding routes.\\
+%Input
+\REQUIRE $\newline P(x_{t-1} | e_{1:t-1})=bel(x_{t-1}), \text{ the belief distribution as far as the previous timestep}
+\newline e_t, \text{ the most recent observation}
+\newline hmm, \text{(a Hidden Markov Model specifying the transition and observation probabilities}$
+%Output
+\ENSURE  $\newline P(X_{t} | e_{1:t}) = bel(X_{t})$
+
 \hfill\pagebreak
 
-\noindent\textbf{\textit{\noindent Initialization} :}\\
-agentPaths$\leftarrow$empty key-value container\\
-visitedPoints$\leftarrow$empty array
-\\
-For each agent in agents:\\
-\quad Initialise path of agent as empty array in agentPaths
-currentAgentIndex$\leftarrow$0\\
-currentAgent$\leftarrow$agents.get(currentAgentIndex)\\
-\hfill\pagebreak
+\FOR{all $x_t$}
+\STATE $\overline{bel}(x_t) = \int p(X_t | x_{t-1}) p(X_{t-1} | e_{1:t-1}) d x_{t-1}$
+\STATE $bel(x_t) = p(e_t | x_t) \overline{bel}(x_t)$
+\ENDFOR
+\STATE $ \eta = 1 / \int_{x_t}{bel(x_t)}dx_t$
+ \FOR{all $x_t$ do:}
+\STATE $bel(x_t) = \eta{bel}(x_t)$
+\ENDFOR  
+    
+%\WHILE {pointsToVisit is not empty}
 
-\WHILE {pointsToVisit is not empty}
+%\STATE agentPosition $\leftarrow$ last value in agentPaths.get(agent)
 
-\STATE agentPosition $\leftarrow$ last value in agentPaths.get(agent)
+%\STATE P$\leftarrow$\(\displaystyle \min_{p \in pointsToVisit}\)cost(agentPosition, p)
 
-\STATE P$\leftarrow$\(\displaystyle \min_{p \in pointsToVisit}\)cost(agentPosition, p)
-
-\STATE Update currentAgent value in AgentPaths to include P
-\STATE Add P to visitedPoints.
-\STATE Remove P from pointsToVisit.
-\STATE currentAgentIndex$\leftarrow$(currentAgentIndex+1) $\mathbf{mod}$$\vert$List of Agents$\vert$
-\STATE currentAgent$\leftarrow$agents.get(currentAgentIndex)
+%\STATE Update currentAgent value in AgentPaths to include P
+%\STATE Add P to visitedPoints.
+%\STATE Remove P from pointsToVisit.
+%\STATE currentAgentIndex$\leftarrow$(currentAgentIndex+1) $\mathbf{mod}$$\vert$List of Agents$\vert$
+%\STATE currentAgent$\leftarrow$agents.get(currentAgentIndex)
 
 
-\ENDWHILE
-\RETURN agentRouteMap
+%\ENDWHILE
+\RETURN $bel(X_t)$
 \end{algorithmic} 
+\caption{Forward Algorithm for HMMs}
+\label{alg:bayes_filter_observations_only}
 \end{algorithm}
 
 \note{Don't forget to mention: Sufficient statistics, forward algorithm}
 
+Algorithm \ref{alg:bayes_filter_observations_only} uses integrals to account for the fact that the distribution being used may be continuous. The work done in this thesis only uses discrete distributions, and so summations are used instead of integrals for the subsequent discussion. A consequence of using discrete distributions is that it is possible to formulate the forward algorithm using vector and matrix notation. As outlined in section \ref{Chapter:HMM}, the transition model for a HMM can be written down in matrix form, as can the observation model. This allows for a highly compact notation: denoting $p(x_t | e_{1:t})$ as $f_{1:t}$, we can write $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, where $f_{1:t}$ contains the vector of values of $p(x_t | e_{1:t})$ for every possible $x_t$ \cite[p.~579]{AIAMA}. Note that the observation model, $O_t$ is time dependent, as opposed to the transition model, which is assumed to be stationary.\par
 
+Some insight can be gained from studying Algorithm \ref{alg:bayes_filter_observations_only}. There are three main steps to this algorithm, and the intuition behind them is explained: 
+\note{These are highly verbose, edit to make less wordy}
+\begin{enumerate}
+    
+    \item The first step is often referred to as the prediction step:
+    \begin{center}
+    $\overline{bel}(x_t) = \sum_{x_t} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) d x_{t-1}$
+    \end{center}
+    This step calculates the belief value for a given state $x_t$, by marginalizing over all possible hidden states ($x_{t-1}$) that could have preceded the current one ($x_t$). This is highly intuitive; the probability of being in state $x_t$ should depend on the product of our most recent belief of being in state $x_{t-1}$, given by $p(x_{t-1} | e_{1:t-1})$ and the probability of transitioning from that state to state $x_{t}$, for all previous possible states that we could have been in. 
+    $\overline{bel}(x_t)$ effectively projects our beliefs over states in the current time step to the next time step by using the transition probabilities specified in the HMM.
+    
+    \item The second step is often referred to as the correction, or measurement update step: 
+    \begin{center}
+    $bel(x_t) = p(e_t | x_t) \overline{bel}(x_t)$ 
+    \end{center}
+    This step takes the projected belief in step 1 and multiplies it by the probability of observing the data that we did in the given hidden state, $x_t$. This can be thought of as a correction because the use of the measurement data narrows down the possible states that the system could be in. 
+    \note{Need to re-word this to make more concise}
+    For example, if a transition probability is highly unlikely from state x to state y, and there is a low probability that the system was previously in state x, a high probability of observing the observed sensor reading given state y can still result in a high posterior probability of the system being in state y given new evidence.
+    
+    \item The final step is to ensure that the distribution sums to 1. This is done by multiplying by a normalizing constant, $\eta$.
+    
+    
+\end{enumerate}
+
+
+
+
+
+\subsubsection{Filtering Algorithm for DBNs}

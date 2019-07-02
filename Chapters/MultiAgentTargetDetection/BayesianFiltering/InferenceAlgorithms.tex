@@ -1,0 +1,63 @@
+As discussed, HMMs and DBNs are useful tools for modelling complex random dynamic processes. Typically, models are used to provide some kind of inference about a process, to gain insight into its inner workings. By inference, we mean calculating the probability distributions over variables of interest. Some algorithms will be outlined here that will demonstrate how to calculate both exact and approximate inferences, using general structures for HMMs and DBNs. \par
+
+First HMMs are discussed, as their representation more rigid, meaning that it is easier to exploit their structure generally to perform inference. The first and arguably most useful quantity that we want to compute is 
+\[P(X_t | e_{1:t})\]
+that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. This is the \textit{filtering} problem, mentioned in section \ref{Chapter:HMM}. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because .... The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The well-known forward algorithm for HMMs is shown in algorithm \ref{algo:bayes_filter_observations_only}. 
+
+%\begin{algorithm}
+%\SetAlgoLined
+%\KwResult{Write here the result }
+% initialization\;
+% \While{While condition}{
+%  instructions\;
+%  \eIf{condition}{
+%   instructions1\;
+%   instructions2\;
+%   }{
+%   instructions3\;
+%  }
+% }
+ 
+%\end{algorithm}
+
+\begin{algorithm}
+\caption{Generating the RAV Agent Routes}
+\label{alg:bayes_filter_observations_only}
+\begin{algorithmic}[1]
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\REQUIRE Array of agents, Set of coordinates, Cost function which takes two GPS coordinates and outputs a real number representing the cost of travelling from one to the other. 
+\ENSURE  A key-value container of agents and their corresponding routes.\\
+\hfill\pagebreak
+
+\noindent\textbf{\textit{\noindent Initialization} :}\\
+agentPaths$\leftarrow$empty key-value container\\
+visitedPoints$\leftarrow$empty array
+\\
+For each agent in agents:\\
+\quad Initialise path of agent as empty array in agentPaths
+currentAgentIndex$\leftarrow$0\\
+currentAgent$\leftarrow$agents.get(currentAgentIndex)\\
+\hfill\pagebreak
+
+\WHILE {pointsToVisit is not empty}
+
+\STATE agentPosition $\leftarrow$ last value in agentPaths.get(agent)
+
+\STATE P$\leftarrow$\(\displaystyle \min_{p \in pointsToVisit}\)cost(agentPosition, p)
+
+\STATE Update currentAgent value in AgentPaths to include P
+\STATE Add P to visitedPoints.
+\STATE Remove P from pointsToVisit.
+\STATE currentAgentIndex$\leftarrow$(currentAgentIndex+1) $\mathbf{mod}$$\vert$List of Agents$\vert$
+\STATE currentAgent$\leftarrow$agents.get(currentAgentIndex)
+
+
+\ENDWHILE
+\RETURN agentRouteMap
+\end{algorithmic} 
+\end{algorithm}
+
+\note{Don't forget to mention: Sufficient statistics, forward algorithm}
+
+

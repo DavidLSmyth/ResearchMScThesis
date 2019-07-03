@@ -1,11 +1,15 @@
+\nomenclature[]{MLE}{Maximum Likelihood Estimate}
 \note{Make sure it's clear whether using random variables or not}
 \note{Might need to make clear Markov assumptions }
 As discussed, HMMs and DBNs are useful tools for modelling complex random dynamic processes. Typically, models are used to provide some kind of inference about a process, to gain insight into its inner workings. By inference, we mean calculating the probability distributions over variables of interest. Some algorithms will be outlined here that will demonstrate how to calculate both exact and approximate inferences, using general structures for HMMs and DBNs. \par
 
-First HMMs are discussed, as their representation more rigid, meaning that it is easier to exploit their structure generally to perform inference. The first and arguably most useful quantity that we want to compute is 
+First, inference algorithms commonly used with HMMs are discussed, as their representation is more rigid, meaning that it is easier to exploit their structure generally to perform inference. As previously stated, HMMs and DBNs are routinely used to model systems that have state variables that cannot be directly observed. In most cases, we are interested in inferring what the state of the system might be, given the observed evidence variables received. This is the first and arguably the most useful inference challenge that we inspect.
+
+The actual quantity that we want to compute is 
 \[P(X_t | e_1, e_2, ..., e_t) = P(X_t | e_{1:t})\]
-that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. The notation $e_{1:t}$ denotes the joint distribution of $e_1, e_2, ..., e_t$ This is the \textit{filtering} problem, mentioned in section \ref{Chapter:HMM}. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because .... \note{Explain this carefully}.The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The well-known forward algorithm for HMMs is shown in algorithm \ref{algo:bayes_filter_observations_only}. The derivation is useful to follow as an exercise:
+that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. The notation $e_{1:t}$ denotes the joint distribution of $e_1, e_2, ..., e_t$ This is the \textit{filtering} problem, mentioned in section \ref{Chapter:HMM}. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because .... \note{Explain this carefully}.The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The well-known forward algorithm for HMMs is shown in algorithm \ref{alg:bayes_filter_observations_only}. The derivation is useful to follow as an exercise:
 \subsubsection{HMM Filtering Algorithm Derivation}
+\note{Might be better to put this in an appendix.}
 Two well-known probability identities are used in the derivation: 
 \note{Fix the formatting here}
 \begin{center}
@@ -18,18 +22,23 @@ Two well-known probability identities are used in the derivation:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \end{center}
 
-\[p(x_t | e_{1:t}) = p(x_t | e_{1:t-1}, e_t) \]
+\begin{enumerate}
+\item {\hfil $ p(x_t | e_{1:t}) = p(x_t | e_{1:t-1}, e_t) $ }
 
-\[\text{applying (a) and letting} \quad \eta = \frac{1}{p(e_t | e_{1:t-1})} \quad= \quad \eta p(e_t | e_{t-1}, X_t)p(X_t|e_{1:t-1})\]
+\item {\hfil $ \text{applying (a) and letting} \quad \eta = \frac{1}{p(e_t | e_{1:t-1})} \quad = \quad \eta p(e_t | e_{1:t-1}, x_t)p(x_t|e_{1:t-1}) $ }
 
-\[\quad \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)p(x_t|e_{1:t-1})\]
+\item {\hfil $ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)p(x_t|e_{1:t-1})$}
 
-\[\text{applying (b)} \quad =  \quad \eta p(e_t | X_t)\int_{x_{t-1}}p(x_t|e_{1:t-1}, x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1}\]
+\item {\hfil $\text{applying (b)} \quad =  \quad \eta p(e_t | X_t)\int_{x_{t-1}}p(x_t|e_{1:t-1}, x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1}$}
 
-\[\text{by the Markov property} \quad = \quad \eta p(e_t | x_t)\int_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1}\]
+\item {\hfil  $ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)\int_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1} $}
 
+\end{enumerate}
 Note that $\eta$ is a normalizing constant that ensures that the probability distribution integrates to 1, and that the probabilities that need to be calculated can be done so from the parameters specified in the HMM; namely $p(e_t | X_t)$, specified by the sensor model, and $p(X_t | x_{t-1})$, specified by the transition model.
-\begin{algorithm}
+
+\begin{algorithm}{}
+\caption{Forward Algorithm for HMMs}
+\label{alg:bayes_filter_observations_only}
 
 \begin{algorithmic}[1]
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
@@ -68,8 +77,6 @@ Note that $\eta$ is a normalizing constant that ensures that the probability dis
 %\ENDWHILE
 \RETURN $bel(X_t)$
 \end{algorithmic} 
-\caption{Forward Algorithm for HMMs}
-\label{alg:bayes_filter_observations_only}
 \end{algorithm}
 
 \note{Don't forget to mention: Sufficient statistics, forward algorithm}
@@ -82,26 +89,115 @@ Some insight can be gained from studying Algorithm \ref{alg:bayes_filter_observa
     
     \item The first step is often referred to as the prediction step:
     \begin{center}
-    $\overline{bel}(x_t) = \sum_{x_t} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) d x_{t-1}$
+    $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) d x_{t-1}$
     \end{center}
-    This step calculates the belief value for a given state $x_t$, by marginalizing over all possible hidden states ($x_{t-1}$) that could have preceded the current one ($x_t$). This is highly intuitive; the probability of being in state $x_t$ should depend on the product of our most recent belief of being in state $x_{t-1}$, given by $p(x_{t-1} | e_{1:t-1})$ and the probability of transitioning from that state to state $x_{t}$, for all previous possible states that we could have been in. 
-    $\overline{bel}(x_t)$ effectively projects our beliefs over states in the current time step to the next time step by using the transition probabilities specified in the HMM.
+
+    This step carries out the first part of the calculation of the belief value for a given state $x_t$, by marginalizing over all possible hidden states ($x_{t-1}$) that could have preceded the current one ($x_t$). This is highly intuitive; the probability of being in state $x_t$ should depend on the probability of transitioning from all possible previous states to $x_t$. 
+    \note{this sentence doesn't seem necessary}
+    Think "\textit{the probability that I am in location x is the sum of probabilities of starting at all other possible locations and subsequently ending up in location x, weighted against my belief that I began in each other possible location}".
     
-    \item The second step is often referred to as the correction, or measurement update step: 
+    %product of our most recent belief of being in state $x_{t-1}$, given by $p(x_{t-1} | e_{1:t-1})$ and the probability of transitioning from that state to state $x_{t}$, for all previous possible states that we could have been in. 
+    $\overline{bel}(x_t)$ effectively projects our current belief to the next time step by using the transition probabilities specified in the HMM.
+    
+    \item The second step is often referred to as the correction step, or the measurement update step: 
     \begin{center}
     $bel(x_t) = p(e_t | x_t) \overline{bel}(x_t)$ 
     \end{center}
     This step takes the projected belief in step 1 and multiplies it by the probability of observing the data that we did in the given hidden state, $x_t$. This can be thought of as a correction because the use of the measurement data narrows down the possible states that the system could be in. 
     \note{Need to re-word this to make more concise}
-    For example, if a transition probability is highly unlikely from state x to state y, and there is a low probability that the system was previously in state x, a high probability of observing the observed sensor reading given state y can still result in a high posterior probability of the system being in state y given new evidence.
+    For example, if the value of a transition probability from state x to state y is low, and there is a low probability that the system was previously in state x, a high probability of observing the observed sensor reading given state y can still result in a high posterior probability of the system being in state y given the new evidence.
     
     \item The final step is to ensure that the distribution sums to 1. This is done by multiplying by a normalizing constant, $\eta$.
     
     
 \end{enumerate}
+It is also worth noting that algorithm \ref{alg:bayes_filter_observations_only} is recursive, meaning that updates can be performed online. This means that an agent can iteratively update its estimated state (or belief) as new percepts are recorded. Also note that an initial distribution of the estimated state must be provided to this algorithm before updated can be performed. The complexity of the forward algorithm is $\theta (nm^2)$, where m is the size of the joint distribution of the hidden variables, x, and n is the number of timesteps that have occurred. This is clear to see when viewing the update as the matrix-vector multiplication $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, as the size of T is $m^2$.
+
+
+
+
+
+
+\subsubsection{Evidence Likelihood Algorithm Using a HMM}
+\note{Will talk about this briefly for SPRT}
+The second useful quantity that we would like to calculate is the probability of observing the evidence that we did, often referred to the likelihood function of the data, as identified in section \ref{Chapter:HMM}. In simpler terms, this means we calculate the probability of observing the data, given a fixed parameterised model of the data (the HMM). This value is useful as it can reveal insights into whether one model is more likely than another model, with applications including \textbf{M}aximum \textbf{a} \textbf{P}osteriori (MAP) parameter estimates and hypothesis testing. We would like to compute the value of
+\[P(e_1, e_2, ..., e_t) = P(e_{1:t})\]
+given the fixed set of parameters provided by the HMM. A brief outline of the derivation provided in ... .\note{Put the derivation in an appendix} The derivation clearly shows that the algorithm for calculating likelihoods is exactly the same as forward algorithm, with the replacement of  $p(x_{t-1}|e_{1:t-1})$ with $p(x_t-1, e_{1:t-1})$ and one final summation.
+
+
+\subsubsection{HMM Evidence Likelihood Algorithm Derivation}\label{section:EvidenceLikelihood}
+
+Analagous to ..., two well-known probability identities are used in the derivation: 
+\begin{center}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\end{center}
+%quad adds space
+\[(a) \quad p(A, B, C) = p(A | B, C) p(B, C) \quad \text{and} \quad (b) \quad p(A, B) = \sum_{C}{p(A | B, C)p(B, C)}\]
+
+\begin{center}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+\end{center}
+
+
+\begin{enumerate}
+
+\item {\hfil $p(e_{1:t}) = \sum_{x_t}p(e_{1:t}, x_t) \quad = \quad \sum_{x_t}p({e_{1:t-1}, e_t, x_t}) $
+}
+\item {\hfil $\text{applying (a) } \quad= \quad
+\sum_{x_t}{p(e_t | e_{1:t-1}, x_t)p(x_t, e_{1:t-1})}$
+}
+\item {\hfil $\quad \text{by the Markov property} 
+\quad = \quad \sum_{x_t}p(e_t | x_t)p(x_t, e_{1:t-1})$
+}
+
+\item {\hfil $\text{applying (b)} \quad =  \quad
+\sum_{x_t}p(e_t | x_t) \sum_{x_{t-1}}p(x_t|e_{1:t-1}, x_{t-1}) p(x_{t-1},e_{1:t-1})$
+}
+
+\item {\hfil $\text{by the Markov property} \quad = \quad 
+\sum_{x_t}{p(e_t | x_t)\sum_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1},e_{1:t-1})}$
+}
+
+\end{enumerate}
+
+%No point in writing up likelihood algorithm as it's very similar to forward algorithm.
+
+\subsubsection{HMM Parameter Learning Using Expectation Maximization}
+\note{Can talk about this briefly for battery model}
+Since a HMM is a parameterised model of a stochastic process, a natural question to ask is whether it is possible to determine a \textit{"best"} set of parameters to describe the process, by using observations of the process. This is a more complex version of the well-known process of finding the parameters that maximize the likelihood function of fully observable data, known as the \textbf{M}aximum \textbf{L}ikelihood \textbf{E}stimate (MLE). Finding the most likely set of parameters which provided the observed values can be described mathematically as the value of \note{fix argmax notation}$\argmax_{\lambda} P(E_{1:t} | \lambda)$. Note that this is a fundamentally different problem to that discussed in the preceding section; here we do not assume a fixed set of parameters for the HMM ($\lambda$).
+
+This is a well-studied problem for HMMs and the solution is given by the \textbf{E}xpectation \textbf{M}aximisation (EM) algorithm. A quick outline to the solution is provided here, and the algorithm is provided in (give appendix location). \par
+The reason why the standard methods for finding the MLE for a parameterised model do not work with HMMs is due to the fact that there is no way to directly express the quantity  $P(E_{1:t} | \lambda)$ directly. This can be seen in the derivation of the evidence likelihood in <reference whichever appendix it ends up in>. Instead, it is necessary to marginalize over states: $ P(e_{1:t} | \lambda) = \sum_{x_t}{p(x_t, e_{e:t} | \lambda)}$. The standard approach to finding the parameters that maximize a model is to take a log transform of the likelihood function, which preserves the solution but turns the problem into one of finding the parameters that maximize a sum rather than a product. Using standard calculus, this can usually be done quite easily. The issue with HMMs is that when a logarithmic transformation is applied to the likelihood function, the summation sign remains within the log function, with no straightforward way to 
+
+is to avoid attempting to find the parameters that maximize this directly, but rather to take a log transformation in order to deal
+
+challenge faced while attempting to estimate the most likely parameters for a HMM is that there is 
+
+As can be seen in the derivation of the evidence \ref{section:EvidenceLikelihood}, we cannot evaluate $ P(E_{1:t} | \lambda)$ directly, but need to marginalize over hidden state:  $P(E_{1:t} | \lambda) = \sum)$
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 \subsubsection{Filtering Algorithm for DBNs}
+\note{Extend HMM to add control variable}
+
+\subsubsection{Discrete Bayes Filter}
+\note{This is what is used in the work that I did, so it is outlined}
+
+\subsubsection{Approximate State Estimation Algorithms}
+\note{Thought about using Particle filter to avoid the dimensionality problem when attempting to maintain estimated state}.
+
+\note{Not sure if it's worth filling out this section further, since this gives a lot of the background for the subsequent discussion}

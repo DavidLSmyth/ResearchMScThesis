@@ -8,7 +8,8 @@ First, inference algorithms commonly used with HMMs are discussed, as their repr
 The actual quantity that we want to compute is 
 \[P(X_t | e_1, e_2, ..., e_t) = P(X_t | e_{1:t})\]
 that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. The notation $e_{1:t}$ denotes the joint distribution of $e_1, e_2, ..., e_t$ This is the \textit{filtering} problem, mentioned in section \ref{Chapter:HMM}. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because .... \note{Explain this carefully}.The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The well-known forward algorithm for HMMs is shown in algorithm \ref{alg:bayes_filter_observations_only}. The derivation is useful to follow as an exercise:
-\subsubsection{HMM Filtering Algorithm Derivation}
+\subsubsection{HMM Filtering Algorithm Derivation} 
+\label{section:HMMFiltering}
 \note{Might be better to put this in an appendix.}
 Two well-known probability identities are used in the derivation: 
 \note{Fix the formatting here}
@@ -166,14 +167,13 @@ Analagous to ..., two well-known probability identities are used in the derivati
 \note{Can talk about this briefly for battery model}
 Since a HMM is a parameterised model of a stochastic process, a natural question to ask is whether it is possible to determine a \textit{"best"} set of parameters to describe the process, by using observations of the process. This is a more complex version of the well-known process of finding the parameters that maximize the likelihood function of fully observable data, known as the \textbf{M}aximum \textbf{L}ikelihood \textbf{E}stimate (MLE). Finding the most likely set of parameters which provided the observed values can be described mathematically as the value of \note{fix argmax notation}$\argmax_{\lambda} P(E_{1:t} | \lambda)$. Note that this is a fundamentally different problem to that discussed in the preceding section; here we do not assume a fixed set of parameters for the HMM ($\lambda$).
 
-This is a well-studied problem for HMMs and the solution is given by the \textbf{E}xpectation \textbf{M}aximisation (EM) algorithm. A quick outline to the solution is provided here, and the algorithm is provided in (give appendix location). \par
-The reason why the standard methods for finding the MLE for a parameterised model do not work with HMMs is due to the fact that there is no way to directly express the quantity  $P(E_{1:t} | \lambda)$ directly. This can be seen in the derivation of the evidence likelihood in <reference whichever appendix it ends up in>. Instead, it is necessary to marginalize over states: $ P(e_{1:t} | \lambda) = \sum_{x_t}{p(x_t, e_{e:t} | \lambda)}$. The standard approach to finding the parameters that maximize a model is to take a log transform of the likelihood function, which preserves the solution but turns the problem into one of finding the parameters that maximize a sum rather than a product. Using standard calculus, this can usually be done quite easily. The issue with HMMs is that when a logarithmic transformation is applied to the likelihood function, the summation sign remains within the log function, with no straightforward way to 
+This is a well-studied problem for HMMs and the solution is given by the \textbf{E}xpectation \textbf{M}aximisation (EM) algorithm, proposed by \citeauthor{Dempster1977MaximumAlgorithm}. This algorithm is reasonably complex and highly detailed overviews can be found in many texts that deal with parameter estimation for statistical models. A quick outline of how the algorithm works is provided here.\par
 
-is to avoid attempting to find the parameters that maximize this directly, but rather to take a log transformation in order to deal
 
-challenge faced while attempting to estimate the most likely parameters for a HMM is that there is 
+The reason why the standard methods for finding the MLE for a parameterised model do not work with HMMs is due to the fact that there is no way to directly express the quantity  $P(E_{1:t} | \lambda)$ directly. This can be seen in the derivation of the evidence likelihood in <reference whichever appendix it ends up in>. Instead, it is necessary to marginalize over states: $ P(e_{1:t} | \lambda) = \sum_{x_t}{p(x_t, e_{e:t} | \lambda)}$. The standard approach to finding the parameters that maximize a model is to take a log transform of the likelihood function, which preserves the solution but turns the problem into one of finding the parameters that maximize a sum rather than a product. Using standard methods of calculus, this can usually be done easily. The issue with HMMs is that when a logarithmic transformation is applied to the likelihood function, the summation sign remains within the log function, which means finding the maximum is still a difficult problem. The EM algorithm, taking the approach of many iterative techniques, relaxes the constraints on the problem in order to find a lower bound of the log-likelihood and then iteratively improves this lower bound with increasing likelihood values. 
 
-As can be seen in the derivation of the evidence \ref{section:EvidenceLikelihood}, we cannot evaluate $ P(E_{1:t} | \lambda)$ directly, but need to marginalize over hidden state:  $P(E_{1:t} | \lambda) = \sum)$
+
+The Baum-Welch algorithm is a special case of the EM algorithm and is frequently used to solve the problem of estimating the parameters of a HMM. The algorithm is described fully in appendix <reference appendix>.
 
 
 
@@ -193,11 +193,31 @@ As can be seen in the derivation of the evidence \ref{section:EvidenceLikelihood
 
 \subsubsection{Filtering Algorithm for DBNs}
 \note{Extend HMM to add control variable}
+\begin{wrapfigure}{r}{0.65\linewidth}
+    \centering
+    \includegraphics[width = 0.65\linewidth]{Chapters/MultiAgentTargetDetection/BayesianFiltering/Figs/HMMs/HMMWithControl.png}
+    \caption{A DBN with Hidden State variables (grey), Observation variables (orange) and Control variables (green).}
+    \label{fig:HMMWithControlVariablesExample}
+\end{wrapfigure}
+The forward algorithm for \textit{state estimation}, or \textit{filtering} was presented in section \ref{section:HMMFiltering}. A slightly modified version of this algorithm is now described, which is very commonly used in stochastic systems that can be influenced by actions that an agent may take. Such systems have \textit{control variables} as well as hidden state variables and observation variables. These control variables (variables which represent the actions that an agent may perform) have an influence on the transition probabilities between states. The graphical model in figure \ref{fig:HMMWithControlVariablesExample} describes the basic case. The arrows describe the conditional independence assumptions: at time t, the hidden state ($x_t$) depends on the previous state ($x_{t-1}$), and the previous control action taken ($u_t$). As with the HMM, the observation $u_t$ is conditionally dependent on the state $x_t$. This causes a slight change in the filtering algorithm: on line 2 of algorithm \ref{alg:bayes_filter_observations_only} $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) $ is replaced with $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | u_t, x_{t-1}) p(x_{t-1} | e_{1:t-1}, u_{1:t-1}) $, which is intuitive: transition probabilities now depend on the most recent control action taken, as well as the previous state.
 
-\subsubsection{Discrete Bayes Filter}
-\note{This is what is used in the work that I did, so it is outlined}
+
+%DBNs have already been shown to be a powerful tool while modelling stochastic systems, since the hidden variables can be described by conditional independences, rather than 
+
+
+
+This algorithm can be further generalized - if multiple control variables, hidden state variables and observation variables are needed to describe the system fully, it is possible to make minor modifications which reflect the conditional independences stated by the underlying DBN. It is also worth noting that there are many well-known filtering algorithms that deal with data that come from certain distributions and satisfy constraints related to their transition and observation models, for example Kalman Filters.
+
+
+
+
+
+
+%\subsubsection{Discrete Bayes Filter}
+%\note{This is what is used in the work that I did, so it is outlined}
 
 \subsubsection{Approximate State Estimation Algorithms}
 \note{Thought about using Particle filter to avoid the dimensionality problem when attempting to maintain estimated state}.
+The state estimation algorithms mentioned so far maintain all values of the distribution $p(x_t | e_{1:t}, u_{1:t})$. The computational complexity of the general DBN updating algorithms is determined by how well the joint distribution of hidden state variables, observation variables and control action variables can be factored, but in the worst case the complexity is given by $O(n^2um)$, where n are the number of hidden states, u is the number of available control actions and m is the number of time steps to calculate. In some cases, this can become intractable, especially if the state space is large and the transition model cannot be efficiently factored. In this case, approximate techniques are used. By far the most common example is the particle filter. 
 
 \note{Not sure if it's worth filling out this section further, since this gives a lot of the background for the subsequent discussion}

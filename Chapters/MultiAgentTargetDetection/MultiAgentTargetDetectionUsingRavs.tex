@@ -1,54 +1,73 @@
 %First define the problem to be solved
-\subsection{Problem Setup and Description}
-\subsubsection{Problem Setup}
-As mentioned in the introduction, major problems in hazardous scene management include localizing sources of hazardous materials and localizing potential sources of evidence. The reasons these are difficult problems, in the context of the ROCSAFE project, are:
+\subsection{Problem Description}
+As mentioned in Chapter \ref{chapter:introduction}, a major problem in hazardous scene management includes localizing sources of hazardous materials and localizing potential sources of evidence. The reasons these are difficult problems, in the context of the ROCSAFE project, are:
 \begin{itemize}
     \item Hazardous materials may belong to different classes of threat, as outlined in the CBRN acronym. If the nature of the threat is uncertain, the wrong preventative measures may be taken and personnel may be put at risk. 
     \item Evidence localization usually requires moving a sensor to within close proximity of the evidence. If a human is responsible for this, there is a chance that they will accidentally tamper with the evidence, possibly yielding it unusable.
     \item Since these scenarios are highly dangerous, the area to search may be large to avoid potentially missing important sources of evidences. This means that the process of localization may be painstaking and time-consuming for humans.
 \end{itemize}
-We propose a system that can aid the execution of these tasks using a system of automated Unmanned Aerial Vehicles (UAVs). \par
+This section proposes a system that can aid the execution of these tasks using a system of automated \textbf{U}nmanned \textbf{A}erial \textbf{V}ehicles (UAVs). \par
 
-These localization problems can be described using abstract language which allows them to be approached using a common framework, with only minor implementation details necessary to specify which problem is being addressed. The framework developed uses a lot of the machinery outlined in the Background Knowledge chapter. The localization problems are often referred to \textit{target detection} in the literature. The particular instance of the problem that this thesis investigates can be described as follows: \par
 
-\textit{Given a region of space to explore and a set of heterogeneous autonomous aerial vehicles with sensing capabilities, devise a search strategy which will return either the locations of the targets if one or more is present or return that no targets are present.} \par
+
+Spatiotemporal localization problems have a reasonable body of literature behind them, and can be described using abstract language which allows them to be approached using a common framework, with only minor implementation details necessary to specify which instance of the problem is being addressed. The framework we have developed uses a lot of the theory outlined in the Background Knowledge chapter and builds on existing literature. The problem that this chapter (section) attempts to solve can be generally described as follows: \par
+
+\textit{Given a region of space to explore and a set of heterogeneous autonomous aerial vehicles with sensing capabilities, devise a search strategy which will return either the locations of the targets if one or more is present, otherwise return that no targets are present.} \par
 
 Concrete versions of this that are later addressed are:
 \begin{itemize}
-    \item Given a system of heterogeneous autonomous aerial vehicles, some of which are equipped with radiation sensors and limited battery capacity, localize multiple sources of radioactive material in a scene.
-    \item Given a system of heterogeneous autonomous aerial vehicles, some of which are equipped with high-quality cameras and limited battery capacity, localize multiple objects of a given description in a scene.
+    \item \textit{Given a system of heterogeneous autonomous aerial vehicles, some of which are equipped with radiation sensors and limited battery capacity, localize multiple sources of radioactive material in a scene.}
+    \item \textit{Given a system of heterogeneous autonomous aerial vehicles, some of which are equipped with high-quality cameras and limited battery capacity, localize multiple objects of a given description in a scene.}
 \end{itemize}
 %not sure whether I should mentioned about battery etc. here or to let the discussion lead to this naturally.
 \par
 
-\subsubsection{Simplified Problem Approach}
-A simpler version of this problem was first approached, where either a single source of evidence is assumed to either be present or not. As outlined in the literature review, this problem has been approached before by treating the problem as a 2 Time Slice Dynamic Bayesian Network (2TDBN). We initially made the following simplifying assumptions:
+\note{Did not attempt to solve this full problem in one go, instead took a simplified version and then gradually added in constraints.}
+
+\subsection{Initial Assumptions}
+\note{may need to rename this. want to convey that initially, we made some simplifying assumptions that isolate key aspects of problem that need to be solved. Then these assumptions were modified to deal with the more complex problem involving battery etc.}
+
+Rather than immediately attempting to tackle the full problem, we chose to initially make some simplifications in order to identify potential solution strategies that could be extended to more complex versions of the problem. At the outset, we made the following simplifying assumptions:
+%As outlined in the literature review, this problem has been approached before by treating the problem as a 2 Time Slice Dynamic Bayesian Network (2TDBN). 
 \begin{itemize}
+    \item There are either zero or one targets to be localized.
     \item The UAVs have unlimited battery capacity.
     \item The region that the UAVs need to search can be well approximated by a polygon.
     \item The sensor specificity and sensitivity are known or can be estimated for a given resolution (e.g. 1m). These are assumed to be greater than 50\% for the given resolution.
-    \item The UAVs operate over a discrete spatial grid spanning the region to search, which is determined by the sensor resolution.
+    \item The UAVs operate over a discrete spatial grid spanning the region to search, assumed to be polygonal as above, the dimensions of which determined by the sensor resolution.
     \item The UAVs are assumed to have a GPS sensor that is accurate to beyond the sensor resolution (implying that the UAV moves to discrete grid locations without drift).
     \item The target is assumed to be small enough to occupy only one grid cell at a time. It is also assumed to not lie across grid cells.
 \end{itemize}
-While these assumptions are unrealistic, they are convenient because they simplify the design of the system and subsequent analysis. Some ramifications of these assumptions are addressed later in the chapter, at section x. They are in line with some assumptions made in related works \cite{ChungASearch}, \cite{Waharte2010SupportingUAVs}, % find additional citations in mendeley
+While these assumptions are clearly unrealistic, they are convenient because they simplify the design of the system and subsequent analysis. In later sections in this chapter, these assumptions are relaxed and the necessary modifications for the solution strategy are discussed. Some ramifications of these assumptions are addressed later in the chapter, at section <x>. It is worth noting that similar simplifying assumptions were made in related works in the literature, 
+(\cite{Chung2007ASearch} and \cite{Waharte2010SupportingUAVs}), % find additional citations in mendeley
+which strongly influenced our initial approach.
 
 %Outline experimental setup
-\subsubsection{Experimental Setup}
-In order to prototype the system to aid development, a simple experimental testbed was set up. This involved the following software components:
+\subsection{Experimental Testbed}
+Given the assumptions outlined above, rather than beginning by working on designing a solution, we instead decided to set up the software that would be necessary to quickly test and evaluate a solution. This involved the following software components:
 \begin{itemize}
-    \item A 2-Dimensional grid coordinate system
+    \item A 2-Dimensional grid coordinate system which can be easily configured to create a grid over a polygonal region. This is outlined in greater detail in section <provide a reference to the section>.
     \item An evidence source simulator which simulates the readings that a sensor would observe given the sensitivity and specificity of the sensor.
     \item A grid manager component, which manages the positions of UAVs and targets on the grid.
     \item A simulation manager component, which constructs the agents from their configuration files and is responsible for running the simulation using the other software components.
     \item Configuration files which allow the user to specify the configurations of the sensors, the agents, environment parameters and debugging/analysis files.
 \end{itemize}
-These components were designed in a modular fashion to distinguish the agent from its environment, as shown in Figure \ref{fig:agent_env_interaction}. This seems like an obvious and intuitive notion, but can be easily overlooked while writing code. For example, the agent may have an internal representation of the grid environment in which it operates which should be completely independent of the actual grid environment which is run in the simulation. The user can fully specify all aspects of the agent and environment through the config files.
+These components were designed in a modular fashion to distinguish the agent from its environment, shown in Figure \ref{fig:agent_env_interaction}. This seems like an obvious and intuitive notion, but can be easily overlooked while writing code. For example, the agent may have an internal representation of the grid environment in which it operates which should be completely independent of the actual grid environment which is run in the simulation. The user can fully specify all aspects of the agent and environment (relating to the above assumptions) through configuration files.
 
 %Discuss solutions explored - not sure how to address the modularity associated with this.
-\subsection{Problem Decomposition}
+\subsection{Identifying Components of the problem}
+
+A common approach to dealing with multi-faceted problems is to decompose the problem into sub-problems. These may not be independent, but often it is possible design solutions to each of these individual sub-problems and compose them to form a solution to the larger problem <maybe provide a reference to optimal substructures>. We took this approach and were able to identify the following sub-problems:
+
+\begin{enumerate}
+    \item 
+    \item 
+    \item 
+    \item 
+\end{enumerate}
+
 The target detection problem described in this thesis naturally decomposes into a number of sub-problems. %These components aren't independent, might be worth discussing how the components interact.
-Since the problem must be solved using an agent, the most obvious first step is to consider how to design the agent function, as discussed in chapter \ref{Background}. A model-based agent would clearly be a good place to start, since using previous sensor percepts would intuitively help guide the search process. A goal-based agent would seem to be a good fit on initial contemplation, however there is an outstanding issue that cannot easily be addressed: defining a goal state cannot be done directly, since the agent's sensors are assumed to be noisy. This means that just because a positive reading is reported doesn't mean that the search can be terminated, due to that fact that the sensor reading could be spurious. Therefore, a model-based, utility-based agent is the obvious choice of agent design, since a utility function can help guide that agent towards a  without knowing the exact specification of the goal state. A good example of the architecture of a model-based, utility-based agent is shown in figure \ref{fig:model_based_utility_based}.
+Since the problem must be solved using agents, the most obvious first step is to consider how to design the agent function, as discussed in chapter \ref{Background}. A model-based agent would clearly be a good place to start, since using previous sensor percepts would intuitively help guide the search process. A goal-based agent would seem to be a good fit on initial contemplation, however there is an outstanding issue that cannot easily be addressed: defining a goal state cannot be done directly, since the agent's sensors are assumed to be noisy. This means that just because a positive reading is reported doesn't mean that the search can be terminated, due to that fact that the sensor reading could be spurious. Therefore, a model-based, utility-based agent is the obvious choice of agent design, since a utility function can help guide that agent towards a  without knowing the exact specification of the goal state. A good example of the architecture of a model-based, utility-based agent is shown in figure \ref{fig:model_based_utility_based}.
 \begin{figure}
     \centering
     \includegraphics{Chapters/MultiAgentTargetDetection/BayesianFiltering/Figs/utility-based-agent.eps}

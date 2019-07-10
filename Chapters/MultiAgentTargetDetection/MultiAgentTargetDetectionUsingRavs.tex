@@ -153,12 +153,23 @@ $
 \end{algorithmic} 
 \end{algorithm}
 
-The algorithm clearly outlines how the agent maintains it's representation of the world, based on percepts and actions. This common framework is used throughout the rest of this section when referring to agents. Subsequent sections provide details of how to implement the agent's internal state, the world model and the action-selection function
+The algorithm clearly outlines how the agent maintains its representation of the world, based on percepts and actions. This abstract version of the model-based reflex agent function is used throughout the rest of this section when referring to agents. Subsequent sections provide details of how to implement the agent's internal state, the world model and the action-selection function.
 
+\subsubsection{Stochastic Environment Model}
+\workinprogress
+Model-based agents require a concrete implementation of a model of their world, in order to maintain their internal state. Since the world is assumed to be partially observable, the agent's internal state can be thought of as its opinion of what state the world might be in, and its model describes how it believes the world changes. Chapter \ref{chapter:Background} outlines the background behind potential models of the stochastic world, including both internal state representation and how internal state can be updated.\par
+Hidden Markov Models and Dynamic Bayesian Networks were identified as highly suitable models, due to the fact that they provide a succinct and flexible representation of stochastic world state, as well as efficient online state estimation updating algorithms. We chose to use a Dynamic Bayesian Network (DBN), due to the fact that it can help overcome some of the limitations that HMMs potentially may present (outlined in chapter \ref{chapter:Background}). DBNs also facilitate the incorporation of extra variables, such as battery level, which we were intending to do once a basic implementation was shown to work as intended.
 
+The DBN used is shown in figure \ref{FirstDBNUsed}
 
-\subsubsection{Stochastic World Model}
-\placeholder
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.8\linewidth]{Chapters/MultiAgentTargetDetection/Figs/DBNWithMultipleHiddenState.PNG}
+    \label{fig:FirstDBNUsed}
+    \caption{First Version of the DBN representing the agent world model}
+    
+\end{figure}
+
 
 
 

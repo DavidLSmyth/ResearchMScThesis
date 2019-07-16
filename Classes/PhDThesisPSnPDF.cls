@@ -903,6 +903,7 @@ wish to left align your text}
 \newcommand{\@nomenclaturesubscripts}{Subscripts}
 \newcommand{\@nomenclatureothers}{Other Symbols}
 \newcommand{\@nomenclatureagent}{Agent terminology}
+\newcommand{\@nomenclatureprobability}{Probability terminology}
 \newcommand{\@nomenclatureforensics}{Forensic terminology}
 
 
@@ -1050,6 +1051,7 @@ wish to left align your text}
 \ifthenelse{\equal{#1}{S}}{\item[\textbf{\@nomenclaturesubscripts}]}{%
 \ifthenelse{\equal{#1}{X}}{\item[\textbf{\@nomenclatureothers}]}{%
 \ifthenelse{\equal{#1}{F}}{\item[\textbf{\@nomenclatureforensics}]}{%
+\ifthenelse{\equal{#1}{P}}{\item[\textbf{\@nomenclatureprobability}]}{%
 \ifthenelse{\equal{#1}{Y}}{\item[\textbf{\@nomenclatureagent}]}
 {}
 }% matches mathematical symbols > X
@@ -1059,7 +1061,8 @@ wish to left align your text}
 }% matches Greek Symbols        > G
 }% matches Roman Symbols        > A
 } % matches Forensic Symbols    > F
-} % matches Agent Symbols       > Y
+} % matches Probability Symbols       > P
+}% matches Agent Symbols       > Y
 
 % To add nomenclature in the header
 \renewcommand{\nompreamble}{\markboth{\nomname}{\nomname}}

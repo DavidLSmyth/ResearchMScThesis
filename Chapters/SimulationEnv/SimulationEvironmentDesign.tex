@@ -117,25 +117,31 @@ Although a human may recognise the scene as a derailed train, it does not captur
 
 \pagebreak
 \note{Will ideally have all of these figures on a single page}
+\note{Current format is top view, isometric view, side view. This can be changed but will take quite a lot of effort.}
+\note{Might be better to have this landscape instead}
 \begin{figure}
 \label{fig:virutalEnvDevelopment}
 \centering
 \begin{tabular}{ccc}
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/resized_HighresScreenshot00001.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/resized_HighresScreenshot00000.png}}\\
-
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}}\\
-
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}}\\
-
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}}
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/TopView1.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/IsometricView1.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/LowView1.png}}\\
+%2nd line of images
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/TopView.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/IsometricView.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/LowView.png}}\\
+%3rd line of images
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/TopView1.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/IsometricView1.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/LowView1.png}}\\
+%4thline of images
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/TopView2.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/IsometricView2.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/LowView2.png}}\\
+%5thline of images
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/TopView.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/IsometricView.png}} &
+\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/LowView.png}}
 \end{tabular}
 \caption{Evolution of Simulation Environment. Each row depicts images from a subsequent iteration.}
 \end{figure}
@@ -144,6 +150,23 @@ Although a human may recognise the scene as a derailed train, it does not captur
 
 
 \note{Might not be necessary to talk about all of these things}
+
+\begin{figure}
+\label{fig:virutalEnvDevelopment}
+\centering
+\begin{tabular}{cc}
+\subfloat[caption]{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/IsometricView1.png}} &
+\subfloat[caption]{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/LowView.png}} \\
+
+\subfloat[caption]{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/TopView2.png}}&
+\subfloat[caption]{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/BridgeView1.png}} \\
+
+\subfloat[caption]{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/CloseUp1.png}}&
+\subfloat[caption]{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/CloseUp2.png}} \\
+\end{tabular}
+\caption{Final Version of Simulation Environment}
+\end{figure}
+\pagebreak
 
 \subsubsection{Blueprint Visual Scripting System}
 UE4 uses a visual scripting system to provide a lot of functionality, known as Blueprints. Blueprints provide a node-based interface to create gameplay elements. In order to develop different aspects of a game, the system provides a visual approach to scripting, and many of the tools available in standard written scripting languages are available, such as typed variables, arrays, structs, loops, etc. Blueprints were used extensively in the subsequent sections, as well as C++ code, in order to develop the simulation.
@@ -264,6 +287,6 @@ An asset can be described as a piece of content for an Unreal Engine project, wh
 % V1: Brussels Demo
 % V2: Rail with spline, train, digger. No dirt track, no houses, no road, no wall, poor textures, poor foliage
 % V3: Add wall, better foliage
-% V4: Dirt track and houses
+% V4:and houses
 % V5: Proper foliage (stones) & blended textures
 % V6: Final version in shared folder

@@ -322,9 +322,11 @@ As outlined in
 details. \par
 
 \subsubsection{Search Cutoff Strategy}
-\workinprogress
-At each discrete timestep, the agent can either choose to move to a new grid location to record a sensor measurement or it can decide to terminate the search based on its estimated state of the environment. There is a trade-off in terminating the search early, which means that less time and resources are spent on continuing the search, versus the possibility of drawing misinformed conclusions from the search due to a lack of information. For example, if the agent receives a series of false positive readings at a given location, it could mistakenly choose to conclude that the target is present at a given location rather than sample further to gain confidence that it has correctly found the location of the target. Following this line of thinking, it is clear that a strategy needs to be devised to minimize the probability of drawing false conclusions, which is in line with the performance measure set out in \ref{sssection:PerfMeas}.\par
-Previous related work, \cite{Chung2007ASearchb} has addressed this problem using methods that use heuristics as well as a more formal asymptotic theory-based approach. We explored both methods in this work, choosing to use the Sequential Probability Ratio Test (SPRT). 
+
+\input{Chapters/MultiAgentTargetDetection/SearchTermination/SearchTermination.tex}\label{searchTermination}
+\note{Some of this could be moved to background}
+
+
 
 \subsubsection{Implementing the Agent}
 \placeholder

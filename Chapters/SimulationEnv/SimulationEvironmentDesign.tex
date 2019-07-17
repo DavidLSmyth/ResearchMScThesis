@@ -115,58 +115,48 @@ Although a human may recognise the scene as a derailed train, it does not captur
 
 \note{Might be worth making the margins wider for table of images. Also might be worth recording images again with fixed exposure and orientations for consistency. Come back to this once talked about it with Michael and Frank. Different versions of environment listed at bottom of this file.}
 
-\pagebreak
 \note{Will ideally have all of these figures on a single page}
 \note{Current format is top view, isometric view, side view. This can be changed but will take quite a lot of effort.}
 \note{Might be better to have this landscape instead}
+
+\captionsetup[subfigure]{labelformat=empty}
 \begin{figure}
 \label{fig:virutalEnvDevelopment}
 \centering
+
 \begin{tabular}{ccc}
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/TopView1.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/IsometricView1.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/LowView1.png}}\\
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/TopView1.png}} &
+\subfloat[Basic configuration.]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/IsometricView1.png}} &
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/LowView1.png}}\\
+
+%\subfloat[Here is my caption that is longer than my
+%figure.]{\makebox[.45\textwidth]{\rule{1in}{1in}}}%
+%\hfill
+
 %2nd line of images
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/TopView.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/IsometricView.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/LowView.png}}\\
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/TopView.png}} &
+\subfloat[Spline added for rail, basic foliage added and landscape texture improved]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/IsometricView.png}} &
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV2/LowView.png}}\\
 %3rd line of images
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/TopView1.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/IsometricView1.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/LowView1.png}}\\
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/TopView1.png}} &
+\subfloat[Dirt track and smoke/steam effect added]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/IsometricView1.png}} &
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV3/LowView1.png}}\\
 %4thline of images
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/TopView2.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/IsometricView2.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/LowView2.png}}\\
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/TopView2.png}} &
+\subfloat[Splined wall and houses added]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/IsometricView2.png}} &
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV4/LowView2.png}}\\
 %5thline of images
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/TopView.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/IsometricView.png}} &
-\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/LowView.png}}
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/TopView.png}} &
+\subfloat[Road and extra walls added]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/IsometricView.png}} &
+\subfloat{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV5/LowView.png}}
 \end{tabular}
-\caption{Evolution of Simulation Environment. Each row depicts images from a subsequent iteration.}
+\caption{Evolution of Simulation Environment. Each row depicts images from a subsequent iteration of the environment.}
 \end{figure}
-\pagebreak
+\captionsetup[subfigure]{labelformat=default}
 
 
 
 \note{Might not be necessary to talk about all of these things}
-
-\begin{figure}
-\label{fig:virutalEnvDevelopment}
-\centering
-\begin{tabular}{cc}
-\subfloat{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/IsometricView1.png}} &
-\subfloat{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/LowView.png}} \\
-
-\subfloat{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/TopView2.png}}&
-\subfloat{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/BridgeView1.png}} \\
-
-\subfloat{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/CloseUp1.png}}&
-\subfloat{\includegraphics[width = 7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/CloseUp2.png}} \\
-\end{tabular}
-\caption{Final Version of Simulation Environment}
-\end{figure}
-
 
 \pagebreak
 \begin{landscape}

@@ -1,0 +1,32 @@
+\subsubsection{Performance Measure}\label{sssection:PerfMeas}
+The agent's performance measure maps sequences of environment states to the real numbers. Given the above definitions, it is clear that environment states of the form
+\[ <x_i, TERMINATED\_x_i> \]
+should be of high value (as they indicate that the agent has correctly identified the location of the target in the environment). Secondary to this, longer percept sequences should have a lower value than shorter percept sequences. Therefore, the performance measure primarily gives high values to the agent when it correctly identifies the location of the target or correctly concludes that the target is not present, with a secondary ordering on value determined by the time taken to come to a conclusion. The actual value of the function only needs to follow this ordering, but could be suitably be defined as:
+\note{Be careful that this agrees with the rest}
+\[
+Performance Measure(state_1,..., state_t) = 
+\begin{cases}
+\frac{1}{t} \quad \text{ if } state_t \text{ = } <x_i, TERMINATED\_x_i>
+%agent returns correct target location.} 
+\\
+-1 \quad \text { otherwise. }
+\end{cases}
+\]
+
+%\[
+%Performance Measure(state_1,..., state_t) = 
+%\begin{cases}
+%\frac{1}{t} \quad \text{ if } state_t \text{ = } <x_i, TERMINATED\_x_i>
+%agent returns correct target location.} 
+%\\
+%\frac{1}{t} \quad \text{ if agent correctly returns target is not present.}
+%\\
+%-1 \quad \text { if agent returns incorrect target location.}
+%\\
+%-1 \quad \text{if agent incorrectly returns target is not present}
+%\end{cases}
+%\]
+
+%The performance measure is assumed to ignore subsequent terminal states. 
+It is worth noting that this performance measure suggests goal states for the agent:
+\[ <x_i, TERMINATED\_x_i> \]

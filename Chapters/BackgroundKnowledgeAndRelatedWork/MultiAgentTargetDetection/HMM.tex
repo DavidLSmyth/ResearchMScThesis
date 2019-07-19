@@ -1,21 +1,17 @@
 \nomenclature[]{HMM}{Hidden Markov Model}
 \note{Add italics in places}
 \note{Could discuss:
-\\Background
-\begin{itemize}
-    \item What HMMs are
-    \item why they're useful in AI
-    \item the different commonly used HMMs. 
-\end{itemize}
+\\Background:
+What HMMs are,
+why they're useful in AI,
+the different commonly used HMMs. 
 \\ Use in my research:
-\begin{itemize}
-    \item How the problem can naturally be described by a HMM
-    \item Lead into discussion of how DBN is a more natural way to describe the problem and how it leads to efficient factorization of densities for state estimation
-\end{itemize}
-}
+How the problem can naturally be described by a HMM, 
+Lead into discussion of how DBN is a more natural way to describe the problem and how it leads to efficient factorization of densities for state estimation}
+     
 Hidden Markov Models appear frequently in AI literature as they provide an abstract framework to deal with stochastic processes, which themselves are pervasive in their use as a tool to model real-world phenomena. This chapter will outline what HMMs are and their use in literature describing target localization algorithms. A general overview of HMMs can be found in \cite{Murphy1994DynamicLearning} and \cite{Ghahramani2001ANNETWORKS}.
 
-\subsubsection{Markov Processes}
+\subsubsection{Markov Processes}\label{subsubsec:MarkovProcesses}
 It is instructive to understand what is meant by a stochastic process for some of the concepts mentioned in this thesis. The high-level details will be discussed here and the reader can refer to a text on probability theory for a fuller explanation, for example \cite{papoulis02}. A random process can be described as a family of random variables indexed by a set $\tau$: $\{X_t\}_{t\in\tau}$. Commonly in AI, stochastic processes model the evolution of a random system through \textit{discrete} time steps: $\tau$=$\mathbb N$. Common phenomena modelled by stochastic processes include the growth of a bacterial population and the movement of a gas molecule.\par
 
 A first-order discrete-time Markov process is a stochastic process that describes a system which is in a given state at each time step, with the state changing randomly between steps. The steps are elements of the natural numbers and the random process is a mapping from the natural numbers to states. First-order Markov processes have the additional property that the probability distribution of the n$_{th}$ random variable in the process is conditionally independent of all previous probability distributions in the sequence but the $n-1_{st}$: $P(X_t = x_t | X_{t-1} = x_{t-1}, X_{t-2} = x_{t-2}, ... , X_{1} = x_{1}) = P(X_t = x_t | X_{t-1} = x_{t-1})$. This is often referred to as the Markov Property or the memoryless property of Markov processes. In order to describe a Markov process, it is therefore necessary to describe what is known as the transition function between each pair of timesteps: $P(X_t = x_t | X_{t-1} = x_{t-1})$. A common assumption is that the rules that govern state transitions are time invariant, meaning that they can be specified generally for any given pair of timesteps. This assumption will be made for the subsequent discussion. If $X_t$ is a discrete random variable defined over $S$ states, the transition function can be described by a stochastic matrix T, where T$_{i,j}$ = $P(X_t = j | X_{t-1} = i)$: 
@@ -36,7 +32,7 @@ It also is possible to calculate the probability of the process experiencing a s
 $P(X_{1:t}) = P(X_1, X_2, ..., X_t) = P(X_1)\times P(X_2 | X_1)\times P(X_3 | X_2, X_1) \times P(X_t | X_{t-1}, X_{t-2}, ... , X_1) = P(X_1) \times \prod_{i=2}^{t}{P(X_i | x_{i-1})}$. Marginalization over variables in this sequence allows the calculation of many useful quantities.
 \par
 
-\subsubsection{HMM Description}
+\subsubsection{HMM Description}\label{subsubsec:HMMDesc}
 Hidden Markov Models (HMMs) are models that build on the Markov Process model, which describe the evolution of a random system in the language of probability theory. HMMs assume that the system being modeled can be described by a Markov process, but that the states of this process are unobservable. This means that it is not possible to determine the state of the system exactly at any given point in time. However, it is possible to make an observation of a random variable that is related to the hidden state which yields information about the hidden state. A graphical representation of a HMM is shown in figure \ref{fig:hmm}
 \begin{figure}[]
     \centering
@@ -68,5 +64,5 @@ $Given this representation, it is then possible to answer questions such as:
 
 %Might include a subsection on a taxonomy of commonly used HMMs.
 
-\subsubsection{Summary}
+\subsubsection{Summary}\label{subsubsec:Summary}
 In summary, HMMs can be used to abstractly describe the evolution of a stochastic system. They have been used to achieve state of the art performance in problems such as speech recognition \cite{ChiuSTATE-OF-THE-ARTMODELS} and ... . An comprehensive overview of extensions to the vanilla HMM can be found at \cite{Murphy1994DynamicLearning}.

@@ -1,8 +1,8 @@
 %outlines the background behind the sequential probability ratio test.
 
-This section assumes that the reader has a basic familiarity with the terminology and techniques of hypothesis testing in statistics. 
+\note{This section assumes that the reader has a basic familiarity with the terminology and techniques of hypothesis testing in statistics.}
 
-A statistical test is a mechanism for making quantitative decisions about a process. Statistical tests are usually used in conjunction with a \textit{statistical hypothesis}, which is a testable hypothesis based on observations of a process that is modelled using random variables. There are many texts that outline the statistical tests that can be used to make a decision between accepting or rejecting the null hypothesis, $H_0$. \note{do I need to list them} The usual context in which this occurs is one in which the data has been collected in advance and the sample size is fixed and known. The standard procedure for testing a simple hypothesis involves using a Uniformly Most Powerful (UMP) Test for a fixed value of the probability of making a type \Romannum{1} error, $\alpha$. The subsequent sections discuss how this can be extended to form sequential framework, where the sample size is not fixed.\note{An example might be of value here} \par
+A statistical test is a mechanism for making quantitative decisions about a process. Statistical tests are usually used to draw conclusions about a \textit{statistical hypothesis}, which is a testable hypothesis based on observations of a process that is modelled using random variables. There are many texts that outline the statistical tests that can be used to make a decision between accepting or rejecting the null hypothesis, $H_0$, for example \cite{IntroductionToMathematicalStatistics}. The usual context in which this occurs is one in which the data has been collected in advance and the sample size is fixed and known. The standard procedure for testing a simple hypothesis involves using a Uniformly Most Powerful (UMP) Test for a fixed value of the probability of making a type \Romannum{1} error, $\alpha$. The subsequent sections discuss how this can be extended to form sequential framework, where the sample size is not fixed.\note{An example might be of value here} \par
 
 There exists a branch of statistical hypothesis testing called \textit{sequential hypothesis testing}, which is used when the sample size is not fixed in advance. Given a hypothesis to test, $H_0$, this means the decision process goes beyond deciding whether to accept or reject the null hypothesis, but to either
 \begin{enumerate}
@@ -13,15 +13,15 @@ There exists a branch of statistical hypothesis testing called \textit{sequentia
 
 It is clear that samples are gathered as long as 1). or 2). above are not chosen, which intuitively corresponds to the notion of making an informed decision, where it is desirable to ensure that enough data has been gathered to draw a meaningful conclusion. In the sequential testing paradigm, two kinds of error may be committed, as with the non-sequential case: we may reject the null hypothesis when it is true (commit a type \Romannum{1} error) or we may accept the null hypothesis when some alternative hypothesis is true (commit a type \Romannum{2} error). 
 
-The Sequential Probability Ratio Test (SPRT), which was devised by \citeauthor{Wald1945SequentialHypotheses}, proposes a statistical test for simple hypotheses with specified fixed values, which ensures that the probability of type \Romannum{1} and type \Romannum{2} errors do not exceed $\alpha$ and $\beta$ respectively. \citeauthor{Wald1948OptimumTest} proved that the SPRT is optimal, in the sense that of all tests with the same power, the SPRT requires on average the fewest number of observations to reach a decision \cite{Wald1948OptimumTest}. A strong advantage of the test is that it can be carried out without determining any probability distributions whatsoever. The SPRT can be thought of as a stopping rule for sampling in a stochastic process. For the sake of brevity, we omit the derivation of the rule and the proof of optimality, but instead refer the reader to \cite{Wald1945SequentialHypotheses}, \cite{Wald1950BayesProblems} and \cite{Wald1948OptimumTest}. The SPRT can be carried out as follows:
+The Sequential Probability Ratio Test (SPRT), which was devised by \citeauthor{Wald1945SequentialHypotheses}, proposes a statistical test for simple hypotheses with specified fixed values, which ensures that the probability of type \Romannum{1} and type \Romannum{2} errors do not exceed $\alpha$ and $\beta$ respectively. \citeauthor{Wald1948OptimumTest} proved that the SPRT is optimal, in the sense that of all tests with the same power, the SPRT requires on average the fewest number of observations to reach a decision \cite{Wald1948OptimumTest}. A strong advantage of the test is that it can be carried out without determining any probability distributions whatsoever. The SPRT can be thought of as a stopping rule for sampling in a stochastic process. For the sake of brevity, we omit the full derivation of the rule and the proof of optimality, but instead refer the reader to \cite{Wald1945SequentialHypotheses}, \cite{Wald1950BayesProblems} and \cite{Wald1948OptimumTest}. The SPRT can be carried out as follows:
 
 
-\begin{enumerate}
-    \item The null and alternative hypotheses are stated, $H_0$ and $H_1$.
-    \item The desired type \Romannum{1} and type \Romannum{2} error rates are specified as $\alpha$ and $\beta$.
-    \item Calculate the values $A = \frac{1-\beta}{\alpha}$ and $B = \frac{\beta}{1-\alpha}$
-    \item 
-\end{enumerate}
+%\begin{enumerate}
+%    \item The null and alternative hypotheses are stated, $H_0$ and $H_1$.
+%    \item The desired type \Romannum{1} and type \Romannum{2} error rates are specified as $\alpha$ and $\beta$.
+%    \item Calculate the values $A = \frac{1-\beta}{\alpha}$ and $B = \frac{\beta}{1-\alpha}$
+%    \item 
+%\end{enumerate}
 
 
 \begin{algorithm}{}
@@ -38,8 +38,8 @@ The Sequential Probability Ratio Test (SPRT), which was devised by \citeauthor{W
 \newline $H_1 \text{, the alternative hypothesis.}$
 \newline $(x_1, ..., x_m) \text{, the m observations made so far.}$
 %Output
-\ENSURE  $\newline$ A decision to accept $H_0$, accept $H_1$ or make another observation.
-
+\ENSURE  $\newline$ A decision to accept $H_0$, accept $H_1$ or make another observation.\\
+\hfill\pagebreak
 
 \STATE Calculate $p_{0m}=p_{0m}(x_1, ..., x_m)$, the probability of observing the data under the assumption $H_0$ is true.
 
@@ -47,21 +47,19 @@ The Sequential Probability Ratio Test (SPRT), which was devised by \citeauthor{W
 
 \STATE Calculate the values $A = \frac{1-\beta}{\alpha}$ and $B = \frac{\beta}{1-\alpha}$
 
-\STATE Return $accept H_1$ if $\frac{p_{1m}}{p_0m} \geq A$
+\STATE Accept $H_1$ if $\frac{p_{1m}}{p_0m} \geq A$
 
-\STATE Return $accept H_0$ if $\frac{p_{1m}}{p_0m} \leq B$
+\STATE Accept $H_0$ if $\frac{p_{1m}}{p_0m} \leq B$
+
+\STATE Make an additional observation if $B < \frac{p_{1m}}{p_0m} < A$
 
 
 
 \end{algorithmic}
 \end{algorithm}
-%Supposing we are testing the null hypothesis, $H_0$ against a single alternative hypothesis, $H_1$, 
-
-This is explained in further detail by \citeauthor{Wald1945SequentialHypotheses} in \cite{Wald1945SequentialHypotheses}. 
 
 
-When the decision process involves deciding whether to 1). Accept 
+The main idea, as is the case with simple non-sequential hypothesis tests, is based on the that if the likelihood ratio ($\frac{p_{1m}}{p_{0m}}$) lies in some \textit{critical region}, $C$, then we may reject the null hypothesis. The SPRT extends this notion. This is done by partitioning the m-dimensional sample space $M_m$ into three mutually exclusive regions, $R_m^0$, $R_m^1$ and $R_m$. After the $i_{th}$ observation $(x_i)$ has been drawn, $H_0$ is accepted if $(x_1, ..., x_i)$ lies in $R_m^0$, $H_1$ will be accepted if $(x_1, ..., x_i)$ lies in $R_m^1$ or a $i+1_{th}$ observation will be drawn if $(x_1, ..., x_i)$ lies in $R_m$. The process of how to choose $R_m^0$, $R_m^1$ and $R_m$ is outlined in section 3 of \cite{Wald1945SequentialHypotheses}, which goes beyond the scope of this thesis. The derivation agrees with intuition and essentially shows that $(x_1, ..., x_i) \in R_m^0$ is equivalent to $\frac{p_{1m}}{p_0m} \leq B$, $(x_1, ..., x_i) \in R_m^1$ is equivalent to $\frac{p_{1m}}{p_0m} \geq A$, and $(x_1, ..., x_i) \in R_m$ is equivalent to $B < \frac{p_{1m}}{p_0m} < A$.
 
-is of a slightly different nature to the usual statistical framework in that it is used 
-
-The Sequential Probability Ratio Test (SPRT) is a statistical test that 
+\subsubsection{Summary}
+The SPRT is a sequential hypothesis test that formulates a stopping rule in order to draw conclusions based on statistical data. Its main use has been in quality control studies, where samples can be expensive to gather. We use it in section \ref{SPRT}

@@ -13,10 +13,48 @@ There exists a branch of statistical hypothesis testing called \textit{sequentia
 
 It is clear that samples are gathered as long as 1). or 2). above are not chosen, which intuitively corresponds to the notion of making an informed decision, where it is desirable to ensure that enough data has been gathered to draw a meaningful conclusion. In the sequential testing paradigm, two kinds of error may be committed, as with the non-sequential case: we may reject the null hypothesis when it is true (commit a type \Romannum{1} error) or we may accept the null hypothesis when some alternative hypothesis is true (commit a type \Romannum{2} error). 
 
-fixing the probability of making a type \Romannum{1} error to a given value, $\alpha$, and 
+The Sequential Probability Ratio Test (SPRT), which was devised by \citeauthor{Wald1945SequentialHypotheses}, proposes a statistical test for simple hypotheses with specified fixed values, which ensures that the probability of type \Romannum{1} and type \Romannum{2} errors do not exceed $\alpha$ and $\beta$ respectively. \citeauthor{Wald1948OptimumTest} proved that the SPRT is optimal, in the sense that of all tests with the same power, the SPRT requires on average the fewest number of observations to reach a decision \cite{Wald1948OptimumTest}. A strong advantage of the test is that it can be carried out without determining any probability distributions whatsoever. The SPRT can be thought of as a stopping rule for sampling in a stochastic process. For the sake of brevity, we omit the derivation of the rule and the proof of optimality, but instead refer the reader to \cite{Wald1945SequentialHypotheses}, \cite{Wald1950BayesProblems} and \cite{Wald1948OptimumTest}. The SPRT can be carried out as follows:
 
-The Sequential Probability Ratio Test (SPRT), which was devised by \citeauthor{Wald1945SequentialHypotheses}, 
 
+\begin{enumerate}
+    \item The null and alternative hypotheses are stated, $H_0$ and $H_1$.
+    \item The desired type \Romannum{1} and type \Romannum{2} error rates are specified as $\alpha$ and $\beta$.
+    \item Calculate the values $A = \frac{1-\beta}{\alpha}$ and $B = \frac{\beta}{1-\alpha}$
+    \item 
+\end{enumerate}
+
+
+\begin{algorithm}{}
+\caption{The Sequential Probability Ratio Test Algorithm}
+\label{alg:bayes_filter_observations_only}
+
+\begin{algorithmic}[1]
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+%Input
+\REQUIRE $\newline \alpha \text{, the upper limit in probability for making a type \Romannum{1} error.}$
+\newline $\beta \text{, the upper limit in probability for making a type \Romannum{2} error.}$
+\newline $H_0 \text{, the null hypothesis.}$
+\newline $H_1 \text{, the alternative hypothesis.}$
+\newline $(x_1, ..., x_m) \text{, the m observations made so far.}$
+%Output
+\ENSURE  $\newline$ A decision to accept $H_0$, accept $H_1$ or make another observation.
+
+
+\STATE Calculate $p_{0m}=p_{0m}(x_1, ..., x_m)$, the probability of observing the data under the assumption $H_0$ is true.
+
+\STATE Calculate $p_{1m}=p_{1m}(x_1, ..., x_m)$, the probability of observing the data under the assumption $H_1$ is true.
+
+\STATE Calculate the values $A = \frac{1-\beta}{\alpha}$ and $B = \frac{\beta}{1-\alpha}$
+
+\STATE Return $accept H_1$ if $\frac{p_{1m}}{p_0m} \geq A$
+
+\STATE Return $accept H_0$ if $\frac{p_{1m}}{p_0m} \leq B$
+
+
+
+\end{algorithmic}
+\end{algorithm}
 %Supposing we are testing the null hypothesis, $H_0$ against a single alternative hypothesis, $H_1$, 
 
 This is explained in further detail by \citeauthor{Wald1945SequentialHypotheses} in \cite{Wald1945SequentialHypotheses}. 

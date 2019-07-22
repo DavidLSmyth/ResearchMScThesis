@@ -119,14 +119,14 @@ An key strength of this algorithm is the fact it allows updates to be performed 
 
 
 
-\subsubsection{Evidence Likelihood Algorithm Using a HMM}
+\subsubsection{Evidence Likelihood Algorithm Using a HMM}\label{subsubsec:EvLikelihood}
 \note{Will talk about this briefly for SPRT}
-The second useful quantity that we would like to calculate is the probability of observing the evidence that we did, often referred to the likelihood function of the data, as identified in section \ref{Chapter:HMM}. In simpler terms, this means we calculate the probability of observing the data, given a fixed parameterised model of the data (the HMM). This value is useful as it can reveal insights into whether one model is more likely than another model, with applications including \textbf{M}aximum \textbf{a} \textbf{P}osteriori (MAP) parameter estimates and hypothesis testing. We would like to compute the value of
+The second useful quantity that we would like to calculate is the probability of observing the evidence that we did, often referred to the likelihood function of the data, as identified in section \ref{Chapter:HMM}. In simpler terms, this means we calculate the probability of observing the data, given a fixed parameterised model of the data (the HMM). This value is useful as it can reveal insights into whether one model is more likely than another model, with applications including \textbf{M}aximum \textbf{a} \textbf{P}osteriori (MAP) parameter estimates and hypothesis testing. It is used in this thesis in section \ref{subsubsec:SeachTerminationMethodology}. We would like to compute the value of
 \[P(e_1, e_2, ..., e_t) = P(e_{1:t})\]
-given the fixed set of parameters provided by the HMM. A brief outline of the derivation provided in ... .\note{Put the derivation in an appendix} The derivation clearly shows that the algorithm for calculating likelihoods is exactly the same as forward algorithm, with the replacement of  $p(x_{t-1}|e_{1:t-1})$ with $p(x_t-1, e_{1:t-1})$ and one final summation.
+given the fixed set of parameters provided by the HMM. A brief outline of the derivation is shown:\note{might be best to put the derivation in an appendix} 
 
 
-\subsubsection{HMM Evidence Likelihood Algorithm Derivation}\label{section:EvidenceLikelihood}
+\subsubsection{HMM Evidence Likelihood Algorithm Derivation}\label{subsubsec:BGEvidenceLikelihood}
 
 Analagous to ..., two well-known probability identities are used in the derivation: 
 \begin{center}
@@ -160,6 +160,9 @@ Analagous to ..., two well-known probability identities are used in the derivati
 }
 
 \end{enumerate}
+
+The derivation for calculating likelihoods uses the forward algorithm, $\alpha$, with the replacement of  $p(x_{t-1}|e_{1:t-1})$ with $p(x_{t-1}, e_{1:t-1})$ and one final summation. This means that it is possible to use the forward algorithm to calculate likelihoods: $p(e_{1:t}) = \sum_{i=1}^{n} \alpha(x_i, e_i)$, where $\alpha(x, e)$ is the result of applying the forward algorithm to the sequence of evidence variables $(e_1, ..., e_t)$.
+
 
 %No point in writing up likelihood algorithm as it's very similar to forward algorithm.
 

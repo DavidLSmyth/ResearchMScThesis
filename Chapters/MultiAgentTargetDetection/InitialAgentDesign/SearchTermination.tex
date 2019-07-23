@@ -34,37 +34,62 @@ $p_{0t}$ and $p_{1t}$ are calculated by using the evidence likelihood algorithm,
     \item Terminate the search accepting $H_1$, that the target is present in the search region. In this case, the target location with the highest estimated probability is returned as the target location.
     \item Continue the search, using the Action Selection Strategy described in section \ref{subsubsec:ActionSelection}.
 \end{enumerate}
+In practice, we often took log transforms of the values used in the SPRT, to simplify some calculations and to be able to look at plots that are less skewed and easier to interpret.
 
 \subsection{Analysis of Search Termination Criteria}
-The two parameters, $\alpha$ and $\beta$ that the user needs to specify to perform the Sequential Probability Ratio test need to be chosen carefully and depend on the context of the search. As in the usual hypothesis testing context, it is important to consider the significance level and power of the test to ensure that they reflect the severity of drawing an incorrect conclusion. Figure \ref{fig:SPRTVaryingT1} shows how the varying the type \Romannum{1} error rate for a fixed type \Romannum{2} error rate affects the upper and lower threshold for cutting off the search 
+The two parameters, $\alpha$ and $\beta$ that the user needs to specify to perform the Sequential Probability Ratio test need to be chosen carefully and depend on the context of the search. As in the usual hypothesis testing context, it is important to consider the significance level and power of the test to ensure that they reflect the severity of drawing an incorrect conclusion. Figure \ref{fig:SPRTVaryingT1} shows how the varying the type \Romannum{1} error rate for a fixed type \Romannum{2} error rate affects the upper and lower threshold for cutting off the search. Figure \ref{fig:SPRTVaryingT2} shows how the varying the type \Romannum{2} error rate for a fixed type \Romannum{1} error rate affects the upper and lower threshold for cutting off the search. Note that as the varying error rate increases on the x-axis, the decision boundaries come closer together, reflecting the intuition that we are more willing to accept a mistake.
 
 \note{might be better to have figures side-by-side.}
-\begin{figure}
+%\begin{figure}
+%    \centering
+%    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT1ErrorRate.png}
+%    \caption{The Log-likelihood upper and lower threshold for a varying type \Romannum{1} error rate and fixed type \Romannum{2} error rate.}
+%    \label{fig:SPRTVaryingT1}
+%\end{figure}
+
+%\begin{figure}
+%    \centering
+%    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT2ErrorRate.png}
+%    \caption{The Log-likelihood upper and lower threshold for a varying type \Romannum{2} error rate and fixed type \Romannum{1} error rate.}
+%    \label{fig:SPRTVaryingT2}
+%\end{figure}
+
+
+\begin{figure}%
     \centering
-    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT1ErrorRate.png}
-    \caption{The Log-likelihood upper and lower threshold for a varying type \Romannum{1} error rate and fixed type \Romannum{2} error rate.}
-    \label{fig:SPRTVaryingT1}
+    \subfloat[Varying T \Romannum{1} error rate and fixed T \Romannum{2} error rate]{{\includegraphics[width=7cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT2ErrorRate.png} }}%
+    \qquad
+    \subfloat[Varying T \Romannum{2} error rate and fixed T \Romannum{1} error rate]{{\includegraphics[width=7cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT2ErrorRate.png} }}%
+    \caption{Upper and lower values of A and B for varying error rates. Values are shown on a log scale}%
+    \label{fig:example}%
 \end{figure}
+
+
 
 \begin{figure}
     \centering
-    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT2ErrorRate.png}
-    \caption{The Log-likelihood upper and lower threshold for a varying type \Romannum{2} error rate and fixed type \Romannum{1} error rate.}
-    \label{fig:SPRTVaryingT2}
+    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/AandBAsFunctionOfAlphaAndBeta.png}
+    \caption{The upper and lower SPRT bounds for acceptance and rejection of $H_0$, as functions of the significance and power of the test. Values are shown on a log scale.}
+    \label{fig:SPRTCutoffFunctionOfAlphaAndBeta}
 \end{figure}
+
+
 
 \begin{figure}
     \centering
-    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT2ErrorRate.png}
-    \caption{The Log-likelihood upper and lower threshold for a varying type \Romannum{2} error rate and fixed type \Romannum{1} error rate.}
-    \label{fig:SPRTVaryingT2}
+    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/CutoffRegions.png}
+    \caption{The cutoff regions of the SPRT for $\alpha=0.05$, $\beta=0.08$ as a function of agent belief in whether target is present or not. Values are shown on a log scale.}
+    \label{fig:SPRTLogLikelihoodRatio}
 \end{figure}
+
+
+
 
 \note{maybe move tables to appendix}
 \begin{table}[!ht]
 \centering
-\caption{A as a function of $\alpha$ and $\beta$}
-\begin{tabular}{| c |cccccccccc} 
+\caption{Upper threshold of SPRT, $A$,  as a function of $\alpha$ and $\beta$}
+\begin{tabular}{| c |cccccccccc|} 
 \toprule
 \diagbox{$\beta$}{$\alpha$} & \makecell{0.05}& \makecell{0.1} & \makecell{0.15} & \makecell{0.2}& \makecell{0.25}& \makecell{0.3} & \makecell{0.35}& \makecell{0.4}& \makecell{0.45}& \makecell{0.5}  \\ 
 \midrule
@@ -86,8 +111,8 @@ The two parameters, $\alpha$ and $\beta$ that the user needs to specify to perfo
 
 \begin{table}[!ht]
 \centering
-\caption{B as a function of $\alpha$ and $\beta$}
-\begin{tabular}{| c |cccccccccc} 
+\caption{Lower threshold of SPRT, $B$, as a function of $\alpha$ and $\beta$}
+\begin{tabular}{| c |cccccccccc|} 
 \toprule
 \diagbox{$\beta$}{$\alpha$} & \makecell{0.05}& \makecell{0.1} & \makecell{0.15} & \makecell{0.2}& \makecell{0.25}& \makecell{0.3} & \makecell{0.35}& \makecell{0.4}& \makecell{0.45}& \makecell{0.5}  \\ 
 \midrule
@@ -104,3 +129,14 @@ The two parameters, $\alpha$ and $\beta$ that the user needs to specify to perfo
 \bottomrule
 \end{tabular}
 \end{table}
+
+
+
+
+
+
+
+
+
+
+

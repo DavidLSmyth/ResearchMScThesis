@@ -37,13 +37,18 @@ $p_{0t}$ and $p_{1t}$ are calculated by using the evidence likelihood algorithm,
 In practice, we often took log transforms of the values used in the SPRT, to simplify some calculations and to be able to look at plots that are less skewed and easier to interpret.
 
 \subsection{Analysis of Search Termination Criteria}
-The two parameters, $\alpha$ and $\beta$ that the user needs to specify to perform the Sequential Probability Ratio test need to be chosen carefully and depend on the context of the search. As in the usual hypothesis testing context, it is important to consider the significance level and power of the test to ensure that they reflect the severity of drawing an incorrect conclusion. Figure \ref{fig:VaryingSPRTParameters} shows plots of how varying the significance and power of the test affect the values of $A$ and $B$, which determine when the search will be terminated.
+The two parameters, $\alpha$ and $\beta$ that the user needs to specify to perform the SPRT need to be chosen carefully and depend on the context of the search. As in the standard hypothesis testing context, it is important to consider the significance level and power of the test to ensure that they reflect the severity of drawing an incorrect conclusion. They can also help to perform analysis on how well the agent could perform, since setting a high threshold means that the agent may have to take a minimum number of samples at the correct target location in order to choose $H_0$ or $H_1$. \par
+
+Figure \ref{fig:SPRTCutoffFunctionOfAlphaAndBeta} shows how A and B vary as functions of the parameters $\alpha$ and $\beta$ on a log scale. If the log-likelihood ratio $\frac{H_0}{H_1}$ lies in this region, another sample is taken. A projection of this plot onto the axes that vary $\alpha$ for fixed $\beta$ in figure (a) and $\beta$ for fixed $\alpha$ in figure (b) is shown in figure \ref{fig:VaryingSPRTParameters}.
+
+
+Figure \ref{fig:VaryingSPRTParameters} shows two plots, which show 
+
+both of which plot  plots of how varying the significance and power of the test affect the values of $A$ and $B$, which determine when the search will be terminated.
 
 Tables \ref{table:SPRTA} and \ref{table:SPRTB} show values of A and B, the upper and lower thresholds, for varying $\alpha$ and $\beta$, for which the search will be cutoff. 
-
+\par
 %varying the type \Romannum{1} error rate for a fixed type \Romannum{2} error rate affects the upper and lower threshold for cutting off the search. Figure \ref{fig:SPRTVaryingT2} shows how the varying the type \Romannum{2} error rate for a fixed type \Romannum{1} error rate affects the upper and lower threshold for cutting off the search. Note that as the varying error rate increases on the x-axis, the decision boundaries come closer together, reflecting the intuition that we are more willing to accept a mistaken conclusion.
-
-\note{might be better to have figures side-by-side.}
 %\begin{figure}
 %    \centering
 %    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT1ErrorRate.png}
@@ -58,12 +63,12 @@ Tables \ref{table:SPRTA} and \ref{table:SPRTB} show values of A and B, the upper
 %    \label{fig:SPRTVaryingT2}
 %\end{figure}
 
-
+%Show how A and B vary for a fixed T1 or T2 error rate.
 \begin{figure}%
     \centering
-    \subfloat[Varying T\Romannum{1} error rate for a fixed T\Romannum{2} error rate]{{\includegraphics[width=7cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT1ErrorRate.png} }}%
+    \subfloat[Varying T\Romannum{1} error rate for a fixed T\Romannum{2} error rate]{{\includegraphics[width=7cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/AAndBVaryingWithAlpha.png} }}%
     \qquad
-    \subfloat[Varying T\Romannum{2} error rate and fixed T\Romannum{1} error rate]{{\includegraphics[width=7cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/SPRTDecisionThresholdVaryingT2ErrorRate.png} }}%
+    \subfloat[Varying T\Romannum{2} error rate and fixed T\Romannum{1} error rate]{{\includegraphics[width=7cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/AAndBVaryingWithBeta.png} }}%
     \caption{Upper and lower values of A and B for varying error rates. Values are shown on a log scale}%
     \label{fig:VaryingSPRTParameters}%
 \end{figure}

@@ -1,4 +1,4 @@
-\subsection{Initial Assumptions}
+\subsection{Initial Assumptions}\label{subsec:initalAssumptions}
 \note{may need to rename this. want to convey that initially, we made some simplifying assumptions that isolate key aspects of problem that need to be solved. Then these assumptions were modified to deal with the more complex problem involving battery etc.}
 
 Rather than immediately attempting to tackle the full problem, we chose to initially make some simplifications in order to identify potential solution strategies that could be extended to more complex versions of the problem. At the outset, we made the following simplifying assumptions:
@@ -11,6 +11,7 @@ Rather than immediately attempting to tackle the full problem, we chose to initi
     \item The UAVs operate over a discrete spatial grid spanning the region to search, assumed to be polygonal as above, the dimensions of which are pre-determined by the sensor resolution.
     \item The UAVs are assumed to have a GPS sensor that is accurate to beyond the sensor resolution (implying that the UAV moves to discrete grid locations without drift).
     \item The target is assumed to be small enough to occupy only one grid cell at a time. It is also assumed to not lie across grid cells.
+    \item There exists a path that the agent can follow between any two given grid cells.
 \end{itemize}
 While these assumptions are clearly unrealistic, they are convenient because they simplify the design of the system and subsequent analysis. In later sections in this chapter, these assumptions are relaxed and the necessary modifications for the solution strategy are discussed. Some ramifications of these assumptions are addressed later in the chapter, at section <x>. It is worth noting that similar simplifying assumptions were made in related works in the literature, 
 (\cite{Chung2007ASearch} and \cite{Waharte2010SupportingUAVs}), % find additional citations in mendeley

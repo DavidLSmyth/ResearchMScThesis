@@ -8,9 +8,17 @@ The first assumption that we address is that there are either zero or one target
 The main issue that arises when including \textit{multiple} targets in the hidden state, $X_t$, is that there is an exponential increase the dimensionality of the hidden state for each new target added. This means that maintaining an estimate of the state quickly becomes infeasible, since the run time of the forward algorithm detailed in section \ref{subsubsec:filteringDBN} is dependent on the square of the size of the joint distribution of the hidden state variables, $X_t$ and the memory requirements for maintaining the estimated state also depend on the dimensionality of the joint distribution of the hidden state. See section \ref{subsubsec:filteringDBN} for details of the filtering algorithm.
 
 
-Section <reference lit review> of the literature review outlines a number of techniques that have been applied by other researchers in this domain in order to deal with the case of multiple targets. \note{maybe should leave all of this to lit. review and just outline what I did.} Related work \cite{Waharte2009CoordinatedUAVs} proposed to use an approach commonly used with occupancy grids, which is that every grid cell may or may not contain a target, independent of all other grid cells. This technique is often referred to as \textit{mapping} when the location of the agent is known. This is generally described in \cite[P.~284]{Thrun:2005:ProbabilisticRobotics}. Rather than maintain a multinomial distribution for $TargetLocation_{t-1}$, as was the case in the work outlined in this chapter, we create a new binary random variable representing a target being present or not in each grid cell, denote $m_i$ for $i \in {1,...,N}$. We denote m as the joint distribution of these random variables. 
+Section <reference lit review> of the literature review outlines a number of techniques that have been applied by other researchers in this domain in order to deal with the case of multiple targets. \note{maybe should leave all of this to lit. review and just outline what I did.} Related work \cite{Waharte2009CoordinatedUAVs} proposed to use an approach commonly used with occupancy grids, which is that every grid cell may or may not contain a target, independent of whether or not all other grid cells contain a target. This technique is often referred to as \textit{mapping} when the location of the agent is known. This is generally described by \citeauthor{Thrun:2005:ProbabilisticRobotics} in  \cite[P.~284]{Thrun:2005:ProbabilisticRobotics}. Rather than maintain a multinomial distribution for $TargetLocation_{t-1}$, as was the case in the work outlined in this chapter, we create a new binary random variable representing a target being present or not in each grid cell, denoted $m_i$ for $i \in \{1,...,N\}$. We denote m as the joint distribution of these random variables. The DBN that corresponds to this is shown in Figure \ref{fig:DBNWithMultipleIndependent}. The associated update rule simply 
 
-A suitable DBN for this approach is shown in figure <>. This
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/DBNs/DBNWithMultipleIndependentSources.png}
+    \caption{The DBN which takes into account that there could be a target in each of the grid cells}
+    \label{fig:DBNWithMultipleIndependent}
+\end{figure}
+
+
+
 
 
 In the case, estimating the joint distribution is not hard, since This results in a greatly simplified state estimate update equation, where the probability of the target being located in a grid cell does not change unless the observation was made in that grid cell. The major drawback of this approach is that there is no clear way to apply the SPRT, hence there is no clear way to decide when to terminate the search. 

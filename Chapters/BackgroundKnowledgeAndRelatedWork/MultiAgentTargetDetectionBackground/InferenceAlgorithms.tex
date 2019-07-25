@@ -39,7 +39,7 @@ Note that $\eta$ is a normalizing constant that ensures that the probability dis
 
 \begin{algorithm}{}
 \caption{Forward Algorithm for HMMs}
-\label{alg:bayes_filter_observations_only}
+\label{alg:forwardAlgorithm}
 
 \begin{algorithmic}[1]
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
@@ -82,9 +82,9 @@ Note that $\eta$ is a normalizing constant that ensures that the probability dis
 
 \note{Don't forget to mention: Sufficient statistics, forward algorithm}
 
-Algorithm \ref{alg:bayes_filter_observations_only} uses integrals to account for the fact that the distribution being used may be continuous. The work done in this thesis only uses discrete distributions, and so summations are used instead of integrals for the subsequent discussion. A consequence of using discrete distributions is that it is possible to formulate the forward algorithm using vector and matrix notation. As outlined in section \ref{Chapter:HMM}, the transition model for a HMM can be written down in matrix form, as can the observation model. This allows for a highly compact notation: denoting $p(x_t | e_{1:t})$ as $f_{1:t}$, we can write $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, where $f_{1:t}$ contains the vector of values of $p(x_t | e_{1:t})$ for every possible $x_t$ \cite[p.~579]{AIAMA}. Note that the observation model, $O_t$ is time dependent, as opposed to the transition model, which is assumed to be stationary. \par
+Algorithm \ref{alg:forwardAlgorithm} uses integrals to account for the fact that the distribution being used may be continuous. The work done in this thesis only uses discrete distributions, and so summations are used instead of integrals for the subsequent discussion. A consequence of using discrete distributions is that it is possible to formulate the forward algorithm using vector and matrix notation. As outlined in section \ref{Chapter:HMM}, the transition model for a HMM can be written down in matrix form, as can the observation model. This allows for a highly compact notation: denoting $p(x_t | e_{1:t})$ as $f_{1:t}$, we can write $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, where $f_{1:t}$ contains the vector of values of $p(x_t | e_{1:t})$ for every possible $x_t$ \cite[p.~579]{AIAMA}. Note that the observation model, $O_t$ is time dependent, as opposed to the transition model, which is assumed to be stationary. \par
 
-Some insight can be gained from studying Algorithm \ref{alg:bayes_filter_observations_only}. There are three main steps to this algorithm, and the intuition behind them is explained: 
+Some insight can be gained from studying Algorithm \ref{alg:forwardAlgorithm}. There are three main steps to this algorithm, and the intuition behind them is explained: 
 \note{These are highly verbose, edit to make less wordy}
 \begin{enumerate}
     
@@ -194,7 +194,7 @@ The Baum-Welch algorithm is a special case of the EM algorithm and is frequently
 
 
 
-\subsubsection{Filtering Algorithm for DBNs}
+\subsubsection{Filtering Algorithm for DBNs}\label{subsubsec:filteringDBN}
 \note{Extend HMM to add control variable}
 \begin{wrapfigure}{r}{0.65\linewidth}
     \centering

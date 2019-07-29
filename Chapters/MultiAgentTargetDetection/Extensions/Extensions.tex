@@ -69,39 +69,7 @@ The estimated state of each grid cell, $m_i$, is maintained by the agent. The as
 The major drawback of this approach is that there is no clear way to apply the SPRT, hence an alternative method of terminating the search is required. Rather than 
 
 
-Rather than follow this work, we chose to use a simple extension to the approach proposed in this chapter so far. We chose to run a sequential search, which locates sources one-by-one, using information from the previous search to begin the subsequent search for the next target. This uses the advantages of using the sequential search procedure with the SPRT while avoiding the dimensionality problems that arise with introducing extra targets. The search procedure we propose for multiple sources is given in algorithm \ref{alg:MultiTargetLocalisation}.
-
-
-
-%\begin{algorithm}{}
-%\caption{Forward Algorithm for HMMs}
-%\label{alg:forwardAlgorithm}
-
-%\begin{algorithmic}[1]
-%\renewcommand{\algorithmicrequire}{\textbf{Input:}}
-%\renewcommand{\algorithmicensure}{\textbf{Output:}}
-%Input
-%\REQUIRE $\newline P(x_{t-1} | e_{1:t-1})=bel(x_{t-1}), \text{ the belief distribution as far as the previous timestep}
-%\newline e_t, \text{ the most recent observation}
-%\newline hmm, \text{(a Hidden Markov Model specifying the transition and observation probabilities}$
-%Output
-%\ENSURE  $\newline P(X_{t} | e_{1:t}) = bel(X_{t})$
-
-%\hfill\pagebreak
-
-%\FOR{all $x_t$}
-%\STATE $\overline{bel}(x_t) = \int p(X_t | x_{t-1}) p(X_{t-1} | e_{1:t-1}) d x_{t-1}$
-%\STATE $bel(x_t) = p(e_t | x_t) \overline{bel}(x_t)$
-%\ENDFOR
-%\STATE $ \eta = 1 / \int_{x_t}{bel(x_t)}dx_t$
-% \FOR{all $x_t$ do:}
-%\STATE $bel(x_t) = \eta{bel}(x_t)$
-%\ENDFOR  
-    
-%\ENDWHILE
-%\RETURN $bel(X_t)$
-%\end{algorithmic} 
-%\end{algorithm}
+Rather than follow this work, we chose to use a simple extension to the approach proposed in this chapter so far. We chose to run a sequential search, which locates sources one-by-one, using information from the previous search to begin the subsequent search for the next target. This uses the advantages of using the sequential search procedure with the SPRT while avoiding the dimensionality problems that arise with introducing extra targets. The search procedure we propose for multiple sources is given in algorithm \ref{alg:MultiTargetLocalisation}. The algorithm maintains a list of located targets in the variable target\_locations and runs the find\_next\_target procedure until the SPRT returns that there is no target present using the most recent state estimate. Lines 9 and 10 effectively restart the search procedure for a single source with the probability at the location where the last target was located set to zero. This means that it will continue to be zero, due to the multiplicative update formula, which effectively removes it from the process of localising subsequent targets.
 
 
 \begin{algorithm}{}
@@ -112,33 +80,27 @@ Rather than follow this work, we chose to use a simple extension to the approach
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 %Input
-\REQUIRE $ \newline initial\_estimated\_state = P(x_{0} | e_{0})=bel(x_{0}), \quad\text{ The initial estimated state}
+\REQUIRE $ \newline initial\_estimated\_state = p(x_{0} | e_{0}, u_0)=bel(x_{0}), \quad\text{ The initial estimated state}
 \newline K, \quad \text{ the maximum number of targets to be localised.}
 \newline find\_next\_target, \quad \text{The procedure descibed in Algorithm \ref{alg:SingleTargetLocalisation}}$
 %Output
 \ENSURE  A set of target locations, of size $\leq$ K
 
 \hfill\pagebreak
-\STATE located\_sources\leftarrow empty array
-\WHILE{located\_sources.length \leq K}
-\STATE test
+\STATE target\_locations $\leftarrow$ empty array
+\STATE estimated\_state $\leftarrow$ initial\_estimated\_state
+\WHILE{target\_locations.length $\leq$ K}
+\STATE next\_target\_location $\leftarrow$ find\_next\_target()
+\IF{next\_target is $x_{N+1}$}
+\STATE {break}
+\ELSE 
+\STATE{target\_locations.append(next\_target\_location)}
+\STATE{Update the estimated\_state probability where (target\_location = next\_target\_location) to zero}
+\STATE{Normalize the estimated states to sum to one}
+\ENDIF
 \ENDWHILE
-    
-%\WHILE {pointsToVisit is not empty}
 
-%\STATE agentPosition $\leftarrow$ last value in agentPaths.get(agent)
-
-%\STATE P$\leftarrow$\(\displaystyle \min_{p \in pointsToVisit}\)cost(agentPosition, p)
-
-%\STATE Update currentAgent value in AgentPaths to include P
-%\STATE Add P to visitedPoints.
-%\STATE Remove P from pointsToVisit.
-%\STATE currentAgentIndex$\leftarrow$(currentAgentIndex+1) $\mathbf{mod}$$\vert$List of Agents$\vert$
-%\STATE currentAgent$\leftarrow$agents.get(currentAgentIndex)
-
-
-%\ENDWHILE
-\RETURN $bel(X_t)$
+\RETURN target\_locations
 \end{algorithmic} 
 \end{algorithm}
 \note{Talk about how prior can be specified to guide search to certain regions before others}

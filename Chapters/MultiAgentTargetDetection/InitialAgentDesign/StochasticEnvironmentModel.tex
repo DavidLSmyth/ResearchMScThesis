@@ -22,15 +22,15 @@ A number of conditional probabilities are specified here in order to describe th
 \scriptsize
 \begin{equation}\label{eqn:EvidenceVarsProbs}
     %\centering
-    p(SensorReading_t | AgentLoc_{t-1}, EvidenceLoc_{t-1})  = 
+    p(SensorReading_t | AgentLoc_{t}, TargetLoc_{t})  = 
     \begin{cases}
-    \alpha \quad \text{ if } SensorReading_t=1 \text{ and } EvidenceLoc_t \neq AgentLoc_t
+    \alpha \quad \text{ if } SensorReading_t=1 \text{ and } TargetLoc_t \neq AgentLoc_t
     \\
-    1-\beta \quad \text{ if } SensorReading_t=1 \text{ and } EvidenceLoc_t = AgentLoc_t
+    1-\beta \quad \text{ if } SensorReading_t=1 \text{ and } TargetLoc_t = AgentLoc_t
     \\
-    \beta \quad \text{ if } SensorReading_t=0 \text{ and } EvidenceLoc_t \neq AgentLoc_t
+    \beta \quad \text{ if } SensorReading_t=0 \text{ and } TargetLoc_t = AgentLoc_t
     \\
-    1-\alpha \quad \text{ if } SensorReading_t=0 \text{ and } EvidenceLoc_t \neq AgentLoc_t
+    1-\alpha \quad \text{ if } SensorReading_t=0 \text{ and } TargetLoc_t \neq AgentLoc_t
     \end{cases}
     %
 \end{equation}

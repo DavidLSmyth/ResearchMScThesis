@@ -62,19 +62,6 @@ Note that $\eta$ is a normalizing constant that ensures that the probability dis
 \STATE $bel(x_t) = \eta{bel}(x_t)$
 \ENDFOR  
     
-%\WHILE {pointsToVisit is not empty}
-
-%\STATE agentPosition $\leftarrow$ last value in agentPaths.get(agent)
-
-%\STATE P$\leftarrow$\(\displaystyle \min_{p \in pointsToVisit}\)cost(agentPosition, p)
-
-%\STATE Update currentAgent value in AgentPaths to include P
-%\STATE Add P to visitedPoints.
-%\STATE Remove P from pointsToVisit.
-%\STATE currentAgentIndex$\leftarrow$(currentAgentIndex+1) $\mathbf{mod}$$\vert$List of Agents$\vert$
-%\STATE currentAgent$\leftarrow$agents.get(currentAgentIndex)
-
-
 %\ENDWHILE
 \RETURN $bel(X_t)$
 \end{algorithmic} 

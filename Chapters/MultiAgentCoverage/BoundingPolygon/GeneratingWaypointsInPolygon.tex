@@ -1,5 +1,7 @@
+\nomenclature[]{GPS}{Global Positioning System}
+
 \section{Generation of Waypoints}
-We first address the issue of finding a discrete set of waypoints, referenced above as $R$. We chose to formulate the problem using a discrete set of waypoints, rather than deal with the case of treating the region as continuous space, since it is much easier to accurately record sensor data at a given point. Discretising the space also allows the problem to be formulated in a manner that is easier to tackle, without losing the key aspects.
+We first address the issue of finding a discrete set of waypoints, referenced above as $R$. We chose to formulate the problem using a discrete set of waypoints, rather than deal with the case of treating the region as continuous space, since it is much easier to accurately record sensor data when the UAV has settled at a given point. Discretising the space also allows the problem to be formulated in a manner that is easier to tackle, without losing the key aspects.
 %\begin{itemize}
     %\item It is more straightforward to describe the problem using a discrete set of points rather than a continuous one.
 %    \item It is much easier to process sensor information if it is known exactly where this data has been captured. The UAVs may stop at each discrete waypoint to visit these locations. *Focus on this point, expand if possible*
@@ -13,7 +15,7 @@ We first address the issue of finding a discrete set of waypoints, referenced ab
 \note{Above needs revision, will come back once rest of chapter has been fleshed out a bit more}
 We began by assuming that the region which is to be surveyed, the \textit{region of interest}, can be described by a polygon on the x-y plane, since it allows for a discrete representation. We favour a discrete representation since it is computationally much easier to record and manipulate a set of points denoting the boundary rather than an arbitrary curve. Given this polygon, the goal is to generate a set of points, $R$, which are a uniform distance from each other in the x and y directions and lie inside the polygonal grid. These points form a regular tessellation of the region of interest. In order to do this, we employed the following methodology, using well-known algorithms:
 \begin{enumerate}
-    \item Find the rectangle that tightly bounds the polygon, which is oriented with the x-y plane. This is shown in \ref{fig:PolygonWithBoundingRect}
+    \item Find the circum-rectangle that tightly bounds the polygon, which is oriented with the x-y plane. This is shown in \ref{fig:PolygonWithBoundingRect}
     \item Generate a set of grid points in the bounding rectangle. This is shown in \ref{fig:PolygonWithBoundingRectAndGridPoints}
     \item Prune the points that lie inside the rectangle but outside the polygon. This is shown in \ref{fig:PolygonWithBoundingRectAndGridPointsPruned}
 \end{enumerate}
@@ -22,30 +24,26 @@ We began by assuming that the region which is to be surveyed, the \textit{region
 \begin{figure}
 \centering
 \subfloat[Arbitrary Polygonal Region]{
-  \includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/Polygon.PNG}\label{fig:PolygonOnly}
+  \includegraphics[width=68mm]{Chapters/MultiAgentCoverage/Figs/Polygon.PNG}\label{fig:PolygonOnly}
 }
 \subfloat[Bounding Rectangle Found]{
-  \includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRect.PNG}\label{fig:PolygonWithBoundingRect}
+  \includegraphics[width=68mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRect.PNG}\label{fig:PolygonWithBoundingRect}
 }
 \hspace{0mm}
 \subfloat[Grid Points Generated in Bounding Rectangle]{
-  \includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRectGridPoints.PNG}\label{fig:PolygonWithBoundingRectAndGridPoints}
+  \includegraphics[width=68mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRectGridPoints.PNG}\label{fig:PolygonWithBoundingRectAndGridPoints}
 }
 \subfloat[Grid Points Outside of Polygon Pruned]{
-  \includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRectGridPointsPruned.PNG}\label{fig:PolygonWithBoundingRectAndGridPointsPruned}
+  \includegraphics[width=68mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRectGridPointsPruned.PNG}\label{fig:PolygonWithBoundingRectAndGridPointsPruned}
 }
 \end{figure}
 
-This procedure was devised with the aim of being straightforward to implement and modify. The algorithm used to carry out these steps is outlined in Algorithm \ref{alg:GridGeneration}. The algorithm is very intuitive: first, the bounding rectangle is constructed from the largest and smallest x and y coordinates of the points in the polygon, outlined in lines 2-6. Then grid points in the bounding rectangle are generated in lines 7-13. Finally in lines 14-18, the grid points that lie inside the bounding rectangle but outside the polygon are pruned.
-
-
-Algorithm \ref{alg:PointInPolygon} outlines a procedure for finding whether a point is contained in a polygon using the well-known \textit{crossing test}, described in \cite{Shimrat1962Algorithms}.
-
+This procedure was devised with the aim of being straightforward to implement and modify. The algorithm used to carry out these steps is outlined in Algorithm \ref{alg:GridGeneration}. The algorithm is very intuitive: first, the bounding circum-rectangle is constructed from the largest and smallest x and y coordinates of the points in the polygon, outlined in lines 2-6. Then grid points in the bounding rectangle are generated in lines 7-13. Finally in lines 14-18, the grid points that lie inside the bounding rectangle but outside the polygon are pruned using the Point-in-Polygon routine which is described separately in Algorithm \ref{alg:PointInPolygon}. 
 
 
 \begin{algorithm}{}
 %\caption{Crossing Test for Point in Polygon based on \cite{Shimrat1962Algorithms}}
-\caption{Point in Polygon}
+\caption{Point-in-Polygon}
 \label{alg:PointInPolygon}
 \begin{algorithmic}[1]
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
@@ -59,7 +57,7 @@ $
 \ENSURE $\newline \text{True if P is contained in R else False }$
 
 \hfill\pagebreak
-\STATE polygon\_points $\leftarrow$ The set of points which define the edges of R
+\STATE polygon\_points $\leftarrow$ The set of points defining the vertices of R
 \IF{x coordinate of $P$ is greater than the largest value or less than the smallest value of the x coordinates of the points in $R$}
 \RETURN False
 \ELSIF{y coordinate of $P$ is greater than the largest value or less than the smallest value of the y coordinates of the points in $R$}
@@ -75,14 +73,14 @@ $
 
 \ELSE
 \STATE point\_in\_polygon $\leftarrow$ True
-\STATE edges $\leftarrow$ the set of edges defining
+\STATE edges $\leftarrow$ the set of edges defining R
 \FOR{each edge in edges}
 \STATE p1 $\leftarrow$ the first point of edge
 \STATE p2 $\leftarrow$ the second point of edge
 
-\IF{(y coordinate of $P$ lies between y coordinates of p1 and p2) AND
-     x coordinate of $P$ is less than the x coordinate of the point of intersection between e and the ray extended to +$\infty$ from $P$ in the +x direction}
-\STATE point\_in\_polygon $\leftarrow$ not point\_in\_polygon
+\IF{(the y coordinate of $P$ lies between the  y coordinates of p1 and p2) \&
+     the x coordinate of $P$ is less than the x coordinate of the point of intersection between e and the ray extended to +$\infty$ from $P$ in the +x direction}
+\STATE point\_in\_polygon $\leftarrow \neg$ point\_in\_polygon
 \ENDIF
 
 \ENDFOR
@@ -91,7 +89,7 @@ $
 \end{algorithm}
 
 
-\begin{algorithm}{H}
+\begin{algorithm}{}
 \caption{Generate Grid Points In Polygon}
 \label{alg:GridGeneration}
 \begin{algorithmic}[1]
@@ -115,8 +113,8 @@ $
 
 \STATE bounding\_rect $\leftarrow$ The tightest bounding rectangle which contains the polygon R defined by the points (min\_x, min\_y), (min\_x, max\_y), (max\_x, max\_y),(max\_x, min\_y).
 
-\STATE no\_y\_points $\leftarrow \left \lfloor{\frac{max_y - min_y}{y\_spacing}}\right \rfloor$
-\STATE no\_x\_points $\leftarrow \left \lfloor{\frac{max_y - min_y}{x\_spacing}}\right \rfloor$
+\STATE no\_y\_points $\leftarrow \left \lfloor{\frac{max\_y - min\_y}{y\_spacing}}\right \rfloor$
+\STATE no\_x\_points $\leftarrow \left \lfloor{\frac{max\_x - min\_x}{x\_spacing}}\right \rfloor$
 
 \FOR{y\_spacing\_index = 0 to no\_y\_points}
 \FOR{x\_spacing\_index = 0 to no\_x\_points}
@@ -124,13 +122,31 @@ $
 \ENDFOR
 \ENDFOR
 \FOR{point in grid\_points}
-\IF{Point in Polygon(R, point) is false}
+\IF{Point-in-Polygon(R, point) is false}
 \STATE Remove point from grid\_points
 \ENDIF
 \ENDFOR
 \RETURN grid\_points
 \end{algorithmic} 
 \end{algorithm}
+
+%\begin{wrapfigure}{r}{0.5\textwidth}
+%\includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/PointOutsidePolygon.PNG}\caption{Ray extended from point outside polygon intersects an even number of times}\label{fig:PointOutsidePolygon}
+%\end{wrapfigure}
+
+%\begin{wrapfigure}{r}{0.5\textwidth}
+%\includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/PointInsidePolygon.PNG}\caption{Ray extended from point inside polygon intersects an odd number of times}\label{fig:PointInsidePolygon}
+%\end{wrapfigure}
+
+We chose to use the well-known \textit{crossing test} \cite{Shimrat1962Algorithms}, which extends a ray from the point to be tested in the positive x-direction. If it crosses the boundary of the polygon an odd number of times, then it must be contained within it, otherwise it must lie outside it. This is illustrated in figures \ref{fig:PointOutsidePolygon} and \ref{fig:PointInsidePolygon}. The running time of this algorithm is dictated by the number of edges in the polygon and the size of the polygon relative to the desired tessellation spacing in the x and y directions. We did not make any optimizations other than the one outlined in lines 2-5 of Algorithm \ref{alg:PointInPolygon}, but there is room to improve the runtime significantly if one is dealing with particularly large regions of interest or particularly small spacings between grid points.
+
+
+\begin{figure}{}
+\subfloat[Ray extended from point outside polygon intersects an even number of times]{\includegraphics[width=60mm]{Chapters/MultiAgentCoverage/Figs/PointOutsidePolygon.PNG}\label{fig:PointOutsidePolygon}}
+%\end{wrapfigure}
+\hspace{1em}
+\subfloat[Ray extended from point inside polygon intersects an odd number of times]{\includegraphics[width=60mm]{Chapters/MultiAgentCoverage/Figs/PointInsidePolygon.PNG}\label{fig:PointInsidePolygon}}
+\end{figure}
 
 
 %From a practical perspective, the region specified is defined over the earth's surface, which is not planar. For small regions, it can be assumed that this region is planar, since at 
@@ -139,6 +155,7 @@ $
 
 
 
-
+\subsection{Generating Waypoints as GPS Locations}
+In order to be useful in the real world, it is necessary to refer to these points using some kind of reference coordinate system that UAVs can use. Since GPS is by far the most commonly system that UAVs use for navigation, we chose to design an implementation based on the \textit{World Geodetic System 1984} (WGS84) coordinate system, which is the coordinate system that GPS relies upon. The WGS84 system was proposed by the US department of defence and is officially documented in the official report entitled "Department of Defense World Geodetic System 1984 Its Definition and Relationships With Local Geodetic Systems". It assumes that the datum surface is an oblate spheroid, and refers to latitudes, longitudes and altitudes 
 
 

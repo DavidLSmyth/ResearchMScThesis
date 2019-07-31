@@ -1,0 +1,20 @@
+\section{Generation of Waypoints}
+We first address the issue of finding a discrete set of waypoints, referenced above as $R$. We chose to formulate the problem using a discrete set of waypoints, rather than deal with the case of treating the region as continuous space, since it is much easier to accurately record sensor data at a given point. Discretising the space also allows the problem to be formulated in a manner that is easier to tackle, without losing the key aspects.
+%\begin{itemize}
+    %\item It is more straightforward to describe the problem using a discrete set of points rather than a continuous one.
+%    \item It is much easier to process sensor information if it is known exactly where this data has been captured. The UAVs may stop at each discrete waypoint to visit these locations. *Focus on this point, expand if possible*
+%    \item The case of path-finding using discrete waypoints has a strong body of literature behind it
+%    \item The UAVs run autopilot software which can guide them using the on-board GPS sensor
+%\end{itemize}
+
+%which are the center points of cells that partition the region of interest.
+\note{set of waypoints create a voronoi partition, might be worth talking about}
+
+\note{Above needs revision, will come back once rest of chapter has been fleshed out a bit more}
+From a practical perspective, the region specified is defined over the earth's surface, which is not planar. The generation of grid points takes this into account. The earth can be well described mathematically as an ellipsoid talk about WGS84
+
+
+
+
+
+

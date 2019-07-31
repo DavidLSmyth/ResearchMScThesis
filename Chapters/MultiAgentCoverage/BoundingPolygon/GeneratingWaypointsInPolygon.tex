@@ -36,10 +36,10 @@ We began by assuming that the region which is to be surveyed, the \textit{region
 }
 \end{figure}
 
-This procedure was devised with the aim of being straightforward to implement and modify. The algorithm used to carry out these steps is outlined in \ref{alg:GridGeneration}. 
+This procedure was devised with the aim of being straightforward to implement and modify. The algorithm used to carry out these steps is outlined in Algorithm \ref{alg:GridGeneration}. The algorithm is very intuitive: first, the bounding rectangle is constructed from the largest and smallest x and y coordinates of the points in the polygon, outlined in lines 2-6. Then grid points in the bounding rectangle are generated in lines 7-13. Finally in lines 14-18, the grid points that lie inside the bounding rectangle but outside the polygon are pruned.
 
 
-Algorithm \ref{alg:PointInPolygon} outlines a procedure for finding whether a point is contained in a polygon using the well-known \textit{crossing test}, described in  \cite{Shimrat1962Algorithms}.
+Algorithm \ref{alg:PointInPolygon} outlines a procedure for finding whether a point is contained in a polygon using the well-known \textit{crossing test}, described in \cite{Shimrat1962Algorithms}.
 
 
 
@@ -115,12 +115,12 @@ $
 
 \STATE bounding\_rect $\leftarrow$ The tightest bounding rectangle which contains the polygon R defined by the points (min\_x, min\_y), (min\_x, max\_y), (max\_x, max\_y),(max\_x, min\_y).
 
-\STATE no\_y\_points $\leftarrow \left \lceil{\frac{max_y - min_y}{y\_spacing}}\right \rceil$
-\STATE no\_x\_points $\leftarrow \left \lceil{\frac{max_y - min_y}{x\_spacing}}\right \rceil$
+\STATE no\_y\_points $\leftarrow \left \lfloor{\frac{max_y - min_y}{y\_spacing}}\right \rfloor$
+\STATE no\_x\_points $\leftarrow \left \lfloor{\frac{max_y - min_y}{x\_spacing}}\right \rfloor$
 
 \FOR{y\_spacing\_index = 0 to no\_y\_points}
 \FOR{x\_spacing\_index = 0 to no\_x\_points}
-\STATE Add (min\_x + x\_spacing * x\_spacing\_index, min\_y + y\_spacing * y\_spacing\_index) to grid\_points
+\STATE Add the point (min\_x + x\_spacing * x\_spacing\_index, min\_y + y\_spacing * y\_spacing\_index) to grid\_points
 \ENDFOR
 \ENDFOR
 \FOR{point in grid\_points}

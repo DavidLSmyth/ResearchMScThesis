@@ -1,4 +1,5 @@
 \nomenclature[]{GPS}{Global Positioning System}
+\nomenclature[]{WGS84}{World Geodetic System 1984}
 
 \section{Generation of Waypoints}
 We first address the issue of finding a discrete set of waypoints, referenced above as $R$. We chose to formulate the problem using a discrete set of waypoints, rather than deal with the case of treating the region as continuous space, since it is much easier to accurately record sensor data when the UAV has settled at a given point. Discretising the space also allows the problem to be formulated in a manner that is easier to tackle, without losing the key aspects.
@@ -90,7 +91,7 @@ $
 
 
 \begin{algorithm}{}
-\caption{Generate Grid Points In Polygon}
+\caption{Algorithm to Generate a Uniformly Spaced Grid of Points in an Arbitrary Polygon}
 \label{alg:GridGeneration}
 \begin{algorithmic}[1]
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
@@ -104,7 +105,7 @@ $
 \ENSURE $\newline grid\_points \quad \text{ A set of uniformly spaced (x, y) points, which define a regular } \newline \text{ tessellation of the region of interest}$
 
 \hfill\pagebreak
-\STATE grid\_points $\leftarrow$ empty array
+\STATE waypoints $\leftarrow$ empty array
 
 \STATE max\_x $\leftarrow$ maximum x value of all points in R
 \STATE min\_x $\leftarrow$ minimum x value of all points in R
@@ -121,12 +122,12 @@ $
 \STATE Add the point (min\_x + x\_spacing * x\_spacing\_index, min\_y + y\_spacing * y\_spacing\_index) to grid\_points
 \ENDFOR
 \ENDFOR
-\FOR{point in grid\_points}
+\FOR{point in waypoints}
 \IF{Point-in-Polygon(R, point) is false}
 \STATE Remove point from grid\_points
 \ENDIF
 \ENDFOR
-\RETURN grid\_points
+\RETURN waypoints
 \end{algorithmic} 
 \end{algorithm}
 
@@ -138,7 +139,7 @@ $
 %\includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/PointInsidePolygon.PNG}\caption{Ray extended from point inside polygon intersects an odd number of times}\label{fig:PointInsidePolygon}
 %\end{wrapfigure}
 
-We chose to use the well-known \textit{crossing test} \cite{Shimrat1962Algorithms}, which extends a ray from the point to be tested in the positive x-direction. If it crosses the boundary of the polygon an odd number of times, then it must be contained within it, otherwise it must lie outside it. This is illustrated in figures \ref{fig:PointOutsidePolygon} and \ref{fig:PointInsidePolygon}. The running time of this algorithm is dictated by the number of edges in the polygon and the size of the polygon relative to the desired tessellation spacing in the x and y directions. We did not make any optimizations other than the one outlined in lines 2-5 of Algorithm \ref{alg:PointInPolygon}, but there is room to improve the runtime significantly if one is dealing with particularly large regions of interest or particularly small spacings between grid points.
+We chose to use the well-known \textit{crossing test} \cite{Shimrat1962Algorithms}, which extends a ray from the point to be tested in the positive x-direction. If it crosses the boundary of the polygon an odd number of times, then it must be contained within it, otherwise it must lie outside it. This is illustrated in figures \ref{fig:PointOutsidePolygon} and \ref{fig:PointInsidePolygon}. The running time of this algorithm is dictated by the number of edges the polygon has and the size of the polygon relative to the desired tessellation spacing in the x and y directions. We did not make any optimizations other than the one outlined in lines 2-5 of Algorithm \ref{alg:PointInPolygon}, which checks whether the test point lies outside the largest and smallest x and y coordinates. but there is room to improve the running time significantly if one is dealing with particularly large regions of interest or a relatively small spacing between grid points.
 
 
 \begin{figure}{}
@@ -156,6 +157,32 @@ We chose to use the well-known \textit{crossing test} \cite{Shimrat1962Algorithm
 
 
 \subsection{Generating Waypoints as GPS Locations}
-In order to be useful in the real world, it is necessary to refer to these points using some kind of reference coordinate system that UAVs can use. Since GPS is by far the most commonly system that UAVs use for navigation, we chose to design an implementation based on the \textit{World Geodetic System 1984} (WGS84) coordinate system, which is the coordinate system that GPS relies upon. The WGS84 system was proposed by the US department of defence and is officially documented in the official report entitled "Department of Defense World Geodetic System 1984 Its Definition and Relationships With Local Geodetic Systems". It assumes that the datum surface is an oblate spheroid, and refers to latitudes, longitudes and altitudes 
+For the sake of real-world usage, it is necessary to refer to these points using some kind of reference coordinate system that UAVs can use. We provide a brief overview of how we accomplished this, without delving too far into Geographic Coordinate Systems (GCS). Since GPS is by far the most commonly system that UAVs use for navigation, we chose to design an implementation based on the \textit{World Geodetic System 1984} (WGS84) coordinate system, which is the coordinate system that GPS relies upon. The WGS84 system was created by the US department of defence and is officially documented in the official government report entitled "Department of Defense World Geodetic System 1984 Its Definition and Relationships With Local Geodetic Systems". It assumes that the datum surface is an oblate spheroid.
+%, and the coordinate system uses Greenwich as the starting point. 
+Coordinates are referenced using latitude, longitude and altitude, where longitude measurements range between [-180$^{\circ}$, 180$^{\circ}$], latitude measurements range between [-90$^{\circ}$, 90$^{\circ}$] and altitude measurements come in the form of meters above sea level. Greenwich is used as the \textit{prime meridian} for longitude, meaning Greenwich defines 0$^{\circ}$ longitude. The equator is used to define 0$^{\circ}$ latitude. In order to generate a grid of points in a bounding polygon as coordinates that can be referenced by the UAVs' GPS sensors, we had to make some modifications to the grid point generation algorithm outlined above. The main issue that arises is that the grid point generation algorithm assumes that the Cartesian coordinate system is used, which is obviously not valid when assuming coordinates lie on a  non-planar surface (the earth). We could simply treat the WGS84 coordinates that make the bounding polygon defining the region of interest as a plane and continue using the unmodified Algorithm \ref{alg:GridGeneration}, but for the sake of guaranteed accuracy we decided to make the following changes to the algorithm for use with WGS84 coordinates:
+\begin{enumerate}
+    \item When calculating distances, the well-known \textit{inverse solution} to finding geodesics (shortest paths along the earth's surface) is used. This algorithm is due to \citeauthor{Vincenty1975DirectEquations} and it takes into account the non-planar nature of WGS84 coordinates.  \cite{Vincenty1975DirectEquations}.
+    \item test
+    \item We created a specific WGS84 coordinate class, which can be used in place of regular Cartesian coordinates in Algorithm \ref{alg:GridGeneration}
+\end{enumerate}
+
+make the assumption that the regions we
+
+Since the curvature of the earth is relat
+
+\note{Make sure to refer to target localisation}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

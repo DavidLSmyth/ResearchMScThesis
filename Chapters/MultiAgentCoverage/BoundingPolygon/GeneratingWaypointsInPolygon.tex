@@ -168,12 +168,12 @@ Coordinates are referenced using latitude, longitude and altitude, where longitu
 
 The code which allows the user to generate grids is hosted on github at <> \note{might be worth referencing how to pull it down using maven}
 
-\subsection{User Interface}
+\subsection{User Interface and Results of Grid Generation Algorithm}
 %to Facilitate Grid Generation
 \note{Might not be worth talking about this in a full subsection}
-We developed a User Interface (UI) in order to have the ability to quickly generate grids over which simulations could be run, as outlined in sections <target detection section> and <coverage section>. We also used the UI to visually validate that the grid generation code was performing as expected. We chose to use the  \href{https://shiny.rstudio.com/}{Shiny framework}\footnote{\href {https://shiny.rstudio.com/}{https://shiny.rstudio.com/}}, which is a web app development framework written in the \href{https://www.r-project.org/}{R language}\footnote{\href {https://www.r-project.org/}{https://www.r-project.org/}}. The Shiny framework is highly suited to prototyping web apps and abstracts away much of the more nuanced aspects of web development, at the cost of flexibility. We used the \href{https://rstudio.github.io/leaflet/}{Leaflet Package}\footnote{\href {https://rstudio.github.io/leaflet/}{https://rstudio.github.io/leaflet/}}, which provides a high-level interface to the \href{https://wiki.openstreetmap.org/wiki/Develop}{Open Street Map}\footnote{\href {https://wiki.openstreetmap.org/wiki/Develop}{https://wiki.openstreetmap.org/wiki/Develop}} API. We added an observeEvent function to record when the user clicks on points on the map, adding an edge to the previous point. The process of sequentially selecting the points on the map defining a polygonal region can be seen in figure \ref{fig:AddClicks}. 
+We developed a User Interface (UI) in order to have the ability to quickly generate grids over which simulations could be run, as outlined in sections <target detection section> and <coverage section>. We also used the UI to visually validate that the grid generation code was performing as expected. We chose to use the  \href{https://shiny.rstudio.com/}{Shiny framework}\footnote{\href {https://shiny.rstudio.com/}{https://shiny.rstudio.com/}}, which is a web app development framework written in the \href{https://www.r-project.org/}{R language}\footnote{\href {https://www.r-project.org/}{https://www.r-project.org/}}. The Shiny framework is highly suited to prototyping web apps and abstracts away much of the more nuanced aspects of web development, at the cost of flexibility. We used the \href{https://rstudio.github.io/leaflet/}{Leaflet Package}\footnote{\href {https://rstudio.github.io/leaflet/}{https://rstudio.github.io/leaflet/}}, which provides a high-level interface to the \href{https://wiki.openstreetmap.org/wiki/Develop}{Open Street Map}\footnote{\href {https://wiki.openstreetmap.org/wiki/Develop}{https://wiki.openstreetmap.org/wiki/Develop}} API. We added an \textit{observeEvent} function to record when the user clicks on points on the map, adding an edge to the previous point. The process of sequentially selecting the points on the map defining a polygonal region can be seen in figure \ref{fig:AddClicks}. 
 
-\begin{figure}{}\label{fig:AddClicks}
+\begin{figure}{}
 \subfloat{\includegraphics[width=48mm]{Chapters/MultiAgentCoverage/Figs/AdditionalClicks.PNG}}
 %\end{wrapfigure}
 \hspace{0.2em}
@@ -181,23 +181,20 @@ We developed a User Interface (UI) in order to have the ability to quickly gener
 \hspace{0.2em}
 \subfloat{\includegraphics[width=48mm]{Chapters/MultiAgentCoverage/Figs/AdditionalClicksTwo.PNG}}
 \caption{Creating the bounding polygon using the UI}
+\label{fig:AddClicks}
 \end{figure}
 
-In order to actually generate and draw the grid points on the user interface, we added "Show planned waypoints" button. When this button is clicked, the polygon defining the region of interest that the user has selected is sent to the grid generation code. The grid points are generated and written to a file. The user interface then reads this points from the file and then overlays them on the map. Examples of visualisation of polygonal regions with grid points are shown in figure \ref{fig:GridPointsOnUI}.
-\begin{figure}{}\label{fig:GridPointsOnUI}
-\subfloat{\includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/RegionOne.PNG}}
+In order to actually generate and draw the grid points on the user interface, we added "Show planned waypoints" button. When this button is clicked, the polygon defining the region of interest that the user has selected is sent to the grid generation code, as well as the desired latitude and longitude spacing between the generated grid points. The grid points are generated and written to a file. The user interface then reads this points from the file and then overlays them on the map. Examples of visualisation of polygonal regions with grid points are shown in figure \ref{fig:GridPointsOnUI}.
+\begin{figure}{}
+\centering
+\subfloat[Grid points with a latitude spacing of 40m and a longitude spacing of 30m.]{\includegraphics[width=70mm, height=65mm]{Chapters/MultiAgentCoverage/Figs/RegionOne.PNG}}
 %\end{wrapfigure}
 \hspace{0.2em}
-\subfloat{\includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/RegionTwo.PNG}}
-\caption{Examples of generated grid points overlayed onto the UI}
+\subfloat[Grid points with a latitude spacing of 30m and a longitude spacing of 25m.]{\includegraphics[width=70mm, height=65mm]{Chapters/MultiAgentCoverage/Figs/RegionTwo.PNG}}
+\caption{Examples of generated grid points overlaid onto the UI}
+\label{fig:GridPointsOnUI}
 \end{figure}
 
-The results of generating grids using the UI outlined 
-
-
-
-\subsection{Results of Grid Generation}
-The grid generation algorithm has multiple uses for the work in this thesis and the problems it is used to tackle are discussed in sections <>. The results of applying algorithm \ref{alg:GridGeneration} to polygonal regions are shown in figures 
 
 \note{Make sure to refer to target localisation}
 

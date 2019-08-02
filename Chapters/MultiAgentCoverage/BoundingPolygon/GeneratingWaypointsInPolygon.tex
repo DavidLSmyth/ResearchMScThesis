@@ -105,7 +105,7 @@ $
 \ENSURE $\newline grid\_points \quad \text{ A set of uniformly spaced (x, y) points, which define a regular } \newline \text{ tessellation of the region of interest}$
 
 \hfill\pagebreak
-\STATE waypoints $\leftarrow$ empty array
+\STATE grid\_points $\leftarrow$ empty array
 
 \STATE max\_x $\leftarrow$ maximum x value of all points in R
 \STATE min\_x $\leftarrow$ minimum x value of all points in R
@@ -122,12 +122,12 @@ $
 \STATE Add the point (min\_x + x\_spacing * x\_spacing\_index, min\_y + y\_spacing * y\_spacing\_index) to grid\_points
 \ENDFOR
 \ENDFOR
-\FOR{point in waypoints}
+\FOR{point in grid\_points}
 \IF{Point-in-Polygon(R, point) is false}
 \STATE Remove point from grid\_points
 \ENDIF
 \ENDFOR
-\RETURN waypoints
+\RETURN grid\_points
 \end{algorithmic} 
 \end{algorithm}
 

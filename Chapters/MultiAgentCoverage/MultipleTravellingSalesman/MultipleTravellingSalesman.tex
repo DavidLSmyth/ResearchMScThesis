@@ -13,7 +13,7 @@ This section outlines the algorithms that were explored to generate a set of rou
 
 %Talk about how problem was transformed to TSP problem, took that and then divided up soln for mTSP.
 
-The scene surveying problem that we would like to solve can be treated as an instance of the well-known \textit{Vehicle Routing Problem} (VRP), which first appeared in a paper by \citeauthor{Dantzig1959TheProblem} \cite{Dantzig1959TheProblem}. This problem is a generalisation of the classic \textit{Travelling Salesman problem} (TSP). There are many variants and extensions to this problem, but it essentially asks for a set of routes to be assigned to the UAVs such that each point in the network is visited exactly once, which minimises the total time taken to "service" each of the points. In our case, the service time is the time taken to record a sensor reading. A formal definition of the VRP and its variants can be found in \cite{Toth2002TheProblem}.
+The scene surveying problem that we would like to solve can be treated as an instance of the well-known \textit{Vehicle Routing Problem} (VRP), which first appeared in a paper by \citeauthor{Dantzig1959TheProblem} \cite{Dantzig1959TheProblem}. This problem is a generalisation of the classic \textit{Travelling Salesman problem} (TSP). There are many variants and extensions to this problem, but it essentially asks for a set of routes to be assigned to the UAVs such that each point in the graph is visited exactly once, which minimises the total time taken to "service" each of the points. In our case, the service time is the time taken to record a sensor reading. We are interested solving this problem where the graph is defined by the grid of points that is generated using Algorithm \ref{alg:GridGeneration}. A formal definition of the VRP and its variants can be found in \cite{Toth2002TheProblem}.
 
 \subsection{Simplified Problem}
 \note{maybe change this to constrained problem or something similar}
@@ -35,31 +35,50 @@ This is simply the \textit{multiple travelling salesman problem} (mTSP).
 %By mastering the information of certainty: Sexual VRP and non-deterministic VRP problems;
 %As can be seen from these classifications, solutions to the VRP problem are varied, each category 
 
-\subsubsection{Explored Solutions}
-First we show that the mTSP is at least as hard as the TSP, which implies that finding a polynomial time solution is not feasible. We then discuss solutions that were explored that give non-exact solutions. 
+\subsection{Proposed Solutions for the Simplified Problem}
+\note{Again maybe use constrained instead of simplified}
+Due to the fact that the mTSP is at least as hard as the TSP, since it is a generalisation of the TSP, finding a polynomial time solution to the mTSP is not feasible. Given that there is no algorithm to solve the mTSP optimally in a polynomial time, we explored a number of sub-optimal solutions that take advantage of the highly structured nature of the uniformly spaced grid that we use in our instance of the problem. The usual trade-off between solution quality vs. time taken to find the solution motivated our choice of implemented algorithms, as we anticipated that the time taken to execute the planned routes may be comparable to the time taken to generate some solutions (the order of minutes or hours).  General details of solutions that can be applied to solve the mTSP can be found in Section <> of the literature review.
 
-\\Proof:\\
-Let T be a tour that is an optimal solution to the Travelling Salesperson Problem (TSP) for  a graph G(V, E), where E $\subseteq$ V $\times$ V, with a cost function $c(p_i, p_j)$ defined for all $(p_i, p_j)$ $\in$ E and an induced cost function 
-C(T) = $\sum\limits_{(p_i, p_j)\in S_k}C(p_i, p_j)$ defined for any tour of G.
-The tour T is an ordered tuple (($p_i, p_j$), ($p_j, p_k$),..., ($p_m, p_n$)) $\subseteq$ E which satisfies Cost(T) = \(\displaystyle \min_{e \subseteq E}\) $\sum_{(p_i, p_j) \in e}$ c($p_i, p_j$) with the constraint that each $p_i \in$ V must be visited exactly once. This means T is a hamiltonian tour of G of minimal cost. Any partition ($T_1, T_2, ..., T_m$) of a solution T' can be written as C(T')=
+\subsubsection{Nearest Neighbor Algorithm}
+We first began by designing an algorithm which is a modification of a TSP solution based on the nearest-neighbor heuristic. The idea is based on two key premises:
+\begin{enumerate}
+    \item Due to the fact that the grid is uniformly-spaced, a 
+    \item A solution to the TSP may provide a solution to the mTSP 
+\end{enumerate}
+
+
+We began by designing and algorithm based on the nearest-neighbor heuristic, which 
+Outline the NN algo in "Using a Game Engine to Simulate Critical Incidents
+and Data Collection by Autonomous Drones"
+
+\subsubsection{Proof of Lower Bound of Nearest Neighbor Solution}
+Let O be a tour that is an optimal solution to the Travelling Salesperson Problem (TSP) for  a graph G(V, E), where E $\subseteq$ V $\times$ V, with a cost function c$(p_i, p_j)$ defined for all $(p_i, p_j)$ $\in$ E and an induced cost function 
+C($T$) = $\sum\limits_{(p_i, p_j)\in }$C$(p_i, p_j)$ defined for any tour $T$ of G.
+The optimal tour O is an ordered tuple (($p_i, p_j$), ($p_j, p_k$),..., ($p_m, p_n$)) $\subseteq$ E which satisfies:
+\[
+Cost(O) =  \min_{e \subseteq E}\sum_{(p_i, p_j) \in e} c(p_i, p_j) 
+\]
+with the constraint that each $p_i \in$ V must be visited exactly once. This means that O is a Hamiltonian tour of G of minimal cost. 
 \\
+For any partition ($T_1, T_2, ..., T_m$) of an arbitrary tour T', we find:
 
-$\sum\limits_{k=1}^{m}\sum\limits_{(p_i, p_j)\in T_k} c(p_i, p_j) \leq m\times$
-\(\displaystyle\max_{T_k \in T}\)
-$\sum\limits_{(p_i, p_j)\in T_k}c(p_i, p_j)$
-\\
+\[\text{Cost}(T')=\sum\limits_{k=1}^{m}\sum\limits_{(p_i, p_j)\in T_k} \text{cost}(p_i, p_j) \leq m \times \max_{T_k \in T}
+\sum\limits_{(p_i, p_j)\in T_k}c(p_i, p_j) = 
+m \times \max_{T_k \in T} \text{Cost}(T_k)
+\]
 
-\noindent and since Cost(T) $\leq$ Cost(T'), for the partition determined by Algorithm \ref{alg:agentRoutesEdited}, we find that for any solution S to the Multiple Traveling Salesperson (MTS) problem consisting of the partition ($S_1, S_2, ...,S_m$) for each of the m agents:\\
+\noindent Since Cost(O) $\leq$ Cost(T'), for the partition determined by any solution to the TSP, we find that for any solution S to mTSP consisting of the partition ($S_1, S_2, ...,S_m$) for each of the m agents:\\
+
+\[
 Cost(T)
-$\leq$ Cost(S) $\leq$  m$\times$
-(\(\displaystyle\max_{S_k \in S}\)
-$\sum\limits_{(p_i, p_j)\in S_k}C(p_i, p_j)$) = Cost of MTS solution, S.
+\leq Cost(S) \leq  m \times
+\max_{S_k \in S}
+\sum\limits_{(p_i, p_j)\in S_k}C(p_i, p_j)) = Cost of MTS solution, S.
+\]
 This means we can use a solution of the standard Traveling Salesperson problem as a lower bound for comparison with Algorithm \ref{alg:agentRoutesEdited}. For example, the Held-Karp algorithm gives a well-known lower bound when dealing with a metric space \cite{VALENZUELA1997157}.
 
 We explored a number of solutions to this 
 
-\subsubsection{}
-Outline the NN algo in "Using a Game Engine to Simulate Critical Incidents
-and Data Collection by Autonomous Drones"
+
 
 \subsubsection{}

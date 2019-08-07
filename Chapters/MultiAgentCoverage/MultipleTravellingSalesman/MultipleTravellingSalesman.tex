@@ -13,7 +13,7 @@ This section outlines the algorithms that were explored to generate a set of rou
 
 %Talk about how problem was transformed to TSP problem, took that and then divided up soln for mTSP.
 
-The scene surveying problem that we would like to solve can be treated as an instance of the well-known \textit{Vehicle Routing Problem} (VRP), which first appeared in a paper by \citeauthor{Dantzig1959TheProblem} \cite{Dantzig1959TheProblem}. This problem is a generalisation of the classic \textit{Travelling Salesman problem} (TSP). There are many variants and extensions to this problem, but it essentially asks for a set of routes to be assigned to the UAVs such that each point in the graph is visited exactly once, which minimises the total time taken to "service" each of the points. In our case, the service time is the time taken to record a sensor reading. We are interested solving this problem where the graph is defined by the grid of points that is generated using Algorithm \ref{alg:GridGeneration}. A formal definition of the VRP and its variants can be found in \cite{Toth2002TheProblem}.
+The scene surveying problem that we would like to solve can be treated as an instance of the well-known \textit{Vehicle Routing Problem} (VRP), which was first described in a paper by \citeauthor{Dantzig1959TheProblem} \cite{Dantzig1959TheProblem}. This problem is a generalisation of the classic \textit{Travelling Salesman problem} (TSP). There are many variants and extensions to this problem, but it essentially asks for a set of routes to be assigned to the UAVs such that each point in the graph is visited exactly once, which minimises the total time taken to "service" each of the points. In our case, the service time is the time taken to record a sensor reading. We are interested solving this problem where the graph is defined by the grid of points that is generated using Algorithm \ref{alg:GridGeneration}. A formal definition of the VRP and its variants can be found in \cite{Toth2002TheProblem}.
 
 \subsection{Simplified Problem}
 \note{maybe change this to constrained problem or something similar}
@@ -37,60 +37,75 @@ This is simply the \textit{ multiple travelling salesman problem} (mTSP).
 
 \subsection{Proposed Solution for the Simplified Problem}
 \note{Again maybe use constrained instead of simplified}
-Due to the fact that the mTSP is at least as hard as the TSP, since it is a generalisation of the TSP, finding a polynomial time solution to the mTSP is not feasible. Given that there is no algorithm to solve the mTSP optimally in a polynomial time, we explored a number of sub-optimal solutions that take advantage of the highly structured nature of the uniformly spaced grid that we use in our instance of the problem. The usual trade-off between solution quality vs. time taken to find the solution motivated our choice of implemented algorithms, as we anticipated that the time taken to execute the planned routes may be comparable to the time taken to generate some solutions (the order of minutes or hours). General details of solutions that can be applied to solve the mTSP can be found in Section <> of the literature review.
+Due to the fact that the mTSP is at least as hard as the TSP, since it is a generalisation of the TSP, finding a polynomial time solution to the mTSP is not feasible. Given that there is no algorithm to solve the mTSP optimally in a polynomial time, we explored a number of sub-optimal solutions that take advantage of the highly structured nature of the uniformly spaced grid that we use in our instance of the problem. The usual trade-off between solution quality vs. time taken to find the solution motivated our choice of implemented algorithm, as we anticipated that the time taken to execute the planned routes may be comparable to the time taken to generate some solutions (the order of minutes or hours). For example, \cite{Hungerlander2018TheGrids} shows the results of using a Mixed Integer Linear Program (MILP) took hours to run for grid sizes that would be considered relatively small in our domain, which would exceed the amount of time taken to perform even a random solution. General details of solutions that can be applied to solve the mTSP and VRP can be found in Section <> of the literature review.
 
 \subsubsection{Nearest Neighbor Algorithm}
-There are four common basic heuristic algorithms that form the basis of most solutions to TSP and mTSP problems, which are stated in \cite{Johnson1997TheOptimization}: the \textit{nearest neighbor} heuristic algorithm, the \textit{ greedy algorithm}, the \textit{ Clarke-Wright} algorithm and the \textit{Christofides} algorithm. We began by implementing an algorithm which is a modification of a TSP solution based on the nearest-neighbor heuristic. Our reasoning is based on three premises:
+There are four common heuristic algorithms that form the basis of most solutions to TSP and mTSP problems, which are stated in \cite{Johnson1997TheOptimization}: the \textit{nearest neighbor} algorithm, the \textit{greedy algorithm}, the \textit{Clarke-Wright} algorithm and the \textit{Christofides} algorithm. We began by implementing an algorithm which is a modification of a TSP solution based on the nearest-neighbor heuristic. Our reasoning is based on the following premises:
 \begin{enumerate}
-    \item The nearest-neighbor heuristic is a well-known heuristic that provides good results to the TSP when the cost is defined as the Euclidean distance between points \cite{Johnson1995TheOptimization}, as in our use case.
+    \item The nearest-neighbor heuristic is a well-known heuristic that is straightforward to implement. It is known to provide good results to the TSP when the cost is defined as the Euclidean distance between points \cite{Johnson1995TheOptimization}, as in our use case.
     \item The nearest-neighbor solution to the TSP can be very easily modified to be applied to the mTSP.
-    \item The nearest-neighbor heuristic is known to have a running time which is O($n^2$) \cite{Rosenkrantz1977AnProblem}, which means it can scale well to reasonably large problem instances compared to other algorithms which have a far worse performance complexity. For example, the Christofides algorithm is known to be within $\frac{3}{2}$ of the optimal solution, but its running time is O($n^3$) \cite{Christofides1976WORST-CASEPROBLEM}, which quickly becomes prohibitively long for any comercial processor.
+    \item The nearest-neighbor heuristic is known to have a running time which is O($n^2$) \cite{Rosenkrantz1977AnProblem}, which means it can scale well to reasonably large problem instances compared to other algorithms which have a far worse performance complexity. For example, the Christofides algorithm is known to be within a factor of $\frac{3}{2}$ of the optimal solution, but its running time is O($n^3$) \cite{Christofides1976WORST-CASEPROBLEM}, which quickly becomes prohibitively long.
+    %\item Partitioning a TSP solution can give very good mTSP solutions on the same graph.
 \end{enumerate}
 
-The nearest-neighbor heuristic algorithm for the multiple Travelling Salesman problem is shown in Algorithm \ref{alg:agentRoutesEdited}.
+The nearest-neighbor heuristic algorithm for the multiple Travelling Salesman problem is shown in Algorithm \ref{alg:NNHeuristic}.
 
 \begin{algorithm}
-\caption{Generating the RAV Agent Routes}
-\label{alg:agentRoutesEdited}
+\caption{The Nearest-Neighbor Solution to the mTSP Problem}
+\label{alg:NNHeuristic}
 \begin{algorithmic}[1]
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
-\REQUIRE Array of agents, Set of coordinates, Cost function which takes two GPS coordinates and outputs a real number representing the cost of travelling from one to the other. 
-\ENSURE  A key-value container of agents and their corresponding routes.\\
+
+\REQUIRE$ \newline k \quad \text{ The number of UAVs in the mTSP }
+\newline way\_points \quad \text{ The set of points the UAVs must visit }
+\newline cost(i,j) \quad \text{ The function giving the cost of travelling from node i to node j }
+$
+\ENSURE $ \newline UAV\_routes \quad \text{A key-value data structure mapping UAVs to their corresponding routes.}
+$
+
 \hfill\pagebreak
 
-\noindent\textbf{\textit{\noindent Initialization} :}\\
-agentPaths$\leftarrow$empty key-value container\\
-visitedPoints$\leftarrow$empty array
-\\
-For each agent in agents:\\
-\quad Initialise path of agent as empty array in agentPaths
-currentAgentIndex$\leftarrow$0\\
-currentAgent$\leftarrow$agents.get(currentAgentIndex)\\
-\hfill\pagebreak
+%\noindent\textbf{\textit{\noindent Initialization} :}\\
+\STATE UAV\_routes$\leftarrow$empty key-value container
+\STATE visited\_points$\leftarrow$empty array
+\STATE remaining\_points\_to\_visit$\leftarrow$way\_points
+\FOR{each agent in agents:}
+%\quad 
+\STATE Initialise path of agent as empty array in UAV\_routes
+\ENDFOR
 
+current\_agent\_index$\leftarrow$0\\
+%current\_agent$\leftarrow$agents.get(current\_agent\_index)\\
+\hfill\pagebreak
 \WHILE {pointsToVisit is not empty}
+\STATE agent\_position $\leftarrow$ last value in agent\_paths.get(current\_agent\_index)
+\STATE nearest\_neighbor$\leftarrow$\(\displaystyle \min_{neighbor \in points\_to\_visit}\)cost(agent\_position, neighbor)
+\STATE Update current\_agent value in agent\_paths to include nearest\_neighbor
+\STATE Add nearest\_neighbor to visited\_points.
+\STATE Remove nearest\_neighbor from remaining\_points\_to\_visit.
+\STATE current\_agent\_index$\leftarrow$(currentAgentIndex+1) $\mathbf{mod}$$\vert$List of Agents$\vert$
 
-\STATE agentPosition $\leftarrow$ last value in agentPaths.get(agent)
-
-\STATE P$\leftarrow$\(\displaystyle \min_{p \in pointsToVisit}\)cost(agentPosition, p)
-
-\STATE Update currentAgent value in AgentPaths to include P
-\STATE Add P to visitedPoints.
-\STATE Remove P from pointsToVisit.
-\STATE currentAgentIndex$\leftarrow$(currentAgentIndex+1) $\mathbf{mod}$$\vert$List of Agents$\vert$
-\STATE currentAgent$\leftarrow$agents.get(currentAgentIndex)
+%\STATE currentAgent$\leftarrow$agents.get(currentAgentIndex)
 
 
 \ENDWHILE
-\RETURN agentRouteMap
+\RETURN UAV\_routes
 \end{algorithmic} 
 \end{algorithm}
 
-The algorithm iteratively assigns the nearest non-assigned neighbor to each UAVs current route, as is the case with the single-UAV TSP solution.
 
-\subsubsection{Results of applying NN algorithm}
-The results of applying the NN heuristic algorithm to the symmetric Euclidean TSP are well documented and we will not go into great detail repeating the results here. Instead, we refer the reader to the chapter "The travelling salesman problem: A case study" of \cite{Aarts:1997:LSC:549160}, written by \citeauthor{Johnson1995TheOptimization}, which provides a comparison of the NN heuristic to other heuristic algorithms, using the standard Held-Karp lower bound \cite{Held1962AProblems} using a standardised library of Travelling Salesman Problems, TSPLIB \cite{TSPLIB}.
+\begin{wrapfigure}{r}{0.45\textwidth}
+\includegraphics[width=0.45\textwidth]{Chapters/MultiAgentCoverage/Figs/RAVRoutingNUIGCropped.png}
+\caption{NN heuristic encourages the creation of optimal sub-tours, which are assigned to each UAV}
+\label{fig:NNPartitioning}
+\end{wrapfigure}
+The algorithm can be seen to be a very straightforward extension of the single agent NN algorithm. The while loop iteratively cycles through the list of UAVs and assigns the nearest non-assigned neighbor to the next UAVs partially assembled route. Since we run this algorithm over a uniformly-spaced grid, it builds agent routes in a lawn-cutting pattern, which intuitively will provide good results as long as the routes do not begin to overlap. The idea is to take the NN algorithm TSP solution and apply it exhaustively in a round-robin manner, so that each UAV is encouraged to find a non-overlapping optimal sub-tour. These non-overlapping optimal sub-tours partition the region and therefore offer a solution to the mTSP. Section 4 of \cite{Hungerlander2018TheGrids} gives an insight to how optimal solutions can be found for a uniformly spaced rectangular grid when UAVs are assumed to start in the corners of the rectangle, which provides further motivation to using algorithm \ref{alg:NNHeuristic}. In practice non-overlapping optimal sub-tours are not found, but solutions may come close, as illustrated in figure \ref{fig:NNPartitioning}. \note{Not sure if worth mentioning lower bound of cost for this algo is 1/noUAVs}
+
+
+
+\subsubsection{Analysis of the NN algorithm}
+The results and analysis of applying the NN heuristic algorithm to the symmetric Euclidean TSP are well documented and we will not go into great detail repeating the results here. Instead, we refer the reader to the chapter ``The travelling salesman problem: A case study'' of \cite{Aarts:1997:LSC:549160}, written by \citeauthor{Johnson1995TheOptimization}, which provides a comparison of the NN heuristic to other heuristic algorithms. They compare solutions with the standard Held-Karp lower bound \cite{Held1962AProblems} using a standardised library of Travelling Salesman Problems, TSPLIB \cite{TSPLIB}. Rather than provide tables of results showing the performance of the NN heuristic algorithm on randomly generated datasets, we instead focus on the results on the domain we are most interested in, which is one which is defined over a uniformly spaced grid. We found that the algorithm performed best when the UAVs started in locations that were closest to grid corners, as shown in <reference the relevant image>. This corresponds to the optimal performance configuration suggested in \cite{Hungerlander2018TheGrids}.
 
 Show qualitative and quantitative results over grids. Discuss where performance is good and where it is not good.
 

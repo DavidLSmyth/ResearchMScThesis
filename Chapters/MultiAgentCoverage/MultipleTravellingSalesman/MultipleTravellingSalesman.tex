@@ -106,8 +106,81 @@ The algorithm can be seen to be a very straightforward extension of the single a
 
 
 \subsubsection{Analysis of the NN algorithm}
-The results and analysis of applying the NN heuristic algorithm to the symmetric Euclidean TSP and mTSP are well documented and we will not go into great detail repeating the results here. Instead, we refer the reader to the chapter ``The travelling salesman problem: A case study'' of \cite{Aarts:1997:LSC:549160}, written by \citeauthor{Johnson1995TheOptimization}, which provides a comparison of the NN heuristic to other heuristic algorithms. They compare solutions with the standard Held-Karp lower bound \cite{Held1962AProblems} using a standardised library of Travelling Salesman Problems, TSPLIB \cite{TSPLIB}. Rather than provide tables of results showing the performance of the NN heuristic algorithm on standard benchmark data sets such as TSPLIB, we instead focus on the results for the domain we are most interested in, which is a connected graph defined by a uniformly spaced grid. We found that the algorithm performed best when the UAVs started in locations that were closest to grid corners, as shown in <reference the relevant image>. This corresponds to the optimal performance configuration suggested in \cite{Hungerlander2018TheGrids}. We evaluated solutions qualitatively first and then quantitatively. We found that the algorithm persistently performed best on regions that are regularly shaped, with the UAV starting points being the most important factor. The following elucidates these results.
+The results and analysis of applying the NN heuristic algorithm to the symmetric Euclidean TSP and mTSP are well documented and we will not go into great detail repeating the results here. Instead, we refer the reader to the chapter ``The travelling salesman problem: A case study'' of \cite{Aarts:1997:LSC:549160}, written by \citeauthor{Johnson1995TheOptimization}, which provides a comparison of the NN heuristic to other heuristic algorithms. They compare solutions with the standard Held-Karp lower bound \cite{Held1962AProblems} using a standardised library of Travelling Salesman Problems, TSPLIB \cite{TSPLIB}. Rather than provide tables of results showing the performance of the NN heuristic algorithm on standard benchmark data sets such as TSPLIB, we instead focus on the results for the domain we are most interested in, which is a connected graph defined by a uniformly spaced set of grid points. We found that the algorithm performed best when the UAVs used regions that have multiple axes of symmetry. Rectangular regions in particular yield very good solutions, as shown in figures <x-y>. This corresponds to the optimal performance configuration suggested in \cite{Hungerlander2018TheGrids}. We evaluated solutions qualitatively first and then quantitatively. We found that UAV starting points are a critical factor in solution quality, which again is in line with the findings in \cite{Hungerlander2018TheGrids}. The following elucidates these results.
 
+
+\textbf{Rectangular Region}
+Spacing between grid points: 23m in latitude, 25m in longitude.
+Bounding rectangle coordinates: 
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | m{5cm} | }
+    \hline
+    Planned UAV Routes & Route Lengths (metres) \\
+    \hline
+    %single UAV
+    \begin{minipage}{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/SingleAgent.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+      \item[] UAV 1 (blue): 3576.6
+    \end{itemize}
+    \\
+    \hline
+    
+    %two UAV
+    \begin{minipage}{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/TwoAgent.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+        \item[] UAV 1 (blue): 1825.8
+        \item[] UAV 2 (green): 1836.3
+    \end{itemize}
+    \\
+    \hline
+    
+    %three UAV
+    \begin{minipage}{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/ThreeAgent.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+    \item[] UAV 1 (blue): 1235.1
+    \item[] UAV 2 (green):  1245.6
+    \item[] UAV 3 (red): 1215.9
+    \end{itemize}
+    \\
+    \hline
+    
+    %Four UAV
+    \begin{minipage}{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/FourAgent.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+    \item[] UAV 1 (blue): 1038.3
+    \item[] UAV 2 (green): 1048.8
+    \item[] UAV 3 (red): 994.5
+    \item[] UAV 4 (yellow): 990.5
+    \end{itemize}
+
+    \\
+    \hline
+  \end{tabular}
+  \caption{Results of applying NN algorithm to a rectangular region}\label{table:NNAlgoResults}
+\end{table}
+
+
+
+\textbf{Triangular Region}
+
+\textbf{Hexagonal Region}
+
+
+\textbf{Highly Irregular Region}
 
 
 Show qualitative and quantitative results over grids. Discuss where performance is good and where it is not good.

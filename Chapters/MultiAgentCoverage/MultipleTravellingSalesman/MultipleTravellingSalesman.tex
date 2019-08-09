@@ -106,13 +106,12 @@ The algorithm can be seen to be a very straightforward extension of the single a
 
 
 \subsubsection{Analysis of the NN algorithm}
-The results and analysis of applying the NN heuristic algorithm to the symmetric Euclidean TSP and mTSP are well documented and we will not go into great detail repeating the results here. Instead, we refer the reader to the chapter ``The travelling salesman problem: A case study'' of \cite{Aarts:1997:LSC:549160}, written by \citeauthor{Johnson1995TheOptimization}, which provides a comparison of the NN heuristic to other heuristic algorithms. They compare solutions with the standard Held-Karp lower bound \cite{Held1962AProblems} using a standardised library of Travelling Salesman Problems, TSPLIB \cite{TSPLIB}. Rather than provide tables of results showing the performance of the NN heuristic algorithm on standard benchmark data sets such as TSPLIB, we instead focus on the results for the domain we are most interested in, which is a connected graph defined by a uniformly spaced set of grid points. We found that the algorithm performed best when the UAVs used regions that have multiple axes of symmetry. Rectangular regions in particular yield very good solutions, as shown in figures <x-y>. This corresponds to the optimal performance configuration suggested in \cite{Hungerlander2018TheGrids}. We evaluated solutions qualitatively first and then quantitatively. We found that UAV starting points are a critical factor in solution quality, which again is in line with the findings in \cite{Hungerlander2018TheGrids}. The following elucidates these results.
-
+The results and analysis of applying the NN heuristic algorithm to the symmetric Euclidean TSP and mTSP are well documented and we will not go into great detail repeating the results here. Instead, we refer the reader to the chapter ``The travelling salesman problem: A case study'' of \cite{Aarts:1997:LSC:549160}, written by \citeauthor{Johnson1995TheOptimization}, which provides a comparison of the NN heuristic to other heuristic algorithms. They compare solutions with the standard Held-Karp lower bound \cite{Held1962AProblems} using a standardised library of Travelling Salesman Problems, TSPLIB \cite{TSPLIB}. Rather than provide tables of results showing the performance of the NN heuristic algorithm on standard benchmark data sets such as TSPLIB, we instead focus on the results for the domain we are most interested in, which is a connected graph defined by a uniformly spaced set of grid points. We found that the algorithm performed best when the UAVs used regions that have multiple axes of symmetry. Rectangular regions in particular yield scalable, high-quality solutions, as shown in the figures in table \ref{table:NNAlgoResultsRect}. This corresponds to the optimal performance configuration suggested in \cite{Hungerlander2018TheGrids}. We evaluated solutions both qualitatively and  quantitatively. We found that UAV starting points are a critical factor in solution quality, which again is in line with the findings in \cite{Hungerlander2018TheGrids}. Tables \ref{table:NNAlgoResultsRect}, \ref{table:NNAlgoResultsTri} and \ref{table:NNAlgoResultsHex} illustrate some of the results, with the configuration of each listed below.\\
 
 \textbf{Rectangular Region}
 \\Spacing between grid points: 23m in latitude, 25m in longitude.
 \\Bounding rectangle coordinates: (53.2781933786, -9.0671226391), (53.2803800539, -9.067182416), (53.2804392784, -9.0611222377), (53.2782526061, -9.0610624609)
-
+\\
 \begin{table}[h!]
   \centering
   \begin{tabular}{ | c | m{5cm} | }
@@ -121,8 +120,8 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
     \hline
     
     %single UAV
-    \begin{minipage}[c][57mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/SingleAgent.PNG}
+    \begin{minipage}[c][53mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/SingleAgent.PNG}
 
     \end{minipage}
     &
@@ -132,8 +131,8 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
     \\
     \hline
     %two UAV
-    \begin{minipage}[c][57mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/TwoAgent.PNG}
+    \begin{minipage}[c][53mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/TwoAgent.PNG}
     \end{minipage}
     &
     \begin{itemize}[leftmargin=*]
@@ -144,8 +143,8 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
     \hline
     
     %three UAV
-    \begin{minipage}[c][57mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/ThreeAgent.PNG}
+    \begin{minipage}[c][53mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/ThreeAgent.PNG}
     \end{minipage}
     &
     \begin{itemize}[leftmargin=*]
@@ -157,8 +156,8 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
     \hline
     
     %Four UAV
-    \begin{minipage}[c][57mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/FourAgent.PNG}
+    \begin{minipage}[c][53mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/FourAgent.PNG}
     \end{minipage}
     &
     \begin{itemize}[leftmargin=*]
@@ -171,16 +170,14 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
     \\
     \hline
   \end{tabular}
-  \caption{Results of applying NN algorithm to a rectangular region}\label{table:NNAlgoResults}
+  \caption{Results of applying NN algorithm to a rectangular region}\label{table:NNAlgoResultsRect}
 \end{table}
 
 
 \textbf{Triangular Region}
 \\Spacing between grid points: 23m in latitude, 25m in longitude.
 \\Bounding rectangle coordinates: (53.2781933786, -9.0671226391), (53.2782526061, -9.0610624609), (53.2803800539, -9.06409255)
-)
-
-
+\\
 \begin{table}[h!]
   \centering
   \begin{tabular}{ | c | m{5cm} | }
@@ -223,14 +220,14 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
     \\
     \hline
   \end{tabular}
-  \caption{Results of applying NN algorithm to a triangular region}\label{table:NNAlgoResults}
+  \caption{Results of applying NN algorithm to a triangular region}\label{table:NNAlgoResultsTri}
 \end{table}
 
 
 \textbf{Hexagonal Region}
 \\Spacing between grid points: 32m in latitude, 38m in longitude.
 \\Bounding rectangle coordinates: (53.2782526061, -9.0610624609), (53.2803800539, -9.06409255), (53.2781933786, -9.0671226391), (53.27621, -9.0671226391), (53.27402, -9.06409255), (53.27615, -9.0610624609)
-)
+\\
 
 
 \begin{table}[h!]
@@ -276,13 +273,63 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
     \\
     \hline
   \end{tabular}
-  \caption{Results of applying NN algorithm to a hexagonal region}\label{table:NNAlgoResults}
+  \caption{Results of applying NN algorithm to a hexagonal region}\label{table:NNAlgoResultsHex}
 \end{table}
 
-\textbf{Highly Irregular Region}
 
+\textbf{Irregular Region}
+\\Spacing between grid points: 20m in latitude, 20m in longitude.
+\\Bounding rectangle coordinates: (53.28048,-9.069021), (53.28189,-9.066017), (53.28009,-9.065223), (53.28192,-9.064128), (53.28026,-9.061725), (53.27923,-9.063957), (53.27846,-9.063721), (53.27712,-9.063721), (53.27626,-9.060159), (53.27516,-9.061124), (53.27412,-9.061425), (53.27362,-9.061425), (53.2735,-9.062562), (53.27456,-9.06327), (53.27416,-9.064794), (53.27495,-9.06754), (53.27456,-9.067841), (53.27354,-9.067605), (53.27346,-9.06857), (53.27466,-9.06872), (53.2752,-9.06827), (53.27583,-9.070008), (53.27571,-9.07093), (53.27545,-9.074385), (53.27581,-9.074149), (53.27609,-9.07445), (53.2788,-9.069986), (53.27951,-9.069793), (53.28116,-9.071081), (53.28148,-9.069686)
+\\
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | m{5cm} | }
+    \hline
+    Planned UAV Routes & Route Lengths (metres) \\
+    \hline
+    
+    %single UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/TwoRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+       \item[] UAV 1 (blue): 14268.6
+        \item[] UAV 2 (green): 13393.6
+    \end{itemize}
+    \\
+    \hline
+    %two UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/ThreeRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+        \item[] UAV 1 (blue): 8879.8
+        \item[] UAV 2 (green): 9596.4
+        \item[] UAV 3 (green): 9433.4
+    \end{itemize}
+    \\
+    \hline
+    
+    %three UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/FourRAVSecondAttempt.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+    \item[] UAV 1 (blue): 7673.2
+    \item[] UAV 2 (green): 6354.0
+    \item[] UAV 3 (red): 6860.6
+    \item[] UAV 4 (yellow): 6368.8
+    \end{itemize}
+    \\
+    \hline
+  \end{tabular}
+  \caption{Results of applying NN algorithm to an irregular region}\label{table:NNAlgoResultsIrregular}
+\end{table}
+\pagebreak
 
-Show qualitative and quantitative results over grids. Discuss where performance is good and where it is not good.
 
 
 

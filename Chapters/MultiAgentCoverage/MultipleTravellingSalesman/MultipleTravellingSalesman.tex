@@ -110,8 +110,8 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
 
 
 \textbf{Rectangular Region}
-Spacing between grid points: 23m in latitude, 25m in longitude.
-Bounding rectangle coordinates: 
+\\Spacing between grid points: 23m in latitude, 25m in longitude.
+\\Bounding rectangle coordinates: (53.2781933786, -9.0671226391), (53.2803800539, -9.067182416), (53.2804392784, -9.0611222377), (53.2782526061, -9.0610624609)
 
 \begin{table}[h!]
   \centering
@@ -119,9 +119,11 @@ Bounding rectangle coordinates:
     \hline
     Planned UAV Routes & Route Lengths (metres) \\
     \hline
+    
     %single UAV
-    \begin{minipage}{.6\textwidth}
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
       \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/SingleAgent.PNG}
+
     \end{minipage}
     &
     \begin{itemize}[leftmargin=*]
@@ -129,9 +131,8 @@ Bounding rectangle coordinates:
     \end{itemize}
     \\
     \hline
-    
     %two UAV
-    \begin{minipage}{.6\textwidth}
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
       \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/TwoAgent.PNG}
     \end{minipage}
     &
@@ -143,20 +144,20 @@ Bounding rectangle coordinates:
     \hline
     
     %three UAV
-    \begin{minipage}{.6\textwidth}
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
       \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/ThreeAgent.PNG}
     \end{minipage}
     &
     \begin{itemize}[leftmargin=*]
     \item[] UAV 1 (blue): 1235.1
-    \item[] UAV 2 (green):  1245.6
+    \item[] UAV 2 (green): 1245.6
     \item[] UAV 3 (red): 1215.9
     \end{itemize}
     \\
     \hline
     
     %Four UAV
-    \begin{minipage}{.6\textwidth}
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
       \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Rectangle/FourAgent.PNG}
     \end{minipage}
     &
@@ -174,11 +175,108 @@ Bounding rectangle coordinates:
 \end{table}
 
 
-
 \textbf{Triangular Region}
+\\Spacing between grid points: 23m in latitude, 25m in longitude.
+\\Bounding rectangle coordinates: (53.2781933786, -9.0671226391), (53.2782526061, -9.0610624609), (53.2803800539, -9.06409255)
+)
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | m{5cm} | }
+    \hline
+    Planned UAV Routes & Route Lengths (metres) \\
+    \hline
+    
+    %single UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Triangle/OneRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+      \item[] UAV 1 (blue): 1940.6
+    \end{itemize}
+    \\
+    \hline
+    %two UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Triangle/TwoRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+        \item[] UAV 1 (blue): 930.7
+        \item[] UAV 2 (green): 971.8
+    \end{itemize}
+    \\
+    \hline
+    
+    %three UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Triangle/ThreeRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+    \item[] UAV 1 (blue): 812.7
+    \item[] UAV 2 (green): 621.6
+    \item[] UAV 3 (red): 883.4
+    \end{itemize}
+    \\
+    \hline
+  \end{tabular}
+  \caption{Results of applying NN algorithm to a triangular region}\label{table:NNAlgoResults}
+\end{table}
+
 
 \textbf{Hexagonal Region}
+\\Spacing between grid points: 32m in latitude, 38m in longitude.
+\\Bounding rectangle coordinates: (53.2782526061, -9.0610624609), (53.2803800539, -9.06409255), (53.2781933786, -9.0671226391), (53.27621, -9.0671226391), (53.27402, -9.06409255), (53.27615, -9.0610624609)
+)
 
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | m{5cm} | }
+    \hline
+    Planned UAV Routes & Route Lengths (metres) \\
+    \hline
+    
+    %single UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Hexagon/OneRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+      \item[] UAV 1 (blue): 1940.6
+    \end{itemize}
+    \\
+    \hline
+    %two UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Triangle/TwoRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+        \item[] UAV 1 (blue): 930.7
+        \item[] UAV 2 (green): 971.8
+    \end{itemize}
+    \\
+    \hline
+    
+    %three UAV
+    \begin{minipage}[c][57mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=55mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Triangle/ThreeRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+    \item[] UAV 1 (blue): 812.7
+    \item[] UAV 2 (green): 621.6
+    \item[] UAV 3 (red): 883.4
+    \end{itemize}
+    \\
+    \hline
+  \end{tabular}
+  \caption{Results of applying NN algorithm to a triangular region}\label{table:NNAlgoResults}
+\end{table}
 
 \textbf{Highly Irregular Region}
 

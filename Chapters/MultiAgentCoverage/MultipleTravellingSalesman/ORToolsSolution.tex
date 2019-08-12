@@ -1,7 +1,23 @@
-\subsection{Scene Surveying With Battery Constraints and Sampling Times}
-Once we had prototyped the NN algorithm in order to find a suitable solution to the simplified problem, we then considered the more general problem, where UAVs have heterogeneous battery constraints, sampling times and 
-
-
+\section{Scene Surveying With Heterogeneous Battery Constraints and Sampling Times}
 \note{Keep this very brief - there is not a great research output here. Simply mention that we began looking into using solvers to calculate solutions.}
 
-dsakldfjslkfj
+Once we had prototyped the NN algorithm in order to find a suitable solution to the simplified problem, we then considered the more general problem, where UAVs have heterogeneous battery constraints, sampling times and operational speeds, which is mentioned in section \ref{sec:SceneSurveying}. This addresses the more general Vehicle Routing Problem (VRP). We decided to formulate the problem as a \textit{linear program} and planned to find solutions using a linear program solver, following the literature outlined in section <reference>. 
+%A number of code repositories with permissive licences that provide solvers for linear programs exist .S
+Specifying problem explicitly as a linear program and then passing it to a solver is a time-consuming process, which has led to a number of tools developed which act as wrappers for developers to solve well-known problems without having to write excessive amounts of boiler-plate code. We chose to use Google's Apache-licensed \href{https://developers.google.com/optimization/}{\textit{Operations Research}}\footnote{\href {https://developers.google.com/optimization/}{https://developers.google.com/optimization/}} (OR) repository, which contains a routing library with high-level interfaces specifically designed to allow the user to define and solve VRPs. This meant we could focus on defining the salient aspects of the problem rather than how to convert the VRP into a linear program.
+
+We began by following the example outlined in the \href{https://developers.google.com/optimization/routing/vrp}{OR tools documentation}\footnote{\href {https://developers.google.com/optimization/routing/vrp}{https://developers.google.com/optimization/routing/vrp}}. We made the following modifications:
+
+\subsection{}
+
+\subsection{Specifying a Time Dimension}
+
+\subsection{}
+
+
+\begin{itemize}
+    \item The OR Tools interface requires the user to specify either a distance matrix or a callback method which calculates the cost of traversing an arc between nodes. We used the Haversine distance to create a callback method to calculate the distances between points.
+    \item We wrote a time evaluator method, which 
+\end{itemize}
+
+
+

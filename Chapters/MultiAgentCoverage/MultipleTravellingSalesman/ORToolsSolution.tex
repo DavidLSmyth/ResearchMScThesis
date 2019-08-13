@@ -1,15 +1,44 @@
 \section{Scene Surveying With Heterogeneous Battery Constraints and Sampling Times}
 \note{Keep this very brief - there is not a great research output here. Simply mention that we began looking into using solvers to calculate solutions.}
 
-Once we had prototyped the NN algorithm in order to find a suitable solution to the simplified problem, we then considered the more general problem, where UAVs have heterogeneous battery constraints, sampling times and operational speeds, which is mentioned in section \ref{sec:SceneSurveying}. This addresses the more general Vehicle Routing Problem (VRP). We decided to formulate the problem as a \textit{linear program} and planned to find solutions using a linear program solver, following the literature outlined in section <reference>. 
+Once we had prototyped the NN algorithm in order to find a suitable solution to the simplified problem, we then considered the more general problem, where UAVs have heterogeneous battery constraints, sampling times and operational speeds, which is mentioned in section \ref{sec:SceneSurveying}. This addresses the more general Vehicle Routing Problem (VRP). We decided to formulate the problem as a \textit{linear program} and planned to find solutions using a linear program solver, following the literature outlined in section <reference>. This means that the problem's objective function and constraints must be written as linear expressions.
 %A number of code repositories with permissive licences that provide solvers for linear programs exist .S
-Specifying problem explicitly as a linear program and then passing it to a solver is a time-consuming process, which has led to a number of tools developed which act as wrappers for developers to solve well-known problems without having to write excessive amounts of boiler-plate code. We chose to use Google's Apache-licensed \href{https://developers.google.com/optimization/}{\textit{Operations Research}}\footnote{\href {https://developers.google.com/optimization/}{https://developers.google.com/optimization/}} (OR) repository, which contains a routing library with high-level interfaces specifically designed to allow the user to define and solve VRPs. This meant we could focus on defining the salient aspects of the problem rather than how to convert the VRP into a linear program.
+Specifying problem explicitly as a linear program and then passing it to a solver is a time-consuming process, which has led to a number of tools developed which act as wrappers for developers to solve well-known problems without having to write excessive amounts of boiler-plate code. We chose to use Google's Apache-licensed \href{https://developers.google.com/optimization/}{\textit{Operations Research}}\footnote{\href {https://developers.google.com/optimization/}{https://developers.google.com/optimization/}} (OR) repository, which contains a routing library with high-level interfaces specifically designed to allow the user to define and solve VRPs. This meant we could focus on defining the salient aspects of the problem rather than the details of how to convert the VRP into a linear program.
 
-We began by following the example outlined in the \href{https://developers.google.com/optimization/routing/vrp}{OR tools documentation}\footnote{\href {https://developers.google.com/optimization/routing/vrp}{https://developers.google.com/optimization/routing/vrp}}. We made the following modifications:
+We began by following the example outlined in the \href{https://developers.google.com/optimization/routing/vrp}{OR tools documentation}\footnote{\href {https://developers.google.com/optimization/routing/vrp}{https://developers.google.com/optimization/routing/vrp}}. The documentation outlines the steps to solve a linear program using the repo follow the same pattern: 
+\begin{itemize}
+\item Create the variables.
+\item Define the constraints.
+\item Define the objective function.
+\item Declare the solver — the method that implements an algorithm for finding the optimal solution.
+\item Invoke the solver and display the results.
+\end{itemize}
 
-\subsection{}
+In order to follow these steps, we added the following to the provided example code:
+
+\subsection{Specifying Variables and Constraints}
+We first implemented a vehicle class which records the variables related to routing for each vehicle. Member variables included:
+\begin{itemize}
+    \item The time taken to record data at each node
+    \item The location of the depot, where the charging point is located
+    \item The operational speed of the vehicle
+    \item The estimated remaining battery life in seconds
+\end{itemize}
+In order to facilitate recharging, we created virtual depot nodes, which are duplicate nodes of the recharge location and have an associated recharge time for each UAV.
+
+For each UAV, we then created a matrix of times taken to travel from one node to the next and service the second node, based on the distances between the nodes, the operational speed of the UAV and the service time.
+
+In order to specify the objective function, it is necessary to monitor some quantities that accumulate along a vehicle's route. This is done using the OR Tools interface by adding a \textit{dimension}. Dimensions are used to track each vehicle's cumulative travel time using the matrix of transition times mentioned above. This specifies in the objective function the cost of traversing arcs for each UAV. We force the UAVs to visit a recharge depot once its battery level reaches below 10\% by specifying a cumulative variable with a range equal to the predicted time taken for the RAV battery to degrade to this level. The solver must include the dummy depot node in the solution at this time. By adding the dimensions that track the amount of time it takes vehicles to traverse and gather data at each node, along with mandatory visits to the dummy nodes at the charging station..
+
+We specified each time dimension to contribute to the objective function by using the setGlobalSpanCostCoefficient method, which notifies the solver to minimise the largest cost among all the time dimensions, which equates to minimising the longest time taken for any vehicle to complete its route.
+
+We used the default solver to calculate a solution, with the cheapest arc heuristic as the 
+
+
 
 \subsection{Specifying a Time Dimension}
+
+\subsection{}
 
 \subsection{}
 

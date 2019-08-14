@@ -38,7 +38,72 @@ For each UAV, we then created a lookup table of times taken to travel from one n
 \end{center}
 \end{wrapfigure}
 
-We only managed to prototype the OR-Tools solver based method, which meant the results that we generated apply to carefully chosen regions that offer a proof-of-concept that the OR-Tools based method can provide viable solutions. A sample solution is visible in Figure \ref{fig:ORToolsVRPSoln}. The configurations for the vehicles used is as follows:
+We only managed to prototype the OR-Tools solver based method, which meant the results that we generated apply to carefully chosen regions that offer a proof-of-concept that the OR-Tools based method can provide viable solutions. We outline in section <reference future work> how we envision the prototype solution could be extended and sufficiently tested. Sample solutions computed for various configurations of the vehicles are shown in Table \ref{fig:ORToolsVRPSoln}. For each of the solutions shown in Table <reference>, we enforced that UAV 1 (red) and UAV 2 (green) have 1200 seconds fly time and that UAV 3 (yellow) has 2400 seconds of flying time at an operational speed of 1 m/s, with flying time directly inversely proportional to operational speed. (e.g. UAV 1 will have 300 seconds of flying time at an operational speed of 4 m/s). We assume that the UAVs take 10 seconds to recharge to full capacity. We also assume that UAV 1 and UAV 2 begin with 17.5\% and 33.3\% of their full battery capacities respectively.
+
+The configurations for the vehicles used is as follows:
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | m{5cm} | }
+    \hline
+    Planned UAV Routes & Route Times (Seconds) \\
+    \hline
+    
+    %single UAV
+    \begin{minipage}[c][53mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/SpeedOneOne.PNG}
+
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+      \item[] UAV 1 (red): 1825.8
+      \item[] UAV 2 (green): 1836.3
+    \end{itemize}
+    \\
+    \hline
+    %two UAV
+    \begin{minipage}[c][53mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/SpeedOneOneTimeDemandTwo.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+        \item[] UAV 1 (red): 1825.8
+        \item[] UAV 2 (green): 1836.3
+    \end{itemize}
+    \\
+    \hline
+    
+    %three UAV
+    \begin{minipage}[c][53mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/SpeedEightOne.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+    \item[] UAV 1 (red): 1825.8
+    \item[] UAV 2 (green): 1836.3
+    \end{itemize}
+    \\
+    \hline
+    
+    %Four UAV
+    \begin{minipage}[c][53mm][c]{.6\textwidth}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/ThreeRAV.PNG}
+    \end{minipage}
+    &
+    \begin{itemize}[leftmargin=*]
+    \item[] UAV 1 (red): 1038.3
+    \item[] UAV 2 (green): 1048.8
+    \item[] UAV 3 (yellow): 994.5
+
+    \end{itemize}
+
+    \\
+    \hline
+  \end{tabular}
+  \caption{Results of applying solution found with OR-Tools solver}\label{table:NNAlgoResultsRect}
+\end{table}
+
+
 \subsubsection{Vehicle One}
 
 \subsubsection{Vehicle Two}

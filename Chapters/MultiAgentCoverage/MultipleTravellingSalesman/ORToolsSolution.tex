@@ -38,67 +38,100 @@ For each UAV, we then created a lookup table of times taken to travel from one n
 \end{center}
 \end{wrapfigure}
 
-We only managed to prototype the OR-Tools solver based method, which meant the results that we generated apply to carefully chosen regions that offer a proof-of-concept that the OR-Tools based method can provide viable solutions. We outline in section <reference future work> how we envision the prototype solution could be extended and sufficiently tested. Sample solutions computed for various configurations of the vehicles are shown in Table \ref{fig:ORToolsVRPSoln}. For each of the solutions shown in Table <reference>, we enforced that UAV 1 (red) and UAV 2 (green) have 1200 seconds fly time and that UAV 3 (yellow) has 2400 seconds of flying time at an operational speed of 1 m/s, with flying time directly inversely proportional to operational speed. (e.g. UAV 1 will have 300 seconds of flying time at an operational speed of 4 m/s). We assume that the UAVs take 10 seconds to recharge to full capacity. We also assume that UAV 1 and UAV 2 begin with 17.5\% and 33.3\% of their full battery capacities respectively.
+We only managed to prototype the OR-Tools solver based method, which meant the results that we generated apply to carefully chosen regions that offer a proof-of-concept that the OR-Tools based method can provide viable solutions. We outline in section <reference future work> how we envision the prototype solution could be extended and sufficiently tested. Sample solutions computed for various configurations of the vehicles are shown in Table \ref{fig:ORToolsVRPSoln}. For each of the solutions shown in Table <reference>, we enforced that UAV 1 (red) and UAV 2 (green) have 1200 seconds fly time and that UAV 3 (yellow) has 2400 seconds of flying time at an operational speed of 1 m/s, with flying time directly inversely proportional to operational speed. (e.g. UAV 1 will have 300 seconds of flying time at an operational speed of 4 m/s). We assumed arbitrarily that the UAVs take 600 seconds to recharge to full capacity and that the UAVs will always recharge to full capacity. We also assume that UAV 1, UAV 2 and UAV 3 begin with 17.5\%, 33.3\% and 100\% of their full battery capacities respectively. We also assume that the UAVs start and finish at the same location.
 
-The configurations for the vehicles used is as follows:
+The configurations for the individual vehicles used is as follows:
 
 \begin{table}[h!]
   \centering
-  \begin{tabular}{ | c | m{5cm} | }
+  \begin{tabular}{ | c | m{5.2cm} | }
     \hline
     Planned UAV Routes & Route Times (Seconds) \\
     \hline
     
     %single UAV
     \begin{minipage}[c][53mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/SpeedOneOne.PNG}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/Example1.PNG}
 
     \end{minipage}
     &
-    \begin{itemize}[leftmargin=*]
-      \item[] UAV 1 (red): 1825.8
-      \item[] UAV 2 (green): 1836.3
-    \end{itemize}
+    \small
+    \begin{tabular}{m{10mm}|m{11mm} m{11mm}}
+        & UAV 1 & UAV 2\\
+        \hline
+        Speed& 4 & 2 \\
+        T.T.S & 0.5 & 0.5 \\
+        Color & Red & Green \\
+        \hline
+        Dist.& 1813 & 1813 \\
+        Time& 1410 & 1600 \\
+    \end{tabular}
+    \normalsize
     \\
     \hline
-    %two UAV
+    %single UAV
     \begin{minipage}[c][53mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/SpeedOneOneTimeDemandTwo.PNG}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/Example2.PNG}
+
     \end{minipage}
     &
-    \begin{itemize}[leftmargin=*]
-        \item[] UAV 1 (red): 1825.8
-        \item[] UAV 2 (green): 1836.3
-    \end{itemize}
+    \small
+    \begin{tabular}{m{10mm}|m{11mm} m{11mm} }
+        & UAV 1 & UAV 2\\
+        \hline
+        Speed& 1 & 1 \\
+        T.T.S & 0.5 & 0.5 \\
+        Color & Red & Green \\
+        \hline
+        Dist.& 1961 & 2141 \\
+        Time& 3423 & 3423 \\
+    \end{tabular}
+    \normalsize
     \\
     \hline
     
-    %three UAV
+    %single UAV
     \begin{minipage}[c][53mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/SpeedEightOne.PNG}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/Example3.PNG}
+
     \end{minipage}
     &
-    \begin{itemize}[leftmargin=*]
-    \item[] UAV 1 (red): 1825.8
-    \item[] UAV 2 (green): 1836.3
-    \end{itemize}
+    \small
+    \begin{tabular}{m{10mm}|m{11mm} m{11mm}}
+        & UAV 1 & UAV 2\\
+        \hline
+        Speed& 1 & 1 \\
+        T.T.S & 2 & 2 \\
+        Color & Red & Green \\
+        \hline
+        Dist.& 2142 & 2150 \\
+        Time& 3462 & 3462 \\
+    \end{tabular}
+    \normalsize
     \\
     \hline
     
-    %Four UAV
+    %single UAV
     \begin{minipage}[c][53mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/ThreeRAV.PNG}
+      \includegraphics[width=\linewidth, height=51mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/ORToolsSolns/Example4.PNG}
+
     \end{minipage}
     &
-    \begin{itemize}[leftmargin=*]
-    \item[] UAV 1 (red): 1038.3
-    \item[] UAV 2 (green): 1048.8
-    \item[] UAV 3 (yellow): 994.5
-
-    \end{itemize}
-
+    \small
+    \begin{tabular}{m{10mm}|m{11mm} m{11mm}}
+        & UAV 1 & UAV 2\\
+        \hline
+        Speed& 8 & 1 \\
+        T.T.S & 1 & 1 \\
+        Color & Red & Green \\
+        \hline
+        Dist.& 2638 & 870 \\
+        Time& 1410 & 1600 \\
+    \end{tabular}
+    \normalsize
     \\
     \hline
+
   \end{tabular}
   \caption{Results of applying solution found with OR-Tools solver}\label{table:NNAlgoResultsRect}
 \end{table}

@@ -1,6 +1,8 @@
 \section{Conclusion and Future Work}
 In this chapter we provided the details of how a swarm of UAVs can be used to gather data in a given region described by a polygon. We described how to discretise the region into a set of grid points and we implemented a Nearest Neighbor (NN) heuristic algorithm to generate routes for the swarm of UAVs which visit each grid point in the region exactly once, which is a solution to the multiple Travelling Salesman Problem. For practical purposes in relation to ROCSAFE \cite{rocsafeNUIG}, the project that has funded this work, this solved the surveying problem. The tests carried out in simulation were carried out successfully, using the user interface and custom simulation environment, illustrated in \ref{fig:VirtualPlannedRoutes}, which offers some validation to the work. We then extended this work to use a linear program solver, as proposed in the literature. We managed to prototype a solution using the OR-Tools code repository <provide link>.
 
+The OR-Tools solution is highly flexible, allowing the user to specify arbitrary charging locations, battery capacities, sampling times, optional enforced start and finish locations, operational speeds, etc. However, for the small-scale grids explored, the average solution took x seconds to compute, which indicates that the implemented solution may not scale well. We outline how this may be overcome in the future work section.
+
 Since we were limited by time constraints with this work, we outline some future work that we planned but did not have the time to execute.\par
 
 \subsubsection{Future Work}

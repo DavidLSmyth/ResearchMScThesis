@@ -1,9 +1,9 @@
 \section{Scene Surveying With Heterogeneous Battery Constraints and Sampling Times}
-\note{Keep this very brief - there is not a great research output here. Simply mention that we began looking into using solvers to calculate solutions.}
+\note{Keep this very brief - there is not a great research output here. Simply mention that we began looking into using solvers to calculate solutions as is line with a lot of the literature.}
 
-Once we had prototyped the NN algorithm in order to find a suitable solution to the simplified problem, we then considered the more general problem, where UAVs have heterogeneous battery constraints, sampling times and operational speeds, which is mentioned in section \ref{sec:SceneSurveying}. This addresses the more general Vehicle Routing Problem (VRP). We decided to formulate the problem as a \textit{linear program} and planned to find solutions using a linear program solver, following the literature outlined in section <reference>. This means that the problem's objective function and constraints must be written as linear expressions.
+Once we had prototyped the NN algorithm in order to find a suitable solution to the simplified problem, we then considered the more general problem, where UAVs have heterogeneous battery constraints, sampling times and operational speeds, which is mentioned in section \ref{sec:SceneSurveying}. This addresses the more general Vehicle Routing Problem (VRP). We decided to formulate the problem as a \textit{linear program} and planned to find solutions using a linear program solver, following the literature outlined in section <reference>. We subsequently use terminology commonly used in convex optimisation and linear programming. We refer the reader to the text "Convex Optimization" \cite{Boyd2004ConvexOptimization} for information on linear programming and convex optimisation in general. This means that the problem's objective function and constraints must be written as linear expressions.
 %A number of code repositories with permissive licences that provide solvers for linear programs exist .S
-Specifying problem explicitly as a linear program and then passing it to a solver is a time-consuming process, which has led to a number of tools developed which act as wrappers for developers to solve well-known problems without having to write excessive amounts of boiler-plate code. We chose to use Google's Apache-licensed \href{https://developers.google.com/optimization/}{\textit{Operations Research}}\footnote{\href {https://developers.google.com/optimization/}{https://developers.google.com/optimization/}} (OR) repository, which contains a routing library with high-level interfaces specifically designed to allow the user to define and solve VRPs. This meant we could focus on defining the salient aspects of the problem rather than the details of how to convert the VRP into a linear program.
+Specifying the VRP explicitly as a linear program and then passing it to a solver is a time-consuming process, which has led to the development of a number of tools which act as wrappers for software developers to solve well-known problems without having to write excessive amounts of boiler-plate code. We chose to use Google's Apache-licensed \href{https://developers.google.com/optimization/}{\textit{Operations Research}}\footnote{\href {https://developers.google.com/optimization/}{https://developers.google.com/optimization/}} (OR) repository, which contains a routing library with high-level interfaces specifically designed to allow the user to define and solve VRPs. This meant we could focus on defining the salient aspects of the problem rather than the details of how to convert the VRP into a linear program.
 
 We began by following the example outlined in the \href{https://developers.google.com/optimization/routing/vrp}{OR tools documentation}\footnote{\href {https://developers.google.com/optimization/routing/vrp}{https://developers.google.com/optimization/routing/vrp}}. The documentation outlines the steps to solve a linear program using the repo follow the same pattern: 
 \begin{itemize}
@@ -24,29 +24,21 @@ We first implemented a vehicle class which records the variables related to rout
     \item The operational speed of the vehicle
     \item The estimated remaining battery life in seconds
 \end{itemize}
-In order to facilitate recharging, we created virtual depot nodes, which are duplicate nodes of the recharge location and have an associated recharge time for each UAV.
+In order to facilitate recharging, we followed the approach outlined in the documented examples and created "virtual" depot nodes, which are duplicate nodes of the recharge location and have an associated recharge time for each UAV.  We force the UAVs to visit the depot to recharge once its battery level reaches below 10\% by creating a cumulative variable with a range equal to the predicted time taken for the UAV battery to degrade to this level. In effect, this indicates to the solver that it must include the dummy depot node in the solution at this time.
 
-For each UAV, we then created a matrix of times taken to travel from one node to the next and service the second node, based on the distances between the nodes, the operational speed of the UAV and the service time.
+For each UAV, we then created a lookup table of times taken to travel from one node to the next and service the second node, based on the distances between the nodes, the operational speed of the UAV and the service time. In order to communicate to the solver that it should refer to each of these lookup tables to determine the cost of adding a node to a vehicle's route, we created a \textit{dimension} for each vehicle which refers to the lookup table. \textit{Dimensions} are used in the OR Tools interface to represent quantities accumulated at nodes along the routes. We then specified each time dimension to contribute to the objective function by using the setGlobalSpanCostCoefficient method, which notifies the solver to minimise the largest cost among all the time dimensions, which equates to minimising the longest time taken for any vehicle to complete its route. We used the default CP-SAT solver to compute a solution, with the cheapest arc heuristic. The cheapest arc heuristic builds a solution by beginning with the start node and connects it to the node which produces the cheapest route segment, then extends the route by iterating on the last node added to the route. We did not get the chance to evaluate other heuristics due to time constraints.
 
-In order to specify the objective function, it is necessary to monitor some quantities that accumulate along a vehicle's route. This is done using the OR Tools interface by adding a \textit{dimension}. Dimensions are used to track each vehicle's cumulative travel time using the matrix of transition times mentioned above. This specifies in the objective function the cost of traversing arcs for each UAV. We force the UAVs to visit a recharge depot once its battery level reaches below 10\% by specifying a cumulative variable with a range equal to the predicted time taken for the RAV battery to degrade to this level. The solver must include the dummy depot node in the solution at this time. By adding the dimensions that track the amount of time it takes vehicles to traverse and gather data at each node, along with mandatory visits to the dummy nodes at the charging station..
+\subsection{Results of the Solver-Based Method}
 
-We specified each time dimension to contribute to the objective function by using the setGlobalSpanCostCoefficient method, which notifies the solver to minimise the largest cost among all the time dimensions, which equates to minimising the longest time taken for any vehicle to complete its route.
+\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=0.48\textwidth]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/VRPPrototypeSolution.png}
+\caption{A solution generated by the prototype solutions based using the OR-Tools repository}
+\label{fig:ORToolsVRPSoln}
+\end{center}
+\end{wrapfigure}
 
-We used the default solver to calculate a solution, with the cheapest arc heuristic as the 
+We only managed to prototype the OR-Tools solver based method, which meant the results that we generated apply to carefully chosen regions that offer a proof-of-concept that the OR-Tools based method can provide viable solutions. A sample solution is visible in Figure \ref{fig:ORToolsVRPSoln}. The configurations for the vehicles used is as follows:
+\subsubsection{Vehicle One}
 
-
-
-\subsection{Specifying a Time Dimension}
-
-\subsection{}
-
-\subsection{}
-
-
-\begin{itemize}
-    \item The OR Tools interface requires the user to specify either a distance matrix or a callback method which calculates the cost of traversing an arc between nodes. We used the Haversine distance to create a callback method to calculate the distances between points.
-    \item We wrote a time evaluator method, which 
-\end{itemize}
-
-
-
+\subsubsection{Vehicle Two}

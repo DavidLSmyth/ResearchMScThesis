@@ -23,7 +23,7 @@ The problem can be described as follows:
 \\
 \textit{Given a fully connected graph, $G$, to visit and $n$ RAV agents, find a subtour for each agent such that each point in $P \in G$ is visited exactly once by any agent in the system, with the objective of minimizing the longest time taken for any individual agent subtour, in order to minimize the time taken to carry out the survey.}
 \\
-This is simply the \textit{ multiple travelling salesman problem} (mTSP). 
+%This is simply the \textit{ multiple travelling salesman problem} (mTSP). 
 
 %According to the number of distribution centers: single distribution center and multi-distribution center problem;
 %According to the type of vehicle: single-vehicle type and multi-vehicle type problem;
@@ -37,19 +37,18 @@ This is simply the \textit{ multiple travelling salesman problem} (mTSP).
 
 \subsection{Proposed Solution for the Simplified Problem}
 \note{Again maybe use constrained instead of simplified}
-Due to the fact that the mTSP is at least as hard as the TSP, since it is a generalisation of the TSP, finding a polynomial time solution to the mTSP is not feasible. Given that there is no algorithm to solve the mTSP optimally in a polynomial time, we explored a number of sub-optimal solutions that take advantage of the highly structured nature of the uniformly spaced grid that we use in our instance of the problem. The usual trade-off between solution quality vs. time taken to find the solution motivated our choice of implemented algorithm, as we anticipated that the time taken to execute the planned routes may be comparable to the time taken to generate some solutions (the order of minutes or hours). For example, \cite{Hungerlander2018TheGrids} shows the results of using a Mixed Integer Linear Program (MILP) took hours to run for grid sizes that would be considered relatively small in our domain, which would exceed the amount of time taken to perform even a random solution. General details of solutions that can be applied to solve the mTSP and VRP can be found in Section <> of the literature review.
+Due to the fact that the mTSP is at least as hard as the TSP, since it is a generalisation of the TSP, finding a polynomial time solution to the mTSP is not feasible. We explored a number of sub-optimal solutions that take advantage of the highly structured nature of the uniformly spaced grid that we use in our instance of the problem. The usual trade-off between solution quality vs. time taken to find the solution motivated our choice of implemented algorithm, as we anticipated that the time taken to execute the planned routes may be comparable to the time taken to generate some solutions (the order of minutes or hours). For example, \cite{Hungerlander2018TheGrids} shows the results of using a Mixed Integer Linear Program (MILP) took hours to run for grid sizes that could be considered relatively small in many real-world domains, which would exceed the amount of time taken to perform even a random solution. General details of solutions that can be applied to solve the mTSP and VRP can be found in Section <> of the literature review (this will be filled in).
 
 \subsubsection{Nearest Neighbor Algorithm}
-There are four common heuristic algorithms that form the basis of most solutions to TSP and mTSP problems, which are stated in \cite{Johnson1997TheOptimization}: the \textit{nearest neighbor} algorithm, the \textit{greedy algorithm}, the \textit{Clarke-Wright} algorithm and the \textit{Christofides} algorithm. We began by implementing an algorithm which is a modification of a TSP solution based on the nearest-neighbor heuristic. Our reasoning is based on the following premises:
+There are four common heuristic algorithms that form the basis of most solutions to TSP and mTSP problems, as stated in \cite{Johnson1997TheOptimization}: the \textit{nearest neighbor} algorithm, the \textit{greedy algorithm}, the \textit{Clarke-Wright} algorithm and the \textit{Christofides} algorithm. We began by implementing an algorithm which is a modification of a TSP solution based on the nearest-neighbor heuristic. Our reasoning is based on the following premises:
 \begin{enumerate}
     \item The nearest-neighbor heuristic is a well-known heuristic that is straightforward to implement. It is known to provide good results to the TSP when the cost is defined as the Euclidean distance between points \cite{Johnson1995TheOptimization}, as in our use case.
-    \item The nearest-neighbor solution to the TSP can be very easily modified to be applied to the mTSP.
+    \item The nearest-neighbor solution to the TSP can be very easily modified to be applied to the mTSP by implementing it in a round-robin manner, as detailed in algorithm \ref{alg:NNHeuristic}.
     \item The nearest-neighbor heuristic is known to have a running time which is O($n^2$) \cite{Rosenkrantz1977AnProblem}, which means it can scale well to reasonably large problem instances compared to other algorithms which have a far worse performance complexity. For example, the Christofides algorithm is known to be within a factor of $\frac{3}{2}$ of the optimal solution, but its running time is O($n^3$) \cite{Christofides1976WORST-CASEPROBLEM}, which quickly becomes prohibitively long.
     %\item Partitioning a TSP solution can give very good mTSP solutions on the same graph.
 \end{enumerate}
 
 The nearest-neighbor heuristic algorithm for the multiple Travelling Salesman problem is shown in Algorithm \ref{alg:NNHeuristic}.
-
 \begin{algorithm}
 \caption{The Nearest-Neighbor Solution to the mTSP Problem}
 \label{alg:NNHeuristic}
@@ -93,14 +92,12 @@ current\_agent\_index$\leftarrow$0\\
 \RETURN RAV\_routes
 \end{algorithmic} 
 \end{algorithm}
-
-
 \begin{wrapfigure}{r}{0.45\textwidth}
 \includegraphics[width=0.45\textwidth]{Chapters/MultiAgentCoverage/Figs/RAVRoutingNUIGCropped.png}
 \caption{NN heuristic encourages the creation of optimal sub-tours, which are assigned to each RAV}
 \label{fig:NNPartitioning}
 \end{wrapfigure}
-The algorithm can be seen to be a very straightforward extension of the single agent NN algorithm. The while loop iteratively cycles through the list of RAVs and assigns the nearest non-assigned neighbor to the next RAVs partially assembled route. Since we run this algorithm over a uniformly-spaced grid, it builds agent routes in a lawn-cutting pattern, which intuitively will provide good results as long as the routes do not begin to overlap. The idea is to take the NN algorithm TSP solution and apply it exhaustively in a round-robin manner, so that each RAV is encouraged to find a non-overlapping optimal sub-tour. These non-overlapping optimal sub-tours partition the region and therefore offer a solution to the mTSP. Section 4 of \cite{Hungerlander2018TheGrids} gives an insight to how optimal solutions can be found for a uniformly spaced rectangular grid when RAVs are assumed to start in the corners of the rectangle, which provides further motivation to using algorithm \ref{alg:NNHeuristic}. In practice non-overlapping optimal sub-tours are not found, but solutions may come close, as illustrated in figure \ref{fig:NNPartitioning}. Since sometimes the solutions found by the algorithm are not always well-balanced, we propose to iteratively re-run the algorithm after a set interval in order to update the solution to ensure that no RAV is idle while others are doing work. This also ensures redundancy in the system - if a RAV stops operating, it's uncompleted work will be re-assigned to the others.
+The algorithm can be seen to be a very straightforward extension of the single agent NN algorithm. The while loop iteratively cycles through the list of RAVs and assigns the nearest non-assigned neighbor to the next RAVs partially assembled route. Since we run this algorithm over a uniformly-spaced grid, it builds agent routes in a lawn-cutting pattern, which provides good results as long as the routes do not begin to overlap. The idea is to take the NN algorithm TSP solution and apply it exhaustively in a round-robin manner, so that each RAV is encouraged to find a non-overlapping optimal sub-tour. These non-overlapping optimal sub-tours partition the region and therefore offer a solution to the mTSP. Section 4 of \cite{Hungerlander2018TheGrids} gives an insight to how optimal solutions can be found for a uniformly spaced rectangular grid when RAVs are assumed to start in the corners of the rectangle, which provides further motivation to using algorithm \ref{alg:NNHeuristic}. In practice non-overlapping optimal sub-tours are not found, but solutions may come close, as illustrated in figure \ref{fig:NNPartitioning}. Since sometimes the solutions found by the algorithm are not always well-balanced, we propose to iteratively re-run the algorithm after a set interval in order to update the solution to ensure that no RAV is idle while others are doing work. This also ensures redundancy in the system - if a RAV stops operating, it's uncompleted work will be re-assigned to the others.
 
 \note{Not sure if worth mentioning lower bound of cost for this algo is 1/noRAVs}
 \note{might be worth mentioning that it would be ideal to add the next grid point to whichever agent has the shortest route so far}

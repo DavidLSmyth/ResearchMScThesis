@@ -13,7 +13,7 @@ As mentioned in Chapter \ref{chapter:introduction}, a major problem in hazardous
     \item Evidence localization usually requires moving a sensor to within close proximity of the evidence. If a human is responsible for this, there is a chance that they will accidentally tamper with the evidence, possibly yielding it unusable.
     \item Since these scenarios are highly dangerous, the area to search may be large to avoid potentially missing important sources of evidences. This means that the process of localization may be painstaking and time-consuming for humans.
 \end{itemize}
-This section proposes a system that can aid the execution of these tasks using a system of automated \textbf{U}nmanned \textbf{A}erial \textbf{V}ehicles (UAVs). \par
+This section proposes a system that can aid the execution of these tasks using a system of automated \textbf{U}nmanned \textbf{A}erial \textbf{V}ehicles (RAVs). \par
 
 
 
@@ -38,15 +38,15 @@ Rather than immediately attempting to tackle the full problem, we chose to initi
 %As outlined in the literature review, this problem has been approached before by treating the problem as a 2 Time Slice Dynamic Bayesian Network (2TDBN). 
 \begin{itemize}
     \item There are either zero or one targets to be localized.
-    \item The UAVs have unlimited battery capacity.
-    \item The region that the UAVs need to search can be well approximated by a polygon.
+    \item The RAVs have unlimited battery capacity.
+    \item The region that the RAVs need to search can be well approximated by a polygon.
     \item The sensor specificity and sensitivity are known or can be estimated for a given resolution (e.g. 1m). These are assumed to be greater than 50\% for the given resolution.
-    \item The UAVs operate over a discrete spatial grid spanning the region to search, assumed to be polygonal as above, the dimensions of which are pre-determined by the sensor resolution.
-    \item The UAVs are assumed to have a GPS sensor that is accurate to beyond the sensor resolution (implying that the UAV moves to discrete grid locations without drift).
+    \item The RAVs operate over a discrete spatial grid spanning the region to search, assumed to be polygonal as above, the dimensions of which are pre-determined by the sensor resolution.
+    \item The RAVs are assumed to have a GPS sensor that is accurate to beyond the sensor resolution (implying that the RAV moves to discrete grid locations without drift).
     \item The target is assumed to be small enough to occupy only one grid cell at a time. It is also assumed to not lie across grid cells.
 \end{itemize}
 While these assumptions are clearly unrealistic, they are convenient because they simplify the design of the system and subsequent analysis. In later sections in this chapter, these assumptions are relaxed and the necessary modifications for the solution strategy are discussed. Some ramifications of these assumptions are addressed later in the chapter, at section <x>. It is worth noting that similar simplifying assumptions were made in related works in the literature, 
-(\cite{Chung2007ASearch} and \cite{Waharte2010SupportingUAVs}), % find additional citations in mendeley
+(\cite{Chung2007ASearch} and \cite{Waharte2010SupportingRAVs}), % find additional citations in mendeley
 which strongly influenced our initial approach.
 
 %Outline experimental setup
@@ -55,7 +55,7 @@ Given the assumptions outlined above, rather than beginning by working on design
 \begin{itemize}
     \item A 2-Dimensional grid coordinate system which can be easily configured to create a grid over a polygonal region. This is outlined in greater detail in section <provide a reference to the section>.
     \item An evidence source simulator which simulates the readings that a sensor would observe given the sensitivity and specificity of the sensor.
-    \item A grid manager component, which manages the positions of UAVs and targets on the grid.
+    \item A grid manager component, which manages the positions of RAVs and targets on the grid.
     \item A simulation manager component, which constructs the agents from their configuration files and is responsible for running the simulation using the other software components.
     \item Configuration files which allow the user to specify the configurations of the sensors, the agents, environment parameters and debugging/analysis files.
 \end{itemize}
@@ -123,7 +123,7 @@ It is worth noting that this performance measure suggests goal states for the ag
 \[ <x_i, TERMINATED\_x_i> \]
 
 \subsubsection{Agent Function Design}
-Once key components of the agent and its environment were identified, we began working on the design of the agent function. In Chapter \ref{Background}, four common classes of agents were identified, based on the design of their corresponding agent function. Using this list as a reference, we decided that a model-based agent would be a suitable starting point, since model-based agents can maintain internal state to handle problems associated with partial observability \cite{AIAMA}. The decision was also based on related works \cite{Chung2007ASearchb}, \cite{WaharteProbabilisticUAVsb}, \cite{Charrow2014CooperativeLocalization}. The agent function is implemented as shown in algorithm \ref{alg:ModelBasedReflexAgent}, based on \cite[p.~51]{AIAMA}. 
+Once key components of the agent and its environment were identified, we began working on the design of the agent function. In Chapter \ref{Background}, four common classes of agents were identified, based on the design of their corresponding agent function. Using this list as a reference, we decided that a model-based agent would be a suitable starting point, since model-based agents can maintain internal state to handle problems associated with partial observability \cite{AIAMA}. The decision was also based on related works \cite{Chung2007ASearchb}, \cite{WaharteProbabilisticRAVsb}, \cite{Charrow2014CooperativeLocalization}. The agent function is implemented as shown in algorithm \ref{alg:ModelBasedReflexAgent}, based on \cite[p.~51]{AIAMA}. 
 \note{Considered adding a figure, but not sure how much extra value it will provide}
 %A diagram which outlines the agent operates in relation to the environment is shown in figure \ref{}.
 
@@ -301,7 +301,7 @@ In order to update the estimated state of the agent, the below equations are use
 
 \subsubsection{Action Selection Strategy}
 \workinprogress
-At each time step the agent may either choose to terminate the search or move to a new location to take a measurement reading. The agent may choose which of these actions to perform based on its location, the search status and its internal representation of the environment, which are outlined in the preceding section. First we discuss how move actions are chosen, if the agent decides that the search should not be terminated at the current time step. We began by implementing some of the recommended basic search strategies outlined in the related works by \citeauthor{Chung2007ASearchb} \cite{Chung2007ASearchb} and \citeauthor{Waharte2010SupportingUAVs} \cite{Waharte2010SupportingUAVs}. These search methods are devised in order to optimize the agent's performance measure, which is set out in \ref{sssection:PerfMeas}. The results of applying these strategies are discussed in <give reference to results section>\par 
+At each time step the agent may either choose to terminate the search or move to a new location to take a measurement reading. The agent may choose which of these actions to perform based on its location, the search status and its internal representation of the environment, which are outlined in the preceding section. First we discuss how move actions are chosen, if the agent decides that the search should not be terminated at the current time step. We began by implementing some of the recommended basic search strategies outlined in the related works by \citeauthor{Chung2007ASearchb} \cite{Chung2007ASearchb} and \citeauthor{Waharte2010SupportingRAVs} \cite{Waharte2010SupportingRAVs}. These search methods are devised in order to optimize the agent's performance measure, which is set out in \ref{sssection:PerfMeas}. The results of applying these strategies are discussed in <give reference to results section>\par 
 \note{In the following, might be good to mention the motivation in relation to the performance measure}
 \textbf{Random Search}
 This method serves as a baseline against which similar strategies can be compared. The agent simply chooses the next grid location to explore randomly from all possible grid locations. The expected number of moves needed to take a reading at all possible grid cells is given by the solution to the well-known \textit{coupon collectors problem}, $nH_n$, where $H_n$ is the $n_{th}$ harmonic number and $n$ is the total number of grid cells, which gives a good idea of the expected amount of time that will be taken to conclude the search.
@@ -343,7 +343,7 @@ details. \par
 \subsubsection{Incorporating Multiple Targets}
 \placeholder
 
-\subsubsection{Incorporating Multiple UAVs}
+\subsubsection{Incorporating Multiple RAVs}
 \placeholder
 
 

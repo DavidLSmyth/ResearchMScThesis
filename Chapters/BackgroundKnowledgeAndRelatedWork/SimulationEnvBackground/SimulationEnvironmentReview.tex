@@ -36,7 +36,7 @@ Since computer games are effectively simulations, the technologies used to creat
 
 There have been some highly notable simulation environments written with various games engines for non-gaming purposes. One of the first mature simulations written for a serious purpose using technologies usually applied to game development is the Gazebo simulator \cite{Koenig2005DesignSimulator}. Gazebo makes use of physics engines and graphics rendering engines that are commonly used to develop games. The use of Gazebo has been reported to reduce the training time for some simple benchmark robotics tasks by as much as 33\%, while retaining the same level of performance \cite{VilchesRobotGazebo}. 
 
-There have also been a notable number of simulators designed to aid the development of autonomous cars trucks, UAVs and UUVs, with documentation on each commonly citing difficulties in changing configurations for physical vehicles, time taken to generate data and dangerous edge cases as motivation \cite{Dosovitskiy2017CARLA:Simulator} \cite{Wymann2015TORCS:Simulator}, \cite{Shah2017AirSim:Vehicles} \cite{Bojarski2016EndCars}. \citeauthor{Dosovitskiy2017CARLA:Simulator} designed the CARLA open-source simulator \cite{Dosovitskiy2017CARLA:Simulator} for autonomous driving research using UE4 to provide a lot of basic functionality. They cite \textit{state-of-the-art rendering quality, realistic physics, basic NPC logic, and an ecosystem of interoperable plugins} as key motivations to use the engine. AirSim \cite{Shah2017AirSim:Vehicles} is also built over UE4, with their motivations including
+There have also been a notable number of simulators designed to aid the development of autonomous cars trucks, RAVs and UUVs, with documentation on each commonly citing difficulties in changing configurations for physical vehicles, time taken to generate data and dangerous edge cases as motivation \cite{Dosovitskiy2017CARLA:Simulator} \cite{Wymann2015TORCS:Simulator}, \cite{Shah2017AirSim:Vehicles} \cite{Bojarski2016EndCars}. \citeauthor{Dosovitskiy2017CARLA:Simulator} designed the CARLA open-source simulator \cite{Dosovitskiy2017CARLA:Simulator} for autonomous driving research using UE4 to provide a lot of basic functionality. They cite \textit{state-of-the-art rendering quality, realistic physics, basic NPC logic, and an ecosystem of interoperable plugins} as key motivations to use the engine. AirSim \cite{Shah2017AirSim:Vehicles} is also built over UE4, with their motivations including
 \begin{itemize}
     \item "\textit{The amount of training data needed to learn useful behaviors is often prohibitively high}".
     \item "\textit{Autonomous vehicles are often unsafe and expensive to operate during the training phase}".
@@ -45,12 +45,12 @@ There have also been a notable number of simulators designed to aid the developm
 \end{itemize}
 \note{maybe just keep comma-separated list}
 
-Finally, the designers of Sim4CV \cite{Mueller2016ATracking}, which is also built over UE4, list the following motivations for the work done in developing a simulation environment for UAV tracking:
+Finally, the designers of Sim4CV \cite{Mueller2016ATracking}, which is also built over UE4, list the following motivations for the work done in developing a simulation environment for RAV tracking:
 \begin{itemize}
     \item "\textit{The combination of the simulator with an extensive aerial benchmark provides a more comprehensive evaluation toolbox for modern state-of-the-art trackers and opens new avenues for experimentation and analysis.}"
     \item \note{not sure how to deal with quoted citations} "\textit{Although simulation is popularly used in machine learning and animation and motion planning, the use of synthetically generated video or simulation for tracker evaluation is a new field to explore.}"
     \item "\textit{The Unreal Engine 4 (UE4) has recently become fully open-source and it seems very promising for simulated visual tracking due in part to its high-quality rendering engine and realistic physics library.}"
-    \item "\textit{Our proposed UAV simulator along with novel evaluation methods enables tracker testing in real-world scenarios with live feedback before deployment}"
+    \item "\textit{Our proposed RAV simulator along with novel evaluation methods enables tracker testing in real-world scenarios with live feedback before deployment}"
 \end{itemize}
 \note{Some of the above can be removed, only need most important points.}
 

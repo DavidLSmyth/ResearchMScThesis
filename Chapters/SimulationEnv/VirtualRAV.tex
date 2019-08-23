@@ -60,14 +60,14 @@ The RPCLibServerBase class uses the \textbf{P}ointer to \textbf{Impl}ementation 
 \begin{wrapfigure}{r}{0.4\textwidth}
     \centering
     \includegraphics[width=0.4\textwidth]{Chapters/SimulationEnv/Figs/DebuggingLines/DebugLines.png}
-    \caption{Debugging Lines Visualise planned UAV route.}
+    \caption{Debugging Lines Visualise planned RAV route.}
     \label{fig:DebuggingLines}
 \end{wrapfigure}
 
 \begin{wrapfigure}{r}{0.4\textwidth}
     \centering
     \includegraphics[width=0.4\textwidth]{Chapters/SimulationEnv/Figs/DebuggingLines/RoutesWithRAVsVisible.png}
-    \caption{UAV path visualised mid-way through planned mission.}
+    \caption{RAV path visualised mid-way through planned mission.}
     \label{fig:DebuggingLinesPlannedMission}
 \end{wrapfigure}
 The first modification made to AirSim was to extend the API to allow the user to visualize planned routes using debugging lines. This functionality had already been requested in multiple Github issues \note{do i need to provide links?} and since we also wanted the functionality, we decided to add this to the AirSim API. The end result can be seen in figure \ref{fig:DebuggingLines}. We used a top-down approach to make the appropriate changes. First, we specified the functionality that we wanted to expose through the AirSim API. This was determined to be as follows: given 2 points in the 3-Dimensional Unreal Engine Frame of Reference (NED), a line thickness, a line color and a time which the line will be shown for, display the specified line in the simulation environment. We wanted this to be available in both the global frame of reference and the local RAV frame of reference. This was planned to allow the user to visualise a series of lines form one specified waypoint to the next, on aggregate creating a visualisation of a planned path.
@@ -142,13 +142,13 @@ void DrawDebugLine
 \par
 
 
-Debug lines showing where the UAV has travelled were also added to the simulation. This was done by using a Blueprint (add reference to where blueprints are discussed.) A variable, oldPos, is used to store the previous position of the UAV. Every 0.2 seconds, the position is updated and a line is drawn from the UAV's old position to its new position. The user has the option to turn debugging lines on or off by setting a binary variable.
+Debug lines showing where the RAV has travelled were also added to the simulation. This was done by using a Blueprint (add reference to where blueprints are discussed.) A variable, oldPos, is used to store the previous position of the RAV. Every 0.2 seconds, the position is updated and a line is drawn from the RAV's old position to its new position. The user has the option to turn debugging lines on or off by setting a binary variable.
 
 \note{Might be better to have this wrapfigure}
 \begin{figure}
     \centering
     \includegraphics[width=0.6\textwidth]{Chapters/SimulationEnv/Figs/DebuggingLines/PathTracingDebugLines.png}
-    \caption{Blueprint used to create the debugging lines tracking a UAV.}
+    \caption{Blueprint used to create the debugging lines tracking a RAV.}
     \label{fig:DebuggingLines}
 \end{figure}
 

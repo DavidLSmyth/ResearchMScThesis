@@ -5,15 +5,15 @@ Rather than immediately attempting to tackle the full problem, we chose to initi
 %As outlined in the literature review, this problem has been approached before by treating the problem as a 2 Time Slice Dynamic Bayesian Network (2TDBN). 
 \begin{itemize}
     \item There are either zero or one targets to be localized.
-    \item There is only a single UAV operating in the region.
-    \item The UAV has unlimited battery capacity.
+    \item There is only a single RAV operating in the region.
+    \item The RAV has unlimited battery capacity.
     \item The region to be searched can be well approximated by a polygon.
     \item The sensor specificity and sensitivity are known or can be estimated for a given resolution (e.g. 1m). These are assumed to be greater than 50\% for the given resolution.
     \item The search agent(s) operate over a discrete spatial grid spanning the region to search, assumed to be polygonal as above, the dimensions of which are pre-determined by the sensor resolution.
-    \item The UAV is assumed to have a GPS sensor that is accurate to beyond the sensor resolution (implying that the UAV moves to discrete grid locations without drift).
+    \item The RAV is assumed to have a GPS sensor that is accurate to beyond the sensor resolution (implying that the RAV moves to discrete grid locations without drift).
     \item The target is assumed to be small enough to occupy only one grid cell at a time. It is also assumed to not lie across grid cells.
-    \item There exists a path that the UAV can follow between any two given grid cells.
+    \item There exists a path that the RAV can follow between any two given grid cells.
 \end{itemize}
 While these assumptions are clearly unrealistic, they are convenient because they simplify the design of the system and subsequent analysis. In later sections in this chapter, these assumptions are relaxed and the necessary modifications for the solution strategy are discussed. Some ramifications of these assumptions are addressed later in the chapter, at section <x>. It is worth noting that similar simplifying assumptions were made in related works in the literature, 
-(\cite{Chung2007ASearch} and \cite{Waharte2010SupportingUAVs}), % find additional citations in mendeley
+(\cite{Chung2007ASearch} and \cite{Waharte2010SupportingRAVs}), % find additional citations in mendeley
 which strongly influenced our initial approach.

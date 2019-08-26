@@ -1,0 +1,98 @@
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{20mm} | >{\centering}m{18mm} | >{\centering}m{20mm} | m{45mm} <{\centering}|}
+    \hline
+       Strategy & Initial Belief Distribution & E[Time To Decision] & SD[Time To Decision] & Decision Matrix (\# Targets Correctly Localised vs. \# Returned Target locations\\
+        \hline
+        $\epsilon$ -Greedy & Uniform & 112.93 & 62.38 & {
+        \centering
+        \begin{tabular}{c|c|c|}
+           \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
+           \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
+           \cline{2-3}
+            0 & 0.1516 & 0 \\ \cline{2-3}
+            1 & 0.0398 & 0.8086 \\\cline{2-3}
+        \end{tabular}
+        } \\
+        $\epsilon$ -Greedy & Gaussian & 21.68 & 20.44 & {
+        \centering
+        \begin{tabular}{c|c|c|}
+           \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
+           \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
+           \cline{2-3}
+            0 & 0.0296 & 0. \\ \cline{2-3}
+            1 & 0.0118 & 0.9586 \\\cline{2-3}
+            \multicolumn{3}{c}{}
+        \end{tabular}
+        } \\
+        \hline
+        Sweep & Uniform & 601.57 & 183.45& {
+        \centering
+        \begin{tabular}{c|c|c|}
+           \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
+           \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
+           \cline{2-3}
+            0 & 0.1254 & 0 \\ \cline{2-3}
+            1 & 0.0454 & 0.8292 \\\cline{2-3}
+        \end{tabular}
+        } \\
+        Sweep & Gaussian & 464.48 & 185.54 & {
+        \centering
+        \begin{tabular}{c|c|c|}
+           \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
+           \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
+           \cline{2-3}
+            0 & 0.0832 & 0 \\ \cline{2-3}
+            1 & 0.0294 & 0.8874 \\\cline{2-3}
+            \multicolumn{3}{c}{}
+        \end{tabular}
+        } \\
+        \hline
+        Saccadic & Uniform & 98.83 & 56.13 & {
+        \centering
+        \begin{tabular}{c|c|c|}
+           \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
+           \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
+           \cline{2-3}
+            0 & 0.1588 & 0 \\ \cline{2-3}
+            1 & 0.037 & 0.8042 \\\cline{2-3}
+        \end{tabular}
+        } \\
+        Saccadic & Gaussian & 14.558 & 18.75 & {
+        \centering
+        \begin{tabular}{c|c|c|}
+           \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
+           \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
+           \cline{2-3}
+            0 & 0.0338 & 0 \\ \cline{2-3}
+            1 & 0.0114 & 0.9548 \\\cline{2-3}
+            \multicolumn{3}{c}{}
+        \end{tabular}
+        } \\
+        \hline
+        Random & Uniform & 629.55 & 282.95 & {
+        \centering
+        \begin{tabular}{c|c|c|}
+           \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
+           \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
+           \cline{2-3}
+            0 & 0.1368 & 0 \\ \cline{2-3}
+            1 & 0.0336 & 0.8296 \\\cline{2-3}
+        \end{tabular}
+        } \\
+        Random & Gaussian & 501.83 & 268.45 & {
+        \centering
+        \begin{tabular}{c|c|c|}
+           \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
+           \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
+           \cline{2-3}
+            0 & 0.0792 & 0 \\ \cline{2-3}
+            1 & 0.0308 & 0.89 \\\cline{2-3}
+            \multicolumn{3}{c}{}
+        \end{tabular}
+        } \\
+        \hline
+    \end{tabular}
+    \caption{Results of running the target localisation sim with a \textbf{uniform initial belief dist and Gaussian initial belief dist}. P(T1) = 0.1, p(T2) = 0.15, Sim Sensor FPR = 0.2, Sim Sensor FNR = 0.15, Sensor Model FPR = 0.2, Sensor Model FNR = 0.15, }
+    \label{table:PriorUniform}
+\end{table}

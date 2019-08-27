@@ -1,13 +1,13 @@
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{20mm} | >{\centering}m{18mm} | >{\centering}m{20mm} | >{\centering}m{20mm} | m{20mm} <{\centering}|}
+    \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{24mm} | >{\centering}m{18mm} | >{\centering}m{20mm} | >{\centering}m{20mm} | m{20mm} <{\centering}|}
     \hline
-       Strategy & Initial Belief Target Present & E[Time To Decision] & SD[Time To Decision] & False Negative Rate & Proportion Incorrect Localised \\
+       Strategy & Initial Belief Target Present & Mean TTD & Sample SD[TTD] & False Negative Rate & Proportion Incorrectly Localised \\
         \hline
-        $\epsilon$ -Greedy & 0.25 & 115.17 & 82.34 & 0.045 & 0.14 \\
-        $\epsilon$ -Greedy & 0.5 & 112.93 & 62.38 & 0.152 & 0.040 \\
-        $\epsilon$ -Greedy & 0.75 & 87.22 & 31.63 & 0.47 & 0.0072 \\
+        $\epsilon$-Greedy & 0.25 & 115.17 & 82.34 & 0.045 & 0.14 \\
+        $\epsilon$-Greedy & 0.5 & 112.93 & 62.38 & 0.152 & 0.040 \\
+        $\epsilon$-Greedy & 0.75 & 87.22 & 31.63 & 0.47 & 0.0072 \\
          \hline
         Sweep & 0.25 & 490.70 & 251.34 & 0.081 & 0.128 \\
         Sweep & 0.5 & 601.57 & 183.45& 0.1254 & 0.0454 \\
@@ -24,5 +24,14 @@
     \hline
     \end{tabular}
 
-  \caption{Results of running the target localisation simulation with a \textbf{Varying initial belief value}. p(T \Romannum{1}) = The probability of making a type \Romannum{1} error using the SPRT, p(T \Romannum{2}) = The probability of making a type \Romannum{1} error using the SPRT, Sim. FPR = The simulated false positive rate of the sensor, Sim. FNR = The simulated false negative rate of the sensor, E[TTD] = The expected amount of timesteps until a decision is made, Prec. = precision, Rec. = Recall. }\label{table:VaryingInitialBelief}
+  \caption{Results of running the target localisation simulation with a varying cumulative  initial belief that the target is present in the search region.}\label{table:VaryingInitialBelief}
 \end{table}
+
+Table \ref{table:VaryingInitialBelief} displays the results of running a simulation with a single agent and a single target while varying the cumulative initial belief that the target is present in the search region. The following parameters are fixed: Simulated Sensor False Negative Rate = 0.15, Simulated Sensor False Positive Rate = 0.2, Sensor model False Negative Rate = 0.15, Sensor Model False Positive Rate = 0.2, Initial belief distribution = Uniform, SPRT Type \Romannum{1} error rate = 0.1, SPRT Type \Romannum{2} error rate = 0.15. Table \ref{table:VaryingInitialBelief} shows that for the adaptive search methods, increasing the initial cumulative belief that the target is present in the search region leads to a decrease in the mean time to decision (TTD). 
+
+
+
+
+
+
+

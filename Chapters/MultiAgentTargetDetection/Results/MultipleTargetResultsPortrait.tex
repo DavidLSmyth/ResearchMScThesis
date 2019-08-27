@@ -1,8 +1,8 @@
 \begin{table}[h!]
     \centering
-    \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{15mm} | >{\centering}m{18mm} | >{\centering}m{18mm} | m{60mm} <{\centering}|}
+    \begin{tabular}{| >{\centering} m{17mm} | >{\centering}m{13mm} | >{\centering}m{14mm} | >{\centering}m{15mm} | m{72mm} <{\centering}|}
     \hline
-       Strategy & \# Targets Present & E[Time To Decision] & SD[Time To Decision] & Decision Matrix (\# Targets Correctly Localised vs. \# Returned Target locations\\
+       Strategy & \# Targets Present & E[TTD] & SD [TTD] & Decision Matrix (\# Targets Correctly Localised vs. \# Returned Target locations\\
         \hline
         $\epsilon$ -Greedy & 1 & 112.93 & 62.38 & {
         \centering
@@ -10,8 +10,8 @@
            \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
            \cline{2-3}
-            0 & 0.0792 & 0 \\ \cline{2-3}
-            1 & 0.0308 & 0.89 \\\cline{2-3}
+            0 & 0.152 & 0 \\ \cline{2-3}
+            1 & 0.0400 & 0.8080 \\\cline{2-3}
             \multicolumn{3}{c}{}
         \end{tabular}
         }\\
@@ -22,8 +22,8 @@
            \multicolumn{1}{c}{} & \multicolumn{3}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1}  & \multicolumn{1}{c}{2} \\
            \cline{2-4}
-            0 & 0.0218 & ToDo & ToDo \\ \cline{2-4}
-            1 & 0.0012 & 0.2644 & ToDo \\\cline{2-4}
+            0 & 0.0218 & 0 & 0 \\ \cline{2-4}
+            1 & 0.0012 & 0.2644 & 0 \\\cline{2-4}
             2 & 0.0006 & 0.0474 & 0.6646 \\\cline{2-4}
         \end{tabular}
         }
@@ -35,10 +35,10 @@
            \multicolumn{1}{c}{} & \multicolumn{4}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1}  & \multicolumn{1}{c}{2}& \multicolumn{1}{c}{3} \\
            \cline{2-5}
-            0 & 0.0038 & ToDo & ToDo & todo\\ \cline{2-5}
-            1 & 0 & 0.00596 & ToDo & todo \\\cline{2-5}
-            2 & ToDo & 0.0064 & 0.317 & todo\\\cline{2-5}
-            3 & ToDo & 0.0002 & 0.051 & 0.562\\\cline{2-5}
+            0 & 0.0038 & 0 & 0 & 0\\ \cline{2-5}
+            1 & 0 & 0.0596 & 0 & 0 \\\cline{2-5}
+            2 & 0 & 0.0064 & 0.3170 & 0\\\cline{2-5}
+            3 & 0 & 0.0002 & 0.0510 & 0.5620\\\cline{2-5}
             \multicolumn{4}{c}{}\\
         \end{tabular}
         }
@@ -50,8 +50,8 @@
            \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
            \cline{2-3}
-            0 & 0.0792 & 0 \\ \cline{2-3}
-            1 & 0.0308 & 0.89 \\\cline{2-3}
+            0 & 0.1254 & 0 \\ \cline{2-3}
+            1 & 0.0454 & 0.8292 \\\cline{2-3}
             \multicolumn{3}{c}{}
         \end{tabular}
         }\\
@@ -62,8 +62,8 @@
            \multicolumn{1}{c}{} & \multicolumn{3}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1}  & \multicolumn{1}{c}{2} \\
            \cline{2-4}
-            0 & 0.0106 & ToDo & ToDo \\ \cline{2-4}
-            1 & 0.0002 & 0.181 & ToDo \\\cline{2-4}
+            0 & 0.0106 & 0 & 0 \\ \cline{2-4}
+            1 & 0.0002 & 0.181 & 0 \\\cline{2-4}
             2 & 0.0018 & 0.0666 & 0.7398 \\\cline{2-4}
         \end{tabular}
         }
@@ -75,9 +75,9 @@
            \multicolumn{1}{c}{} & \multicolumn{4}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1}  & \multicolumn{1}{c}{2}& \multicolumn{1}{c}{3} \\
            \cline{2-5}
-            0 & 0.002 & ToDo & ToDo & todo\\ \cline{2-5}
-            1 & 0.0002 & 0.022 & ToDo & todo \\\cline{2-5}
-            2 & 0 & 0.0014 & 0.2104 & todo\\\cline{2-5}
+            0 & 0.002 & 0 & 0 & 0\\ \cline{2-5}
+            1 & 0.0002 & 0.022 & 0 & 0 \\\cline{2-5}
+            2 & 0 & 0.0014 & 0.2104 & 0\\\cline{2-5}
             3 & 0.0002 & 0.0034 & 0.082 & 0.6784\\\cline{2-5}
             \multicolumn{4}{c}{}
         \end{tabular}
@@ -92,9 +92,9 @@
         
         
         \begin{table}[h!]
-        \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{15mm} | >{\centering}m{18mm} | >{\centering}m{18mm} | m{60mm} <{\centering}|}
+        \begin{tabular}{| >{\centering} m{17mm} | >{\centering}m{13mm} | >{\centering}m{14mm} | >{\centering}m{15mm} | m{72mm} <{\centering}|}
         \hline
-        Strategy & No. Targets Present & E[Time To Decision] & SD[Time To Decision] & Decision Matrix (\# Targets Correctly Localised vs. \# Returned Target locations\\
+        Strategy & No. Targets Present & E[TTD] & SD [TTD] & Decision Matrix (\# Targets Correctly Localised vs. \# Returned Target locations\\
         \hline
         Saccadic & 1 & 98.83 & 56.13 & {
         \centering
@@ -102,8 +102,8 @@
            \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
            \cline{2-3}
-            0 & 0.0792 & 0 \\ \cline{2-3}
-            1 & 0.0308 & 0.89 \\\cline{2-3}
+            0 & 0.1588 & 0 \\ \cline{2-3}
+            1 & 0.0370 & 0.8042 \\\cline{2-3}
             \multicolumn{3}{c}{}
         \end{tabular}
         } \\
@@ -114,8 +114,8 @@
            \multicolumn{1}{c}{} & \multicolumn{3}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1}  & \multicolumn{1}{c}{2} \\
            \cline{2-4}
-            0 & 0.0258 & ToDo & ToDo \\ \cline{2-4}
-            1 & 0.0014 & 0.2664 & ToDo \\\cline{2-4}
+            0 & 0.0258 & 0 & 0 \\ \cline{2-4}
+            1 & 0.0014 & 0.2664 & 0 \\\cline{2-4}
             2 & 0 & 0.0448 & 0.6616 \\\cline{2-4}
         \end{tabular}
         }
@@ -127,9 +127,9 @@
            \multicolumn{1}{c}{} & \multicolumn{4}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1}  & \multicolumn{1}{c}{2}& \multicolumn{1}{c}{3} \\
            \cline{2-5}
-            0 & 0.0052 & ToDo & ToDo & todo\\ \cline{2-5}
-            1 & 0.0002 & 0.07 & ToDo & todo \\\cline{2-5}
-            2 & 0 & 0.0036 & 0.3246 & todo\\\cline{2-5}
+            0 & 0.0052 & 0 & 0 & 0\\ \cline{2-5}
+            1 & 0.0002 & 0.07 & 0 & 0 \\\cline{2-5}
+            2 & 0 & 0.0036 & 0.3246 & 0\\\cline{2-5}
             3 & 0 & 0.0006 & 0.0458 & 0.55\\\cline{2-5}
             \multicolumn{4}{c}{}
         \end{tabular}
@@ -142,8 +142,8 @@
            \multicolumn{1}{c}{} & \multicolumn{2}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1} \\
            \cline{2-3}
-            0 & 0.0792 & 0 \\ \cline{2-3}
-            1 & 0.0308 & 0.89 \\\cline{2-3}
+            0 & 0.1368 & 0 \\ \cline{2-3}
+            1 & 0.0336 & 0.8296 \\\cline{2-3}
             \multicolumn{3}{c}{}
         \end{tabular}
         } \\
@@ -154,8 +154,8 @@
            \multicolumn{1}{c}{} & \multicolumn{3}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1}  & \multicolumn{1}{c}{2} \\
            \cline{2-4}
-            0 & 0.0166 & ToDo & ToDo \\ \cline{2-4}
-            1 & 0.0012 & 0.1872 & ToDo \\\cline{2-4}
+            0 & 0.0166 & 0 & 0 \\ \cline{2-4}
+            1 & 0.0012 & 0.1872 & 0 \\\cline{2-4}
             2 & 0.0004 & 0.053 & 0.7416 \\\cline{2-4}
         \end{tabular}
         }
@@ -167,10 +167,10 @@
            \multicolumn{1}{c}{} & \multicolumn{4}{c}{ } \\
            \multicolumn{1}{c}{} & \multicolumn{1}{c}{0}  & \multicolumn{1}{c}{1}  & \multicolumn{1}{c}{2}& \multicolumn{1}{c}{3} \\
            \cline{2-5}
-            0 & 0.0014 & ToDo & ToDo & todo\\ \cline{2-5}
-            1 & 0.0002 & 0.0248 & ToDo & todo \\\cline{2-5}
-            2 & 0 & 0.0014 & 0.2138 & todo\\\cline{2-5}
-            3 & ToDo & 0.0022 & 0.0608 & 0.6954 \\\cline{2-5}
+            0 & 0.0014 & 0 & 0 & 0\\ \cline{2-5}
+            1 & 0.0002 & 0.0248 & 0 & 0 \\\cline{2-5}
+            2 & 0 & 0.0014 & 0.2138 & 0\\\cline{2-5}
+            3 & 0 & 0.0022 & 0.0608 & 0.6954 \\\cline{2-5}
             \multicolumn{4}{c}{}
         \end{tabular}
         }

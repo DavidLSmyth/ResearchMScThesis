@@ -4,12 +4,12 @@
 %\vspace*{\fill}
 \begin{table}[h!]
     \centering
-    \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{20mm} | >{\centering}m{18mm} | >{\centering}m{20mm} | >{\centering}m{20mm} | m{20mm} <{\centering}|}
+    \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{22mm} | >{\centering}m{22mm} | >{\centering}m{22mm} | >{\centering}m{20mm} | m{20mm} <{\centering}|}
     \hline
-       Strategy & Initial Belief Distribution & E[Time To Decision] & SD[Time To Decision] & False Negative Rate & Proportion Incorrectly Localised \\
+       Strategy & Initial Belief Distribution & Mean TTD & Sample SD[TTD] & False Negative Rate & Proportion Incorrectly Localised \\
         \hline
-        $\epsilon$ -Greedy & Uniform & 112.93 & 62.38 & 0.152 & 0.040 \\
-        $\epsilon$ -Greedy & Gaussian & 21.68 & 20.44 & 0.0296 & 0.0118 \\
+        $\epsilon$-Greedy & Uniform & 112.93 & 62.38 & 0.152 & 0.040 \\
+        $\epsilon$-Greedy & Gaussian & 21.68 & 20.44 & 0.0296 & 0.0118 \\
         \hline
         Sweep & Uniform & 601.57 & 183.45& 0.1254 & 0.0454 \\
         Sweep & Gaussian & 464.48 & 185.54 & 0.0832 & 0.0294 \\
@@ -21,10 +21,28 @@
         Random & Gaussian & 501.83 & 268.45 & 0.0792 & 0.0308 \\
         \hline
     \end{tabular}
-    \caption{Results of running the target localisation simulation with a \textbf{uniform initial belief distribution and Gaussian initial belief distribution}. Fixed P(T1) = 0.1, p(T2) = 0.15, Simulated Sensor FPR = 0.2, Simulated Sensor FNR = 0.15, Sensor Model FPR = 0.2, Sensor Model FNR = 0.15, }
-    \label{table:PriorUniform}
+    \caption{Results of running the target localisation simulation with a Uniform initial belief distribution and Gaussian initial belief distribution for each implemented search strategy. }
+    \label{table:VaryingPriorDistribution}
 \end{table}
     
+Table \ref{table:VaryingPriorDistribution} displays the results of running a simulation with a single agent and a single target while varying the initial belief distribution that the target is present in the search region. The following parameters are fixed: Simulated Sensor False Negative Rate = 0.15, Simulated Sensor False Positive Rate = 0.2, Sensor model False Negative Rate = 0.15, Sensor Model False Positive Rate = 0.2, Initial belief that target is present in region = 0.5, SPRT Type \Romannum{1} error rate = 0.1, SPRT Type \Romannum{2} error rate = 0.15.
+%\begin{itemize}
+%    \item Simulated Sensor False Negative Rate = 0.15
+%    \item Simulated Sensor False Positive Rate = 0.2
+%    \item Sensor model False Negative Rate = 0.15
+%    \item Sensor Model False Positive Rate = 0.2
+%    \item Initial belief that target is present in region = 0.5
+%    \item SPRT T\Romannum{1} error rate = 0.1, SPRT T\Romannum{2} error rate = 0.15.
+%\end{itemize}
+\begin{figure}
+\centering
+    \subfloat[Uniform initial belief distribution]{{\includegraphics[width=6cm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Uniform/UniformInitialDistribution.png} }}%
+    \qquad
+    \subfloat[Gaussian initial belief distribution]{{\includegraphics[width=6cm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Gaussian/GaussianInitialDistribution.png} }}%
+    \caption{Initial belief distributions}%
+    \label{fig:initialBeliefDistribution}%
+\end{figure}
+For each search strategy, we ran the simulation with both a Uniform and Gaussian initial belief distribution. The Gaussian mean coincided with the target location and the covariance matrix was $\begin{pmatrix} 3 & 0\\ 0 & 3\end{pmatrix}$, an example of which can be seen in Figure \ref{fig:initialBeliefDistribution}. This represents a correct suspicion about the location of the target, which is the case in many scenarios where some prior information may suggest clues to the target location. As expected, for all of the search strategies the expected time until a decision reduces dramatically when using the Gaussian prior relative to the Uniform prior. In the case of the two non-adaptive search methods (random and sweep), the effect is lessened as the search process is not influenced by new observations, but initial belief begins closer to the decision boundary which means the expected time to decision still drops. It can also be seen that the false negative rate (the rate at which the agent incorrectly concludes that the target is not present in the region) drops in the case of the Gaussian prior, but is higher for the non-adaptive search strategies since they are unbiased while sampling grid locations.
    
 
 %    \hline

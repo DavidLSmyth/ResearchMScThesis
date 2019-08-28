@@ -5,21 +5,21 @@
     \hline
        Strategy & Initial Belief Target Present & Mean TTD & Sample SD[TTD] & False Negative Rate & Proportion Incorrectly Localised \\
         \hline
-        $\epsilon$-Greedy & 0.25 & 116.1422 & 62.1174 & 0.1556 & 0.0332 \\
+        $\epsilon$-Greedy & 0.25 & 87.6214 & 30.9801 & 0.487 & 0.009 \\
         $\epsilon$-Greedy & 0.5 & 112.93 & 62.38 & 0.152 & 0.040 \\
-        $\epsilon$-Greedy & 0.75 & 113.3042 & 62.2254 & 0.1492 & 0.0366 \\
+        $\epsilon$-Greedy & 0.75  & 114.9276 & 81.9386 & 0.0396 & 0.1346 \\
          \hline
-        Sweep & 0.25 & 603.4352 & 185.6114 & 0.1236 & 0.0428 \\
+        Sweep & 0.25 & 520.4050 & 212.5122 & 0.4292 & 0.0118 \\
         Sweep & 0.5 & 601.57 & 183.45& 0.1254 & 0.0454 \\
-        Sweep & 0.75 & 599.7184 & 182.2780 & 0.127 & 0.044 \\
+        Sweep & 0.75 & 485.3650 & 242.1377 & 0.0326 & 0.1586 \\
         \hline
-        Saccadic & 0.25 & 99.1230 & 55.9821 & 0.1624 & 0.0334 \\
+        Saccadic & 0.25 & 75.8320 & 29.8345 & 0.5054 & 0.0064 \\
         Saccadic & 0.5 & 98.83 & 56.13 & 0.1588 & 0.037 \\
-        Saccadic & 0.75 & 97.5964 & 55.8519 & 0.1506 & 0.0362 \\
+        Saccadic & 0.75 & 100.1332 & 74.3883 & 0.0392 & 0.1418 \\
         \hline
-        Random & 0.25 & 632.1198 & 279.6962 & 0.1348 & 0.0370 \\
+        Random & 0.25 & 539.3802 & 267.6280 & 0.4284 & 0.0074 \\
         Random & 0.5 & 629.55 & 282.95 & 0.137 & 0.0336 \\
-        Random & 0.75 & 629.0904 & 287.7592 & 0.1280 & 0.0376 \\
+        Random & 0.75 & 538.0904 & 325.6283 & 0.035 & 0.1538 \\
 
     \hline
     \end{tabular}
@@ -27,7 +27,7 @@
   \caption{Results of running the target localisation simulation with a varying cumulative  initial belief that the target is present in the search region.}\label{table:VaryingInitialBelief}
 \end{table}
 
-Table \ref{table:VaryingInitialBelief} displays the results of running a simulation with a single agent and a single target while varying the cumulative initial belief that the target is present in the search region. The following parameters are fixed: Simulated Sensor False Negative Rate = 0.15, Simulated Sensor False Positive Rate = 0.2, Sensor model False Negative Rate = 0.15, Sensor Model False Positive Rate = 0.2, Initial belief distribution = Uniform, SPRT Type \Romannum{1} error rate = 0.1, SPRT Type \Romannum{2} error rate = 0.15. Table \ref{table:VaryingInitialBelief} shows that for the adaptive search methods, increasing the initial cumulative belief that the target is present in the search region leads to a decrease in the mean time to decision (TTD). 
+Table \ref{table:VaryingInitialBelief} displays the results of running a simulation with a single agent and a single target while varying the cumulative initial belief that the target is present in the search region. The following parameters are fixed: Simulated Sensor False Negative Rate = 0.15, Simulated Sensor False Positive Rate = 0.2, Sensor model False Negative Rate = 0.15, Sensor Model False Positive Rate = 0.2, Initial belief distribution = Uniform, SPRT Type \Romannum{1} error rate = 0.1, SPRT Type \Romannum{2} error rate = 0.15. 
 
 
 

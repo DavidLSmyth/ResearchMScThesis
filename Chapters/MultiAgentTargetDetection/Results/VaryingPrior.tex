@@ -42,7 +42,16 @@ Table \ref{table:VaryingPriorDistribution} displays the results of running a sim
     \caption{Initial belief distributions}%
     \label{fig:initialBeliefDistribution}%
 \end{figure}
-For each search strategy, we ran the simulation with both a Uniform and Gaussian initial belief distribution. The Gaussian mean coincided with the target location and the covariance matrix was $\begin{pmatrix} 3 & 0\\ 0 & 3\end{pmatrix}$, an example of which can be seen in Figure \ref{fig:initialBeliefDistribution}. This represents a correct suspicion about the location of the target, which is the case in many scenarios where some prior information may suggest clues to the target location. As expected, for all of the search strategies the expected time until a decision reduces dramatically when using the Gaussian prior relative to the Uniform prior. In the case of the two non-adaptive search methods (random and sweep), the effect is lessened as the search process is not influenced by new observations, but initial belief begins closer to the decision boundary which means the expected time to decision still drops. It can also be seen that the false negative rate (the rate at which the agent incorrectly concludes that the target is not present in the region) drops in the case of the Gaussian prior, but is higher for the non-adaptive search strategies since they are unbiased while sampling grid locations.
+For each search strategy, we ran the simulation with both a Uniform and Gaussian initial belief distribution. The Gaussian mean coincided with the target location and the covariance matrix was $\begin{pmatrix} 3 & 0\\ 0 & 3\end{pmatrix}$, which is visualised in Figure \ref{fig:initialBeliefDistribution}. This represents a correct suspicion about the location of the target, which is the case in many scenarios where some prior information may suggest clues to the target location. As expected, for all of the search strategies the expected time until a decision reduces dramatically when using the Gaussian prior relative to the Uniform prior. 
+%In the case of the two non-adaptive search methods (random and sweep), the effect is lessened as the search process is not influenced by new observations. 
+Since the shape of the Gaussian distribution is aligned more closely to the true distribution that the Uniform distribution, it takes fewer samples to reach a sufficiently peaked distribution to reach the acceptance region for the SPRT. 
+%This is visible by examining the evolution of the cumulative agent belief that the target is present in the region, shown in figures x and y.
+
+\par It can also be seen that the false negative rate (the rate at which the agent incorrectly concludes that the target is not present in the region) drops in the case of the Gaussian prior relative to the uniform prior. This is also a result of using a prior distribution that matches the shape of the true distribution, since it requires a significant number of false positive/negative samples to modify the distribution enough to reach a negative conclusion.
+
+%This is due to the unbiased sampling method of the non-adaptive strategies, which 
+
+%but is higher for the non-adaptive search strategies since they are unbiased while sampling grid locations.
    
 
 %    \hline

@@ -4,23 +4,26 @@
     \hline
        Strategy & \# Agents & E[TTD] & SD[TTD] & False Negative Rate & Proportion Incorrectly Localised \\
         \hline
-        $\epsilon$ -Greedy & 1 & 0 & 0 & 0 & 0 \\
-        $\epsilon$ -Greedy & 2 & 0 & 0 & 0 & 0 \\
-        $\epsilon$ -Greedy & 3 & 0 & 0 & 0 & 0 \\
+        $\epsilon$-Greedy & 1 & 112.9258 & 62.3798 & 0.1516 & 0.0398 \\
+        $\epsilon$-Greedy & 2 & 65.5912 & 34.3248 & 0.1568 & 0.0314 \\
+        $\epsilon$-Greedy & 3 & 47.5176 & 24.9861 & 0.1428 & 0.0262 \\
         \hline
-        Sweep & 1 & 0 & 0 & 0 & 0 \\
-        Sweep & 2  & 0 & 0 & 0 & 0 \\
-        Sweep & 3 & 0 & 0 & 0 & 0 \\
+        Sweep & 1 & 601.5697 & 183.4529 & 0.1254 & 0.0454 \\
+        Sweep & 2  & 303.7328 & 94.2748 & 0.1232 & 0.0466 \\
+        Sweep & 3 & 204.8172 & 65.1273 & 0.1252 & 0.0408 \\
         \hline
-        Saccadic & 1 & 0 & 0 & 0 & 0 \\
-        Saccadic & 2 & 0 & 0 & 0 & 0 \\
-        Saccadic & 3 & 0 & 0 & 0 & 0 \\
+        Saccadic & 1 & 98.8274 & 56.1298 & 0.1588 & 0.0370 \\
+        Saccadic & 2 & 75.3466 & 39.9718 & 0.1520 & 0.0132 \\
+        Saccadic & 3 & 65.0774 & 33.9798 & 0.1598 & 0.0090 \\
         \hline
-        Random & 1 & 0 & 0 & 0 & 0 \\
-        Random & 2 & 0 & 0 & 0 & 0 \\
-        Random & 2 & 0 & 0 & 0 & 0 \\
+        Random & 1 & 629.5462 & 282.9514 & 0.1368 & 0.0366 \\
+        Random & 2 & 315.0082 & 140.3954 & 0.1254 & 0.0366  \\
+        Random & 3 & 211.4242 & 94.7801 & 0.1222 & 0.0448\\
         \hline
     \end{tabular}
-    \caption{Results of running the target localisation simulation with a \textbf{varying number of agents communicating with each other}. Fixed P(T1) = 0.1, p(T2) = 0.15, Simulated Sensor FPR = 0.2, Simulated Sensor FNR = 0.15, Sensor Model FPR = 0.2, Sensor Model FNR = 0.15, }
-    \label{table:PriorUniform}
+   \caption{Results of running the target localisation simulation with a varying number of homogeneous agents for each implemented search strategy.}
+    \label{table:VaryingNumberOfAgents}
 \end{table}
+
+Table \ref{table:VaryingNumberOfAgents}
+

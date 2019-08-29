@@ -2,7 +2,7 @@
     \centering
     \begin{tabular}{| >{\centering} m{17mm} | >{\centering}m{13mm} | >{\centering}m{14mm} | >{\centering}m{15mm} | m{72mm} <{\centering}|}
     \hline
-       Strategy & \# Targets Present & E[TTD] & SD [TTD] & Decision Matrix (\# Targets Correctly Localised vs. \# Returned Target locations\\
+       Strategy & \# Targets Present & E[TTD] & SD [TTD] & Decision Matrix Showing \# Returned Target Locations (Rows) vs. \# Targets Correctly Localised (Cols).\\
         \hline
         $\epsilon$ -Greedy & 1 & 112.93 & 62.38 & {
         \centering
@@ -85,6 +85,8 @@
         \\
         \hline
         \end{tabular}
+        \caption{Results of running the target localisation simulation with 1,2 and 3 targets for sweep search and $\epsilon$-greedy search.}
+        \label{table:MultipleTargetEGSweep}
         \end{table}
         
         
@@ -94,7 +96,7 @@
         \begin{table}[h!]
         \begin{tabular}{| >{\centering} m{17mm} | >{\centering}m{13mm} | >{\centering}m{14mm} | >{\centering}m{15mm} | m{72mm} <{\centering}|}
         \hline
-        Strategy & No. Targets Present & E[TTD] & SD [TTD] & Decision Matrix (\# Targets Correctly Localised vs. \# Returned Target locations\\
+        Strategy & No. Targets Present & E[TTD] & SD [TTD] & Decision Matrix Showing \# Returned Target Locations (Rows) vs. \# Targets Correctly Localised (Cols).\\
         \hline
         Saccadic & 1 & 98.83 & 56.13 & {
         \centering
@@ -177,7 +179,8 @@
         \\
         \hline
     \end{tabular}
-    \caption{Results of running the target localisation simulation with a \textbf{varying number of targets}.}
+    \caption{Results of running the target localisation simulation with 1,2 and 3 targets for saccadic search and random search.}
+    \label{table:MultipleTargetSaccadicRandom}
 \end{table}
 
-Table \ref{table:VaryingInitialBelief} displays the results of running a simulation with a single agent and a single target while varying the agent's cumulative initial belief that the target is present in the search region. We discuss the results in relation to the adaptive and non-adaptive search methods:
+Tables \ref{table:MultipleTargetEGSweep} and \ref{table:MultipleTargetSaccadicRandom} display the results of running a simulation with a single agent with a varying number of targets in the search region. We ran algorithm \ref{alg:MultiTargetLocalisation} to carry out the localisation procedure. The results show that the mean time to decision increases sub-linearly with respect to the number of targets present. The rows of the decision matrix show the proportions of how many target locations are returned by the agent and the columns show how many targets are correctly localised. The results indicate that the more targets that are present, the less willing the agent is to conclude that the are no targets present, but that it is also less willing to conclude that the maximum number of targets are present. The reason why the agent consistently returns 0 target locations at a lower rate when there is more targets present can be explained by the miscalibrated sensor results; since there are more targets present, the number of observed true positives is greater than the calibrated values. This essentially means that the sensor model fnr is over-estimated, which leads to a much lower search false negative rate. This could be overcome by calibrating the sensor model with the fnr and fpr that would arise from the number of targets suspected to be present in the region, and re-calibrating it each time a target is localised by the agent.

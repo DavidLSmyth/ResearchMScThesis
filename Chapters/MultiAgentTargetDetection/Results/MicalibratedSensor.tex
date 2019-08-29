@@ -5,9 +5,9 @@
     \hline
        Strategy & Sensor Model FPR & Sensor Model FNR & Mean TTD & Sample SD[TTD] & False Negative Rate & Proportion Incorrectly Localised \\
         \hline
-        $\epsilon$ -Greedy & 0.05 & 0.02 & 65.91 & 42.86 & 0.129 & 0.4442 \\
+        $\epsilon$ -Greedy & 0.05 & 0.02 & 65.9066 & 42.8613 & 0.1290 & 0.4442 \\
         $\epsilon$ -Greedy & 0.2 & 0.15 & 21.68 & 20.44 & 0.0296 & 0.0118 \\
-        $\epsilon$ -Greedy & 0.4 & 0.4 & 194.48 & 111.18 & 0.002 & 0.00 \\
+        $\epsilon$ -Greedy & 0.4 & 0.4 & 194.4808 & 111.1802 & 0.0018 & 0.0000 \\
         \hline
 
         Saccadic & 0.05 & 0.02 & 59.61 & 38.57 & 0.148 & 0.4074 \\
@@ -17,7 +17,7 @@
         
         Random & 0.05 & 0.02 & 166.00 & 128.68 & 0.012 & 0.716 \\
         Random & 0.2 & 0.15 & 501.83 & 268.45 & 0.0792 & 0.0308 \\
-        Random & 0.4 & 0.4 & 2090.40 & 681.42 & 0.1814 & 0.0 \\
+        Random & 0.4 & 0.4 & 2090.4032 & 681.4226 & 0.1814 & 0.0 \\
     \hline
     \end{tabular}
 
@@ -26,8 +26,10 @@
 \end{table}
 
 
-Table \ref{table:MiscalibratedSensor} displays the results of running a simulation with a single agent and a single target while varying the parameters of the sensor model. The sensor model is parameterised using a false positive rate and false negative rate, detailed in equation \ref{eqn:EvidenceVarsProbs}. The following parameters are fixed: Simulated Sensor False Negative Rate = 0.15, Simulated Sensor False Positive Rate = 0.2, Initial belief that target is present in region = 0.5, SPRT Type \Romannum{1} error rate = 0.1, SPRT Type \Romannum{2} error rate = 0.15, Initial belief distribution = Gaussian. We deliberately chose values to show the effects of an extreme miscalibration, which can be thought of as a worst case scenario. The results agree with our expectations: 
+Table \ref{table:MiscalibratedSensor} displays the results of running a simulation with a single agent and a single target while varying the parameters of the sensor model. The sensor model is parameterised using a false positive rate and false negative rate, detailed in equation \ref{eqn:EvidenceVarsProbs}. We deliberately chose values to show the effects of an extreme miscalibration, which can be thought of as a worst case scenario. We discuss the results in terms of underestimating and overestimating the true sensor parameters:
 \begin{enumerate}
-    \item When the model is calibrated to underestimate the rate at which the sensor will detect false negatives and false positives (the rows which have a sensor model fpr = 0.05, sensor model fnr = 0.02 in Table \ref{table:MiscalibratedSensor}), relative to the correctly calibrated sensor model (the rows which have a sensor model fpr = 0.05, sensor model fnr = 0.02 in Table \ref{table:MiscalibratedSensor}), a positive observation will cause a large increase in the probability of the target being present at the observation location, which means it will cross the decision threshold of the SPRT more easily due to spurious observations. This leads to a much higher incorrect localisation rate, which can be seen in the \textit{Proportion Incorrectly Localised} column of table \ref{table:MiscalibratedSensor}. Similarly, we see that the false negative rate increases, as the miscalibrated model causes the belief in the target being absent for the region to increase more sharply with negative observations than the correctly calibrated sensor model. The mean time to decision (TTD) increases in this case because the belief in the target presence jumps disproportionately when a positive observation is made relative to a negative observation. The ratio of the sensor model FPR to FNR is approximately half the true ratio, which means the effect of positive observations is underestimated, causing the agent to delay the conclusion in a positive target localisation.
+    \item When the model is calibrated to underestimate the rate at which the sensor will detect false negatives and false positives (the rows which have a sensor model fpr = 0.05, sensor model fnr = 0.02 in Table \ref{table:MiscalibratedSensor}), relative to the correctly calibrated sensor model (the rows which have a sensor model fpr = 0.2, sensor model fnr = 0.15 in Table \ref{table:MiscalibratedSensor}), observations will have a greater effect on the change in the shape of the distribution of the agent's belief, since the sensor model is more confident that the readings are correct. This means that is is easier to cross the decision threshold of the SPRT due to spurious observations. For example, it would require 3, 5 and 17 positive consecutive observations at the same location to cross the upper SPRT threshold in the cases that the sensor model is calibrated with fpr=0.05/fnr=0.02, fpr=0.2/fnr=0.15, fpr=0.4/fnr=0.4 respectively.
+    
+    Underestimating the true sensor parameters leads to a much higher incorrect localisation rate, which can be seen in the \textit{Proportion Incorrectly Localised} column of table \ref{table:MiscalibratedSensor}. Similarly, we see that the false negative rate increases, as the miscalibrated model causes the belief in the target being absent for the region to increase more sharply with negative observations than the correctly calibrated sensor model. The mean time to decision (TTD) increases in this case because the belief in the target presence jumps disproportionately when a positive observation is made relative to a negative observation. The ratio of the sensor model FPR to FNR is approximately half the true ratio, which means the effect of positive observations is underestimated, causing the agent to delay the conclusion in a positive target localisation.
     \item Conversely, when the model is calibrated to overestimate the rate at which the sensor will record false positives and false negatives (the rows which have a sensor model fpr = 0.4, sensor model fnr = 0.4 in Table \ref{table:MiscalibratedSensor}), the belief distribution changes much more gradually given positive or negative observations. This means that crossing the decision thresholds given by the SPRT will require many more positive or negative readings, which leads to much higher mean times to decision (TTD) for all search strategies.
 \end{enumerate}

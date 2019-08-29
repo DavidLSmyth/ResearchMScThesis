@@ -6,19 +6,25 @@
        Strategy & Sensor Model FPR & Sensor Model FNR & Mean TTD & Sample SD[TTD] & False Negative Rate & Proportion Incorrectly Localised \\
         \hline
         $\epsilon$ -Greedy & 0.05 & 0.02 & 65.9066 & 42.8613 & 0.1290 & 0.4442 \\
-        $\epsilon$ -Greedy & 0.2 & 0.15 & 21.68 & 20.44 & 0.0296 & 0.0118 \\
+        $\epsilon$ -Greedy & 0.2 & 0.15 & 112.9258 & 62.3798 & 0.1516 & 0.0398 \\
         $\epsilon$ -Greedy & 0.4 & 0.4 & 194.4808 & 111.1802 & 0.0018 & 0.0000 \\
         \hline
 
-        Saccadic & 0.05 & 0.02 & 59.61 & 38.57 & 0.148 & 0.4074 \\
-        Saccadic & 0.2 & 0.15 & 14.558 & 18.75 & 0.0338 & 0.0114 \\
-        Saccadic & 0.4 & 0.4 & 141.39 & 99.10 & 0.001 & 0.0 \\
+        Saccadic & 0.05 & 0.02 & 59.6090 & 38.5728 & 0.1476 & 0.4074 \\
+        Saccadic & 0.2 & 0.15 & 98.8274 & 56.1298 & 0.1588 & 0.0370 \\
+        Saccadic & 0.4 & 0.4 & 141.3918 & 99.9587 & 0.0006 & 0.0 \\
         \hline
         
         Random & 0.05 & 0.02 & 166.00 & 128.68 & 0.012 & 0.716 \\
-        Random & 0.2 & 0.15 & 501.83 & 268.45 & 0.0792 & 0.0308 \\
+        Random & 0.2 & 0.15 & 629.5462 & 282.9514 & 0.1368 & 0.0366 \\
         Random & 0.4 & 0.4 & 2090.4032 & 681.4226 & 0.1814 & 0.0 \\
-    \hline
+        \hline
+        
+        Sweep & 0.05 & 0.02 & 132.1120 & 74.3178 & 0.0162 & 0.7932 \\
+        Sweep & 0.2 & 0.15 & 601.5697 & 183.4529 & 0.1254 & 0.0454 \\
+        Sweep & 0.4 & 0.4 & 2138.6002 & 554.5915 & 0.1344 & 0.0 \\
+        \hline
+        
     \end{tabular}
 
   \caption{Results of running the target localisation simulation with varying sensor model parameters for each implemented search strategy.}

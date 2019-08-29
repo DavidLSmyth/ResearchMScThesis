@@ -2,7 +2,7 @@
     \centering
     \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{20mm} | >{\centering}m{18mm} | >{\centering}m{20mm} | >{\centering}m{20mm} | m{20mm} <{\centering}|}
     \hline
-       Strategy & \# Agents & E[TTD] & SD[TTD] & False Negative Rate & Proportion Incorrectly Localised \\
+       Strategy & \# Agents & Mean TTD & Sample SD[TTD] & False Negative Rate & Proportion Incorrectly Localised \\
         \hline
         $\epsilon$-Greedy & 1 & 112.9258 & 62.3798 & 0.1516 & 0.0398 \\
         $\epsilon$-Greedy & 2 & 65.5912 & 34.3248 & 0.1568 & 0.0314 \\
@@ -25,5 +25,5 @@
     \label{table:VaryingNumberOfAgents}
 \end{table}
 
-Table \ref{table:VaryingNumberOfAgents}
+Table \ref{table:VaryingNumberOfAgents} shows the results of running the search with 1, 2 and 3 homogeneous agents. Each agent has the same calibrations for their sensors and uses the same values for the SPRT to determine when to cutoff the search. They communicate new observations to each other on each timestep and then make their own observation. We did not assume that there could be corrupted/interrupted transmissions, although this could be investigated in future work. The results are as expected, where the largest reduction in the mean TTD is 
 

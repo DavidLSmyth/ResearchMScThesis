@@ -3,8 +3,7 @@
 
 \chapter{Histograms of Time To Decision}
 
-
-
+%Varying Prior
 \begin{landscape}
 \centering
 \vspace*{\fill}
@@ -20,7 +19,7 @@
     %\begin{minipage}[c][height][c]{width}
     Gaussian & \vline
     \begin{minipage}[c][45mm][c]{45mm}
-      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Gaussian/SingleAgentSingleSourceGaussianEpsilonGreedyHistogram.png}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Gaussian/GaussianEpsilonGreedyHistogram.png}
     \end{minipage}
     &
     %\hline
@@ -29,16 +28,16 @@
     %single RAV
     %\begin{minipage}[c][height][c]{width}
     \begin{minipage}[c][45mm][c]{45mm}
-      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Gaussian/SingleAgentSingleSourceGaussianSweepHistogram.png}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Gaussian/GaussianSweepHistogram.png}
 
     \end{minipage}
     &
     \begin{minipage}[c][45mm][c]{45mm}
-      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Gaussian/SingleAgentSingleSourceGaussianRandomHistogram.png}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Gaussian/GaussianRandomHistogram.png}
     \end{minipage}
     &
     \begin{minipage}[c][45mm][c]{45mm}
-      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Gaussian/SingleAgentSingleSourceGaussianSaccadicHistogram.png}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Gaussian/GaussianSaccadicHistogram.png}
     \end{minipage}
     \\
     %&
@@ -53,10 +52,263 @@
 
     %\end{tabular}
     %\normalsize
+    Uniform & \vline
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Uniform/UniformEpsilonGreedyHistogram.png}
+    \end{minipage}
+    &
+    %\hline
+    %\multicolumn{2}{c}{Initial Discretised Gaussian Distribution of Belief Over Grid Cells (random mean, covariance matrix = [[], []]}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Uniform/UniformSweepHistogram.png}
 
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Uniform/UniformRandomHistogram.png}
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Uniform/UniformSaccadicHistogram.png}
+    \end{minipage}
+    \\
     \hline
    
   \end{tabular}
   \caption{Results of running the target localisation simulation with a  uniform initial belief distribution and Gaussian initial belief distribution. p(T \Romannum{1}) = The probability of making a type \Romannum{1} error using the SPRT, p(T \Romannum{2}) = The probability of making a type \Romannum{1} error using the SPRT, Sim. FPR = The simulated false positive rate of the sensor, Sim. FNR = The simulated false negative rate of the sensor, E[TTD] = The expected amount of timesteps until a decision is made, Prec. = precision, Rec. = Recall. }\label{table:ORToolsResults}
 \end{table}
+
+
+
+%Varying cumulative init belief
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | c | c | c | c |}
+    \hline
+    & $\epsilon$-Greedy & Sweep & Random & Saccadic \\
+    \hline
+    % \multicolumn{2}{c}{Initial Uniform Distribution of Belief Over Grid Cells}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    0.75 & \vline
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/75/75EpsilonGreedyHistogram.png}
+    \end{minipage}
+    &
+    %\hline
+    %\multicolumn{2}{c}{Initial Discretised Gaussian Distribution of Belief Over Grid Cells (random mean, covariance matrix = [[], []]}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/75/75SweepHistogram.png}
+
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/75/75RandomHistogram.png}
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/75/75SaccadicHistogram.png}
+    \end{minipage}
+    \\
+    %&
+    %\small
+    %\begin{tabular}{c|c|c|c|c|c|c|c}
+    %    Strategy & p(T \Romannum{1}) & p(T \Romannum{2}) & Sim. FPR & Sim. FNR & E[TTD] & Prec. & Rec \\
+    %    \hline
+    %    $\epsilon$ -Greedy& 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Sweep & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Saccadic & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Random & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+
+    %\end{tabular}
+    %\normalsize
+    0.25 & \vline
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/25/25EpsilonGreedyHistogram.png}
+    \end{minipage}
+    &
+    %\hline
+    %\multicolumn{2}{c}{Initial Discretised Gaussian Distribution of Belief Over Grid Cells (random mean, covariance matrix = [[], []]}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/25/25SweepHistogram.png}
+
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/25/25RandomHistogram.png}
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/25/25SaccadicHistogram.png}
+    \end{minipage}
+    \\
+    \hline
+   
+  \end{tabular}
+  \caption{Results of running the target localisation simulation with a  uniform initial belief distribution and Gaussian initial belief distribution. p(T \Romannum{1}) = The probability of making a type \Romannum{1} error using the SPRT, p(T \Romannum{2}) = The probability of making a type \Romannum{1} error using the SPRT, Sim. FPR = The simulated false positive rate of the sensor, Sim. FNR = The simulated false negative rate of the sensor, E[TTD] = The expected amount of timesteps until a decision is made, Prec. = precision, Rec. = Recall. }\label{table:ORToolsResults}
+\end{table}
+
+
+%Varying miscalibrated sensor params
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | c | c | c | c |}
+    \hline
+    & $\epsilon$-Greedy & Sweep & Random & Saccadic \\
+    \hline
+    % \multicolumn{2}{c}{Initial Uniform Distribution of Belief Over Grid Cells}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    0.4/0.4 & \vline
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/4-4/4-4EpsilonGreedyHistogram.png}
+    \end{minipage}
+    &
+    %\hline
+    %\multicolumn{2}{c}{Initial Discretised Gaussian Distribution of Belief Over Grid Cells (random mean, covariance matrix = [[], []]}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/4-4/4-4SweepHistogram.png}
+
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/4-4/4-4RandomHistogram.png}
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/4-4/4-4SaccadicHistogram.png}
+    \end{minipage}
+    \\
+    %&
+    %\small
+    %\begin{tabular}{c|c|c|c|c|c|c|c}
+    %    Strategy & p(T \Romannum{1}) & p(T \Romannum{2}) & Sim. FPR & Sim. FNR & E[TTD] & Prec. & Rec \\
+    %    \hline
+    %    $\epsilon$ -Greedy& 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Sweep & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Saccadic & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Random & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+
+    %\end{tabular}
+    %\normalsize
+    0.05/0.02 & \vline
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/05-02/05-02EpsilonGreedyHistogram.png}
+    \end{minipage}
+    &
+    %\hline
+    %\multicolumn{2}{c}{Initial Discretised Gaussian Distribution of Belief Over Grid Cells (random mean, covariance matrix = [[], []]}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/05-02/05-02SweepHistogram.png}
+
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/05-02/05-02RandomHistogram.png}
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/05-02/05-02SaccadicHistogram.png}
+    \end{minipage}
+    \\
+    \hline
+   
+  \end{tabular}
+  \caption{Results of running the target localisation simulation with a  uniform initial belief distribution and Gaussian initial belief distribution. p(T \Romannum{1}) = The probability of making a type \Romannum{1} error using the SPRT, p(T \Romannum{2}) = The probability of making a type \Romannum{1} error using the SPRT, Sim. FPR = The simulated false positive rate of the sensor, Sim. FNR = The simulated false negative rate of the sensor, E[TTD] = The expected amount of timesteps until a decision is made, Prec. = precision, Rec. = Recall. }\label{table:ORToolsResults}
+\end{table}
+
+
+%Varying number agents
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | c | c | c | c |}
+    \hline
+    & $\epsilon$-Greedy & Sweep & Random & Saccadic \\
+    \hline
+    % \multicolumn{2}{c}{Initial Uniform Distribution of Belief Over Grid Cells}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    2 & \vline
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/2/2EpsilonGreedyHistogram.png}
+    \end{minipage}
+    &
+    %\hline
+    %\multicolumn{2}{c}{Initial Discretised Gaussian Distribution of Belief Over Grid Cells (random mean, covariance matrix = [[], []]}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/2/2SweepHistogram.png}
+
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/2/2RandomHistogram.png}
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/2/2SaccadicHistogram.png}
+    \end{minipage}
+    \\
+    %&
+    %\small
+    %\begin{tabular}{c|c|c|c|c|c|c|c}
+    %    Strategy & p(T \Romannum{1}) & p(T \Romannum{2}) & Sim. FPR & Sim. FNR & E[TTD] & Prec. & Rec \\
+    %    \hline
+    %    $\epsilon$ -Greedy& 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Sweep & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Saccadic & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+    %    Random & 4 & 2 & 0.05 & 233.2 & 2303.3 & 2 & 9\\
+
+    %\end{tabular}
+    %\normalsize
+    3 & \vline
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/3/3EpsilonGreedyHistogram.png}
+    \end{minipage}
+    &
+    %\hline
+    %\multicolumn{2}{c}{Initial Discretised Gaussian Distribution of Belief Over Grid Cells (random mean, covariance matrix = [[], []]}\\
+    %\hline
+    %single RAV
+    %\begin{minipage}[c][height][c]{width}
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/3/3SweepHistogram.png}
+
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/3/3RandomHistogram.png}
+    \end{minipage}
+    &
+    \begin{minipage}[c][45mm][c]{45mm}
+      \includegraphics[width=44mm, height=44mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/3/3SaccadicHistogram.png}
+    \end{minipage}
+    \\
+    \hline
+   
+  \end{tabular}
+  \caption{Results of running the target localisation simulation with a  uniform initial belief distribution and Gaussian initial belief distribution. p(T \Romannum{1}) = The probability of making a type \Romannum{1} error using the SPRT, p(T \Romannum{2}) = The probability of making a type \Romannum{1} error using the SPRT, Sim. FPR = The simulated false positive rate of the sensor, Sim. FNR = The simulated false negative rate of the sensor, E[TTD] = The expected amount of timesteps until a decision is made, Prec. = precision, Rec. = Recall. }\label{table:ORToolsResults}
+\end{table}
+
+
 \end{landscape}

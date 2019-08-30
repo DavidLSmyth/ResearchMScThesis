@@ -1,4 +1,21 @@
-\section{Conclusions}
-\note{From C&B: In contrast with these previous works, the pre-sented research herein offers a sequential Bayesian formulation that addresses joint dependence of probabilities, the presence of both false-negative and false-positive detections, and constraints on searcher motion}
+\section{Conclusion and Future Work}
+\note{From C\&B: In contrast with these previous works, the pre-sented research herein offers a sequential Bayesian formulation that addresses joint dependence of probabilities, the presence of both false-negative and false-positive detections, and constraints on searcher motion}
 
 \note{however,  such  costly near-optimal approaches may be less desirable than algorithms that provide “good enough” solutions, where the application re-quires computationally limited platforms, such as educational robots  or  miniaturized  embedded  system}
+
+This chapter described a system which was designed to solve the problem of \textit{target localisation} using RAVs. We designed the system based on previous work, outlined in <>. The system's performance was analysed using Monte Carlo simulation and we explored the trade-off between minimising time-to-decision (TTD) with drawing incorrect conclusions. 
+
+\subsection{Future Work}
+Future work for the problem of target localisation has been outlined in <list previous works>. We identify the following as problems that could be tackled in future research:
+
+\begin{enumerate}
+    \item In our simplified approach, we allowed agents to move to any location in the grid representation of their environment on each timestep. In reality, this would cause the actual search time to be very large as the agents could traverse long distances back and forth across the search grid on each time step. Taking this into account would yield a much more practical system.
+    \item Similar to point 1., we did not take into account battery limitations for the RAV agents. In reality, they would need to periodically recharge while carrying out the search. 
+    \item We assumed that agents could localise \textit{themselves} accurately, which is not always the case. Research into how agents can perform the search without a deterministic location sensor <link to other research>.
+    \item 
+    \item 
+    \item 
+    \item 
+    \item 
+    \item 
+\end{enumerate}

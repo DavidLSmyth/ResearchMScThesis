@@ -153,7 +153,7 @@ The derivation for calculating likelihoods uses the forward algorithm, $\alpha$,
 
 %No point in writing up likelihood algorithm as it's very similar to forward algorithm.
 
-\subsubsection{HMM Parameter Learning Using Expectation Maximization}
+\subsubsection{HMM Parameter Learning Using Expectation Maximization}\label{subsubsec:EMAlgo}
 \note{Can talk about this briefly for battery model}
 Since a HMM is a parameterised model of a stochastic process, a natural question to ask is whether it is possible to determine a \textit{"best"} set of parameters to describe the process, by using observations of the process. This is a more complex version of the well-known process of finding the parameters that maximize the likelihood function of fully observable data, known as the \textbf{M}aximum \textbf{L}ikelihood \textbf{E}stimate (MLE). Finding the most likely set of parameters which provided the observed values can be described mathematically as the value of \note{fix argmax notation}$\argmax_{\lambda} P(E_{1:t} | \lambda)$. Note that this is a fundamentally different problem to that discussed in the preceding section; here we do not assume a fixed set of parameters for the HMM ($\lambda$).
 

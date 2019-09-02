@@ -1,12 +1,16 @@
 %!TEX root = ../thesis.tex
 % ******************************* Thesis Appendix B ********************************
 
-\chapter{Histograms of Time To Decision}
+\chapter{Histograms showing Time To Decision while varying search parameters} \label{chap:AppendixTwo}
+
+In order to generate the histograms displayed in this appendix, we used the following experimental setup:\par
+We generated simulated sensor readings using arbitrarily chosen values of the false positive rate = 0.2 and a false negative rate = 0.15. For each simulation run, we generated random starting locations for the agents and targets in a uniformly spaced 10 $\times$ 10 grid. Unless specified otherwise, we use the following default parameters: sensor model false negative rate = 0.15, sensor model false positive rate = 0.2, initial belief distribution = uniform, initial cumulative belief target is present = 0.5, number of targets present = 1, number of active agents = 1, the $\epsilon$-greedy search has $\epsilon$=0.2 and a neighborhood radius of 4.
+
 %Varying Prior
 \begin{landscape}
 \centering
 \vspace*{\fill}
-\section{Histograms of Time To Decision (TTD) with varying Prior Distribution}
+\section{Histograms of Time To Decision (TTD) for varying initial belief distributions}
 \begin{table}[h!]
   \centering
   \begin{tabular}{ | c | c | c | c | c |}
@@ -18,7 +22,7 @@
     %single RAV
     %\begin{minipage}[c][height][c]{width}
     \rotatebox[origin=c]{90}{Gaussian} & 
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Gaussian/GaussianEpsilonGreedyHistogram.png}
     \end{minipage}
     &
@@ -27,19 +31,20 @@
     %\hline
     %single RAV
     %\begin{minipage}[c][height][c]{width}
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Gaussian/GaussianSweepHistogram.png}
 
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Gaussian/GaussianRandomHistogram.png}
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Gaussian/GaussianSaccadicHistogram.png}
     \end{minipage}
     \\
+    \hline
     %&
     %\small
     %\begin{tabular}{c|c|c|c|c|c|c|c}
@@ -53,7 +58,7 @@
     %\end{tabular}
     %\normalsize
     \rotatebox[origin=c]{90}{Uniform} & 
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Uniform/UniformEpsilonGreedyHistogram.png}
     \end{minipage}
     &
@@ -62,23 +67,24 @@
     %\hline
     %single RAV
     %\begin{minipage}[c][height][c]{width}
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Uniform/UniformSweepHistogram.png}
 
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Uniform/UniformRandomHistogram.png}
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingPrior/Uniform/UniformSaccadicHistogram.png}
     \end{minipage}
     \\
     \hline
    
   \end{tabular}
-  \caption{insert caption. }\label{table:ORToolsResults}
+  %\caption{insert caption. }
+  \label{table:HistVaryingPriorDist}
   %Results of running the target localisation simulation with a  uniform initial belief distribution and Gaussian initial belief distribution. p(T \Romannum{1}) = The probability of making a type \Romannum{1} error using the SPRT, p(T \Romannum{2}) = The probability of making a type \Romannum{1} error using the SPRT, Sim. FPR = The simulated false positive rate of the sensor, Sim. FNR = The simulated false negative rate of the sensor, E[TTD] = The expected amount of timesteps until a decision is made, Prec. = precision, Rec. = Recall
 \end{table}
 
@@ -86,7 +92,7 @@
 
 
 \vspace*{\fill}
-\section{Histograms of Time To Decision (TTD) with varying cumulative initial belief in target presence}
+\section{Histograms of Time To Decision (TTD) for a varying cumulative initial belief in target presence}
 
 %Varying cumulative init belief
 \begin{table}[h!]
@@ -123,6 +129,7 @@
       \includegraphics[width=48mm, height=48mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/VaryingInitBelief/75/75SaccadicHistogram.png}
     \end{minipage}
     \\
+    \hline
     %&
     %\small
     %\begin{tabular}{c|c|c|c|c|c|c|c}
@@ -162,7 +169,8 @@
     \hline
    
   \end{tabular}
-  \caption{insert caption. }\label{table:ORToolsResults}
+  %\caption{insert caption. }
+  \label{table:HistVaryingCumulativeInitial}
 \end{table}
 \break
 
@@ -170,7 +178,7 @@
 
 
 \vspace*{\fill}
-\section{Histograms of Time To Decision (TTD) with varying sensor model params}
+\section{Histograms of Time To Decision (TTD) for varying sensor model parameters}
 
 %Varying miscalibrated sensor params
 \begin{table}[h!]
@@ -207,6 +215,7 @@
       \includegraphics[width=48mm, height=48mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MiscalibratedSensor/4-4/4-4SaccadicHistogram.png}
     \end{minipage}
     \\
+    \hline
     %&
     %\small
     %\begin{tabular}{c|c|c|c|c|c|c|c}
@@ -246,14 +255,15 @@
     \hline
    
   \end{tabular}
-  \caption{insert caption. }\label{table:ORToolsResults}
+  %\caption{insert caption. }
+  \label{table:HistVaryingSensorModelParams}
 \end{table}
 \break
 
 
 
 \vspace*{\fill}
-\section{Histograms of Time To Decision (TTD) with varying number of targets present}
+\section{Histograms of Time To Decision (TTD) for a varying number of targets present}
 
 %Varying number targets
 \begin{table}[h!]
@@ -267,7 +277,7 @@
     %single RAV
     %\begin{minipage}[c][height][c]{width}
     2 & 
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleTarget/2/2EpsilonGreedyHistogram.png}
     \end{minipage}
     &
@@ -276,19 +286,20 @@
     %\hline
     %single RAV
     %\begin{minipage}[c][height][c]{width}
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleTarget/2/2SweepHistogram.png}
 
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleTarget/2/2RandomHistogram.png}
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleTarget/2/2SaccadicHistogram.png}
     \end{minipage}
     \\
+    \hline
     %&
     %\small
     %\begin{tabular}{c|c|c|c|c|c|c|c}
@@ -302,7 +313,7 @@
     %\end{tabular}
     %\normalsize
     3 & 
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleTarget/3/3EpsilonGreedyHistogram.png}
     \end{minipage}
     &
@@ -311,23 +322,24 @@
     %\hline
     %single RAV
     %\begin{minipage}[c][height][c]{width}
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleTarget/3/3SweepHistogram.png}
 
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleTarget/3/3RandomHistogram.png}
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleTarget/3/3SaccadicHistogram.png}
     \end{minipage}
     \\
     \hline
    
   \end{tabular}
-  \caption{insert caption. }\label{table:ORToolsResults}
+  %\caption{insert caption. }
+  \\label{table:HistVaryingNoTargetsPresent}
 \end{table}
 \break
 
@@ -335,7 +347,7 @@
 
 
 \vspace*{\fill}
-\section{Histograms of Time To Decision (TTD) with varying number of search agents}
+\section{Histograms of Time To Decision (TTD) for a varying number of search agents}
 
 %Varying number agents
 \begin{table}[h!]
@@ -349,7 +361,7 @@
     %single RAV
     %\begin{minipage}[c][height][c]{width}
     2 & 
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/2/SingleAgentSingleSource2EpsilonGreedyHistogram.png}
     \end{minipage}
     &
@@ -358,19 +370,20 @@
     %\hline
     %single RAV
     %\begin{minipage}[c][height][c]{width}
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/2/SingleAgentSingleSource2SweepHistogram.png}
 
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/2/SingleAgentSingleSource2RandomHistogram.png}
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/2/SingleAgentSingleSource2SaccadicHistogram.png}
     \end{minipage}
     \\
+    \hline
     %&
     %\small
     %\begin{tabular}{c|c|c|c|c|c|c|c}
@@ -384,7 +397,7 @@
     %\end{tabular}
     %\normalsize
     3 & 
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/3/SingleAgentSingleSource3EpsilonGreedyHistogram.png}
     \end{minipage}
     &
@@ -393,23 +406,24 @@
     %\hline
     %single RAV
     %\begin{minipage}[c][height][c]{width}
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/3/SingleAgentSingleSource3SweepHistogram.png}
 
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/3/SingleAgentSingleSource3RandomHistogram.png}
     \end{minipage}
     &
-    \begin{minipage}[c][49mm][c]{49mm}
+    \begin{minipage}[c][52mm][c]{49mm}
       \includegraphics[width=49mm, height=49mm]{Chapters/MultiAgentTargetDetection/Figs/Histograms/MultipleAgent/3/SingleAgentSingleSource3SaccadicHistogram.png}
     \end{minipage}
     \\
     \hline
    
   \end{tabular}
-  \caption{insert caption. }\label{table:ORToolsResults}
+  %\caption{insert caption. }
+  \label{table:HistVaryingNoSearchAgents}
 \end{table}
 
 

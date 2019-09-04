@@ -1,0 +1,103 @@
+%Want to introduce the problem to allow for a discussion that makes sense. Ideally will frame a problem so that it suggests that having a high-fidelity simulation environment would be very useful for the project and in general.
+\nomenclature[]{UUV}{Unmanned Underwater Vehicle}
+\subsection{Key Aspects of Simulation Environments}
+We begin by discussing some key aspects of simulation environments that serve as a starting point on which more advanced techniques build upon. According to %\citeauthor{Shannon1998INTRODUCTIONSIMULATION} 
+\cite{Shannon1998INTRODUCTIONSIMULATION}, simulation can be defined as \textit{"the process of designing a model of a real system and conducting experiments with this model for the purpose of understanding the behavior of the system and/or evaluating various strategies for the operation of the system"}. Simulations have been used extensively to model complex systems since the invention of the modern computer, gaining traction since the proposal of the Markov Chain Monte Carlo method by Stansislaw Ulam and John Von Neumann in the late 1940s \cite{Robert2011AIncomplete}. Simulations written with software are created in order to gain insight into the system's dynamics and to evaluate results of using a method intended for real-world use. This is usually because proposed methods may be too time-consuming or expensive to test in the real world. Software simulations are being used increasingly for a wide variety of tasks, from planning new roads to alleviate traffic \cite{Pell2017TrendsSimulation} to developing self-driving vehicles \cite{Dosovitskiy2017CARLA:Simulator}. 
+
+Designing simulations allows the developer of an agent-based system to abstract away details of the real-world conditions that the agents will act in and focus on the salient aspects that the agents are concerned with, in order to prototype, train, test, analyse and validate. General advantages of simulations are listed in  \cite{Shannon1998INTRODUCTIONSIMULATION}, with the most notable being:
+\begin{itemize}
+    \item \textit{"It can be used to explore operating procedures, decision rules, organizational structures, etc. without disrupting the ongoing operations."}
+    \item \textit{"Simulation allows us to control time. Thus we can operate the system for several months or years of experience in a matter of seconds allowing us to quickly look at long time horizons or we can slow down phenomena for study."}
+    \item \textit{"It allows us to gain insights into how a modeled system actually works and understanding of which variables are most important to performance."}
+    \item \textit{"Simulation's great strength is its ability to let us experiment with new and unfamiliar situations and to answer "what if" questions."}
+\end{itemize}
+
+
+\note{Following paragraph doesn't really belong here but does help tie everything together}
+
+ In relation to designing intelligent agents, often the trade-off between exploration and exploitation is referenced. Exploration or "information gathering" \cite{AIAMA} can be considered as the agent posing a "what if" question in order to learn the consequences of performing action, and exploitation can be considered as an agent using gathered or previous knowledge to choose actions to take that maximize its performance measure, as outlined in section \ref{AgencySubsection}. As stated above, simulation environments are highly suited to answering "what if" questions, which has motivated the use of using simulations to design systems of autonomous agents in the literature, for example the simulation environment used in the 
+\href{https://multiagentcontest.org/}{Multi-Agent Programming Contest.}\footnote{\href {https://multiagentcontest.org/}{https://multiagentcontest.org/}}
+
+
+
+\subsection{Simulation Environments Design Using Game Engines}\label{GameEngineReview}
+Since computer games are effectively simulations, the technologies used to create them have also been used to create simulations for a more serious purpose, often referred to in the literature as \textit{serious games}. Serious games usually refer to games that have been specifically designed to provide training to professionals working in an industry where extensive training is necessary but difficult, expensive or dangerous to provide \cite{Sobke2016SeriousEngines}. An overview and taxonomy of serious games is provided by \citeauthor{Laamarti2014AnGames} \cite{Laamarti2014AnGames}. Early motivation for using games engine in scientific research is outlined in a 2002 journal article by \citeauthor{Lewis2002GameEnginesInScientificResearch}, summarized by the sentence "\textit{By elevating the problems of updating and synchronization to a primary concern, game engines provide superior platforms for rendering multiple views and coordinating real and simulated scenes as well as supporting multiuser interaction}" \cite{Lewis2002GameEnginesInScientificResearch}.  More recently, games have been used to train learning agents, defined in section \ref{AgencySubsection}. The reasons that this is a recent phenomenon are as follows:
+\begin{itemize}
+    \item
+    Training an agent usually involves defining a mapping from environment states or percept sequences to actions, in order to maximize the performance measure. Until a few years ago, state-space representations of many environments were of such a high dimension that it was prohibitive to find such a mapping. Seminal works on Neural Networks \cite{Lecun1998Gradient-BasedRecognition} \cite{Krizhevsky2012ImageNetNetworks} have allowed high-dimensional states to be compressed to lower-dimensional ones while retaining key information related to the states, simplifying the process of mapping states to actions. This has led to the development of algorithms that can utilise high-dimensional states to choose optimal actions to great effect, such as Deep Q-Learning \cite{Mnih2013PlayingLearning}.
+    \item Writing complex software simulations rendering high-fidelity sensor outputs (e.g. images) in order to train an agent requires a lot of highly-optimize code, which takes a significant amount of effort to write.
+    %Issues such as synchronization are non-trivial to resolve. 
+    General Purpose Graphics Processing Units (GPGPUs) have significantly decreased the time required to carry out certain tasks in parallel, which has made the problem of calculating sensor outputs in a reasonable time tractable. For example, the rendering time for photo-realistic images has significantly sped up relative to the rendering time using a CPU only \cite{Ryoo2008OptimizationCUDA}.
+    \item Insufficient amounts of data could be generated in a reasonable amount of time for the learning agent to perform sufficiently well. Quicker CPU speeds have increased the rates at which agents can learn significantly over the last number of years, in agreement with the predictions of Moore's law \cite{MacK2011FiftyLaw}. Game engines tend to have highly optimised code and given the possibility to generate copious amounts of data in a small amount of time, they have significantly expedited the rate at which learning agents can be trained \cite{Juliani2018Unity:Agents}, \cite{SadeghiRL:World}. 
+\end{itemize}
+\note{Should really have citations for all of the above.}
+
+There have been some highly notable simulation environments written with various games engines for non-gaming purposes. One of the first mature simulations written for a serious purpose using technologies usually applied to game development is the Gazebo simulator \cite{Koenig2005DesignSimulator}. Gazebo makes use of physics engines and graphics rendering engines that are commonly used to develop games. The use of Gazebo has been reported to reduce the training time for some simple benchmark robotics tasks by as much as 33\%, while retaining the same level of performance \cite{Vilches2018RobotGazebo}. 
+
+There have also been a notable number of simulators designed to aid the development of autonomous cars, trucks, RAVs and UUVs, with documentation on each commonly citing difficulties in changing configurations for physical vehicles, time taken to generate data and dangerous edge cases as motivation \cite{Dosovitskiy2017CARLA:Simulator} \cite{Wymann2015TORCS:Simulator}, \cite{Shah2017AirSim:Vehicles} \cite{Bojarski2016EndCars}. \citeauthor{Dosovitskiy2017CARLA:Simulator} designed the CARLA open-source simulator \cite{Dosovitskiy2017CARLA:Simulator} for autonomous driving research using UnrealEngine 4 (UE4) to provide a lot of basic functionality. They cite "\textit{state-of-the-art rendering quality, realistic physics, basic NPC logic, and an ecosystem of interoperable plugins}" as key motivations to use the engine. AirSim \cite{Shah2017AirSim:Vehicles} is also built over UE4, with their motivations including
+\begin{itemize}
+    \item "\textit{The amount of training data needed to learn useful behaviors is often prohibitively high}".
+    \item "\textit{Autonomous vehicles are often unsafe and expensive to operate during the training phase}".
+    \item "\textit{Simulated perception, environments and actuators are often simplistic and lack the richness or diversity of the real world}".
+    \item It is "\textit{important to develop more accurate models of system dynamics so that simulated behavior closely mimics the real-world}".
+\end{itemize}
+\note{maybe just keep comma-separated list}
+
+Finally, the designers of Sim4CV \cite{Mueller2016ATracking}, which is also built over UE4, list the following motivations for the work done in developing a simulation environment for RAV tracking:
+\begin{itemize}
+    \item "\textit{The combination of the simulator with an extensive aerial benchmark provides a more comprehensive evaluation toolbox for modern state-of-the-art trackers and opens new avenues for experimentation and analysis.}"
+    \item \note{not sure how to deal with quoted citations} "\textit{Although simulation is popularly used in machine learning and animation and motion planning, the use of synthetically generated video or simulation for tracker evaluation is a new field to explore.}"
+    \item "\textit{The Unreal Engine 4 (UE4) has recently become fully open-source and it seems very promising for simulated visual tracking due in part to its high-quality rendering engine and realistic physics library.}"
+    \item "\textit{Our proposed RAV simulator along with novel evaluation methods enables tracker testing in real-world scenarios with live feedback before deployment}"
+\end{itemize}
+\note{Some of the above can be removed, only need most important points.}
+
+\subsection{Software Simulations Related to Hazardous Scenes}
+\note{Talk about USARSim and others}
+%hazardous scenarios are the main focus of ROCSAFE. They are diverse. Simulating them is of high value as already outlined - principally due to dangerous element. Talk about previous work that simulates hazardous scenes and how 
+We now move the discussion to the domain of hazardous scenario management. There are a number of existing software simulations that were designed to aid the management of hazardous scenarios. In this context, the scenarios are taken to be of a very serious nature, such that there is an immediate and unquantified risk to human life in the immediate vicinity.
+
+\par A review of the design process of physical search and rescue environments in an urban setting with the aim of robotic navigation can be found in \cite{Jacoff2003TestRobots}. They discuss the recommended physical configuration of simulation environments and offer technical details on how the simulation could be run, including performance metrics and details of how the robot should interact with the environment. The details are relatively high-level, but serve as a good starting point on which to develop more complex and realistic scenarios.
+
+USARSim \cite{Carpin2007USARSim:Education} was proposed in 2007 as a general-purpose simulation environment for Urban Search-and-Rescue (USAR) scenarios. It was built using Unreal Engine 2 and was designed to specifically facilitate the design and testing phase of autonomous robots that would be used to help deal with dangerous scenarios. The simulator was designed to be used as a companion to the National Institute of Standards’ (NIST) Reference Test Facility for Autonomous Mobile Robots for Urban Search and Rescue. They describe the decision to use a game engine as their simulation platform as one that considers the strong advantages of offloading the most technical and difficult aspects of simulation to the game engine, which provides superior visual rendering and physical modelling. This allows the user to concentrate their efforts on developing the robotics-specific tasks related to the management of the scenario.\par
+
+
+VIVID: Virtual Environment for Visual Deep Learning \cite{Lai2018ViviD:Learning} is a platform that is capable of generating photo-realistic quality images and sensor readings from simulated vehicles. It was designed using UE4 and ships with a number of ready-made environments. The author envisages its main applications as lying in the domains of "\textit{deep reinforcement learning, semantic segmentation, object recognition, action recognition and video event detection.}" A number of the ready-made environments involve a hazardous component which could benefit from autonomous scene surveying and management, such as the ruined school and train station scenarios.
+
+
+%This is because game engines have reached a level of maturity that can provide high-fidelity percepts to agents in order to replicate the true environment they would like to perform in. 
+
+%I don't think this is relevant enough to include
+%Initially, industries such as manufacturing created a demand for simulation technology, since taking a manufacturing plant offline in order to integrate new robotics technology could cost a company a significant amount of money. Simulink, developed by Matlab, was a popular tool to develop models of dynamical systems, but it's limitations include ...
+
+
+%Modern-day games are commonly written using a \textit{game engine}, rather than being designed from the bottom up as a singular entity. There is no strict definition for what constitutes a game engine, but the term usually describes a software development environment which typically provides functionality including some kind of rendering engine for 3D graphics, a physics engine that deals with phenomena such as collision, a sound engine, networking abilities, memory management, threading, cinematics and animation. This functionality is necessary in most modern games and has been developed to economise the process of game development.\par
+
+
+
+%\subsection{AirSim Simulator}
+
+%We have identified the following aspects of the real-world scenario we hope to address as causing issues in developing our system:
+%This motivates the development of a high-fidelity simulation to circumvent these limitations.
+
+
+
+%Simulations are typically of high value when data required to design system:
+%\begin{itemize}
+%    \item Costs a lot of money to generate.
+%    \item Is dangerous to generate.
+%    \item Is time consuming/laborious to generate.
+%    \item The system has a well-known stochastic element which makes generating a sufficiently large sample size difficult.
+%\end{itemize}
+%The domain which motivated the development of the technologies proposed in this thesis satisfies all of the above requirements, which naturally motivates the design of a simulation environment. \par
+
+% Key properties of a simulation 
+
+%Intelligent agents are frequently designed to solve problems which usually would be on or more of: labour intensive, monotonous, repetitive or time consuming. In order to accomplish these tasks, agents may need to use data from 
+
+%Simulation environments are used to solve a number of different problems when using intelligent agents.
+
+%A consequence of this is that any systems that are developed to provide support can be difficult to evaluate and validate. To address this, we developed a high-fidelity simulated environment as part of the research involved in this thesis, which preserves the critical aspects of CBRNe incidents without presenting any risk of exposure to the dangerous elements of such scenes in the real world. The following published works related to the development of the simulation environment are discussed in this chapter: \citet{Smyth2018AInvestigation}, \citet{Smyth2018UsingDrones}.\par
+
+
+%Virtual environments designed using games engines have previously been used to gather data to train models for a range of applications \cite{1608.02192}\cite{uav_benchmark_simulator} and software packages have been written that can generate photo realistic images from games engines\cite{1609.01326}. There have also been attempts made to develop models of physical systems that simulate potentially dangerous environments \cite{4625089}. To the best of our knowledge, there are no prior applications using games engines to model critical incidents for the purpose of developing analytical tools in a virtual setting that will then transfer to real-world deployment.

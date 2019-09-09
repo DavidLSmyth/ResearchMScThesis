@@ -7,39 +7,39 @@ First, inference algorithms commonly used with HMMs are discussed, as their repr
 
 The actual quantity that we want to compute is 
 \[P(X_t | e_1, e_2, ..., e_t) = P(X_t | e_{1:t})\]
-that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. The notation $e_{1:t}$ denotes the joint distribution of $e_1, e_2, ..., e_t$ This is the \textit{filtering} problem, mentioned in section \ref{Chapter:HMM}. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because .... \note{Explain this carefully}.The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The well-known forward algorithm for HMMs is shown in algorithm \ref{alg:bayes_filter_observations_only}. The derivation is useful to follow as an exercise:
+that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. The notation $e_{1:t}$ denotes the joint distribution of $e_1, e_2, ..., e_t$. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because we cannot observe the state directly, but we can observe the evidence variables. The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering} \cite{AIAMA}, \cite{Thrun:2005:ProbabilisticRobotics}, \cite{KollerPGM}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The well-known forward algorithm for HMMs is shown in Algorithm \ref{alg:forwardAlgorithmHMMs}. The derivation is useful to follow as an exercise, so we present it in the subsequent sub-section.
 \subsubsection{HMM Filtering Algorithm Derivation} 
 \label{section:HMMFiltering}
 \note{Might be better to put this in an appendix.}
 Two well-known probability identities are used in the derivation: 
 \note{Fix the formatting here}
 \begin{center}
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \end{center}
 %quad adds space
 \[(a) \quad p(A | B, C) = \frac{p(B | A, C) p(A | C)}{p(B | C)} \quad \text{and} \quad (b) \quad p(A | B) = \int\limits_{C}P(A | B, C) P(C | B)dC\]
 
 \begin{center}
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \end{center}
 
 \begin{enumerate}
-\item {\hfil $ p(x_t | e_{1:t}) = p(x_t | e_{1:t-1}, e_t) $ }
+\item[] {\hfil $ p(x_t | e_{1:t}) = p(x_t | e_{1:t-1}, e_t) $ }
 
-\item {\hfil $ \text{applying (a) and letting} \quad \eta = \frac{1}{p(e_t | e_{1:t-1})} \quad = \quad \eta p(e_t | e_{1:t-1}, x_t)p(x_t|e_{1:t-1}) $ }
+\item[] {\hfil $ \text{applying (a) and letting} \quad \eta = \frac{1}{p(e_t | e_{1:t-1})} \quad = \quad \eta p(e_t | e_{1:t-1}, x_t)p(x_t|e_{1:t-1}) $ }
 
-\item {\hfil $ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)p(x_t|e_{1:t-1})$}
+\item[] {\hfil $ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)p(x_t|e_{1:t-1})$}
 
-\item {\hfil $\text{applying (b)} \quad =  \quad \eta p(e_t | X_t)\int_{x_{t-1}}p(x_t|e_{1:t-1}, x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1}$}
+\item[] {\hfil $\text{applying (b)} \quad =  \quad \eta p(e_t | X_t)\int_{x_{t-1}}p(x_t|e_{1:t-1}, x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1}$}
 
-\item {\hfil  $ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)\int_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1} $}
+\item[] {\hfil  $ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)\int_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1} $}
 
 \end{enumerate}
 Note that $\eta$ is a normalizing constant that ensures that the probability distribution integrates to 1, and that the probabilities that need to be calculated can be done so from the parameters specified in the HMM; namely $p(e_t | X_t)$, specified by the sensor model, and $p(X_t | x_{t-1})$, specified by the transition model.
 
 \begin{algorithm}{}
 \caption{Forward Algorithm for HMMs}
-\label{alg:forwardAlgorithm}
+\label{alg:forwardAlgorithmHMMs}
 
 \begin{algorithmic}[1]
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
@@ -69,9 +69,9 @@ Note that $\eta$ is a normalizing constant that ensures that the probability dis
 
 \note{Don't forget to mention: Sufficient statistics, forward algorithm}
 
-Algorithm \ref{alg:forwardAlgorithm} uses integrals to account for the fact that the distribution being used may be continuous. The work done in this thesis only uses discrete distributions, and so summations are used instead of integrals for the subsequent discussion. A consequence of using discrete distributions is that it is possible to formulate the forward algorithm using vector and matrix notation. As outlined in section \ref{Chapter:HMM}, the transition model for a HMM can be written down in matrix form, as can the observation model. This allows for a highly compact notation: denoting $p(x_t | e_{1:t})$ as $f_{1:t}$, we can write $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, where $f_{1:t}$ contains the vector of values of $p(x_t | e_{1:t})$ for every possible $x_t$ \cite[p.~579]{AIAMA}. Note that the observation model, $O_t$ is time dependent, as opposed to the transition model, which is assumed to be stationary. \par
+Algorithm \ref{alg:forwardAlgorithmHMMs} uses integrals to account for the fact that the distribution being used may be continuous. The work done in this thesis only uses discrete distributions, and so summations are used instead of integrals for the subsequent discussion. A consequence of using discrete distributions is that it is possible to formulate the forward algorithm using vector and matrix notation. As outlined in section \ref{subsec:BGHMM}, the transition model for a HMM can be written down in matrix form, as can the observation model. This allows for a highly compact notation: denoting $p(x_t | e_{1:t})$ as $f_{1:t}$, we can write $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, where $f_{1:t}$ contains the vector of values of $p(x_t | e_{1:t})$ for every possible $x_t$ \cite[p.~579]{AIAMA}. Note that the observation model, $O_t$ is time dependent, as opposed to the transition model, which is assumed to be stationary. \par
 
-Some insight can be gained from studying Algorithm \ref{alg:forwardAlgorithm}. There are three main steps to this algorithm, and the intuition behind them is explained: 
+Some insight can be gained from studying Algorithm \ref{alg:forwardAlgorithmHMMs}. There are three main steps to this algorithm, and the intuition behind them is explained: 
 \note{These are highly verbose, edit to make less wordy}
 \begin{enumerate}
     
@@ -108,41 +108,41 @@ An key strength of this algorithm is the fact it allows updates to be performed 
 
 \subsubsection{Evidence Likelihood Algorithm Using a HMM}\label{subsubsec:EvLikelihood}
 \note{Will talk about this briefly for SPRT}
-The second useful quantity that we would like to calculate is the probability of observing the evidence that we did, often referred to the likelihood function of the data, as identified in section \ref{Chapter:HMM}. In simpler terms, this means we calculate the probability of observing the data, given a fixed parameterised model of the data (the HMM). This value is useful as it can reveal insights into whether one model is more likely than another model, with applications including \textbf{M}aximum \textbf{a} \textbf{P}osteriori (MAP) parameter estimates and hypothesis testing. It is used in this thesis in section \ref{subsubsec:SeachTerminationMethodology}. We would like to compute the value of
+The second useful quantity that we would like to calculate is the probability of observing the evidence that we did, often referred to the likelihood function of the data, as identified in section \ref{subsec:BGHMM}. In simpler terms, this means we calculate the probability of observing the data, given a fixed parameterised model of the data (the HMM). This value is useful as it can reveal insights into whether one model is more likely than another model, with applications including \textbf{M}aximum \textbf{a} \textbf{P}osteriori (MAP) parameter estimates and hypothesis testing. It is used in this thesis in section \ref{subsubsec:SeachTerminationMethodology}. We would like to compute the value of
 \[P(e_1, e_2, ..., e_t) = P(e_{1:t})\]
 given the fixed set of parameters provided by the HMM. A brief outline of the derivation is shown:\note{might be best to put the derivation in an appendix} 
 
 
 \subsubsection{HMM Evidence Likelihood Algorithm Derivation}\label{subsubsec:BGEvidenceLikelihood}
 
-Analagous to ..., two well-known probability identities are used in the derivation: 
+Analagous to the filtering algorithm derivation, two well-known probability identities are used in the derivation: 
 \begin{center}
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \end{center}
 %quad adds space
 \[(a) \quad p(A, B, C) = p(A | B, C) p(B, C) \quad \text{and} \quad (b) \quad p(A, B) = \sum_{C}{p(A | B, C)p(B, C)}\]
 
 \begin{center}
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \end{center}
 
 
 \begin{enumerate}
 
-\item {\hfil $p(e_{1:t}) = \sum_{x_t}p(e_{1:t}, x_t) \quad = \quad \sum_{x_t}p({e_{1:t-1}, e_t, x_t}) $
+\item[] {\hfil $p(e_{1:t}) = \sum_{x_t}p(e_{1:t}, x_t) \quad = \quad \sum_{x_t}p({e_{1:t-1}, e_t, x_t}) $
 }
-\item {\hfil $\text{applying (a) } \quad= \quad
+\item[] {\hfil $\text{applying (a) } \quad= \quad
 \sum_{x_t}{p(e_t | e_{1:t-1}, x_t)p(x_t, e_{1:t-1})}$
 }
-\item {\hfil $\quad \text{by the Markov property} 
+\item[] {\hfil $\quad \text{by the Markov property} 
 \quad = \quad \sum_{x_t}p(e_t | x_t)p(x_t, e_{1:t-1})$
 }
 
-\item {\hfil $\text{applying (b)} \quad =  \quad
+\item[] {\hfil $\text{applying (b)} \quad =  \quad
 \sum_{x_t}p(e_t | x_t) \sum_{x_{t-1}}p(x_t|e_{1:t-1}, x_{t-1}) p(x_{t-1},e_{1:t-1})$
 }
 
-\item {\hfil $\text{by the Markov property} \quad = \quad 
+\item[] {\hfil $\text{by the Markov property} \quad = \quad 
 \sum_{x_t}{p(e_t | x_t)\sum_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1},e_{1:t-1})}$
 }
 
@@ -153,17 +153,17 @@ The derivation for calculating likelihoods uses the forward algorithm, $\alpha$,
 
 %No point in writing up likelihood algorithm as it's very similar to forward algorithm.
 
-\subsubsection{HMM Parameter Learning Using Expectation Maximization}\label{subsubsec:EMAlgo}
-\note{Can talk about this briefly for battery model}
-Since a HMM is a parameterised model of a stochastic process, a natural question to ask is whether it is possible to determine a \textit{"best"} set of parameters to describe the process, by using observations of the process. This is a more complex version of the well-known process of finding the parameters that maximize the likelihood function of fully observable data, known as the \textbf{M}aximum \textbf{L}ikelihood \textbf{E}stimate (MLE). Finding the most likely set of parameters which provided the observed values can be described mathematically as the value of \note{fix argmax notation}$\argmax_{\lambda} P(E_{1:t} | \lambda)$. Note that this is a fundamentally different problem to that discussed in the preceding section; here we do not assume a fixed set of parameters for the HMM ($\lambda$).
+%\subsubsection{HMM Parameter Learning Using Expectation Maximization}\label{subsubsec:EMAlgo}
+%\note{Can talk about this briefly for battery model}
+%Since a HMM is a parameterised model of a stochastic process, a natural question to ask is whether it is possible to determine a \textit{"best"} set of parameters to describe the process, by using observations of the process. This is a more complex version of the well-known process of finding the parameters that maximize the likelihood function of fully observable data, known as the \textbf{M}aximum \textbf{L}ikelihood \textbf{E}stimate (MLE). Finding the most likely set of parameters which provided the observed values can be described mathematically as the value of \note{fix argmax notation}$\argmax_{\lambda} P(E_{1:t} | \lambda)$. Note that this is a fundamentally different problem to that discussed in the preceding section; here we do not assume a fixed set of parameters for the HMM ($\lambda$).
 
-This is a well-studied problem for HMMs and the solution is given by the \textbf{E}xpectation \textbf{M}aximisation (EM) algorithm, proposed by \citeauthor{Dempster1977MaximumAlgorithm}. This algorithm is reasonably complex and highly detailed overviews can be found in many texts that deal with parameter estimation for statistical models. A quick outline of how the algorithm works is provided here.\par
-
-
-The reason why the standard methods for finding the MLE for a parameterised model do not work with HMMs is due to the fact that there is no way to directly express the quantity  $P(E_{1:t} | \lambda)$ directly. This can be seen in the derivation of the evidence likelihood in <reference whichever appendix it ends up in>. Instead, it is necessary to marginalize over states: $ P(e_{1:t} | \lambda) = \sum_{x_t}{p(x_t, e_{e:t} | \lambda)}$. The standard approach to finding the parameters that maximize a model is to take a log transform of the likelihood function, which preserves the solution but turns the problem into one of finding the parameters that maximize a sum rather than a product. Using standard methods of calculus, this can usually be done easily. The issue with HMMs is that when a logarithmic transformation is applied to the likelihood function, the summation sign remains within the log function, which means finding the maximum is still a difficult problem. The EM algorithm, taking the approach of many iterative techniques, relaxes the constraints on the problem in order to find a lower bound of the log-likelihood and then iteratively improves this lower bound with increasing likelihood values. 
+%This is a well-studied problem for HMMs and the solution is given by the \textbf{E}xpectation \textbf{M}aximisation (EM) algorithm, proposed by \citeauthor{Dempster1977MaximumAlgorithm}. This algorithm is reasonably complex and highly detailed overviews can be found in many texts that deal with parameter estimation for statistical models. A quick outline of how the algorithm works is provided here.\par
 
 
-The Baum-Welch algorithm is a special case of the EM algorithm and is frequently used to solve the problem of estimating the parameters of a HMM. The algorithm is described fully in appendix <reference appendix>.
+%The reason why the standard methods for finding the MLE for a parameterised model do not work with HMMs is due to the fact that there is no way to directly express the quantity  $P(E_{1:t} | \lambda)$ directly. This can be seen in the derivation of the evidence likelihood in <reference whichever appendix it ends up in>. Instead, it is necessary to marginalize over states: $ P(e_{1:t} | \lambda) = \sum_{x_t}{p(x_t, e_{e:t} | \lambda)}$. The standard approach to finding the parameters that maximize a model is to take a log transform of the likelihood function, which preserves the solution but turns the problem into one of finding the parameters that maximize a sum rather than a product. Using standard methods of calculus, this can usually be done easily. The issue with HMMs is that when a logarithmic transformation is applied to the likelihood function, the summation sign remains within the log function, which means finding the maximum is still a difficult problem. The EM algorithm, taking the approach of many iterative techniques, relaxes the constraints on the problem in order to find a lower bound of the log-likelihood and then iteratively improves this lower bound with increasing likelihood values. 
+
+
+%The Baum-Welch algorithm is a special case of the EM algorithm and is frequently used to solve the problem of estimating the parameters of a HMM. The algorithm is described fully in appendix <reference appendix>.
 
 
 
@@ -189,7 +189,7 @@ The Baum-Welch algorithm is a special case of the EM algorithm and is frequently
     \caption{A DBN with Hidden State variables (grey), Observation variables (orange) and Control variables (green).}
     \label{fig:HMMWithControlVariablesExample}
 \end{wrapfigure}
-The forward algorithm for \textit{state estimation}, or \textit{filtering} was presented in section \ref{section:HMMFiltering}. A slightly modified version of this algorithm is now described, which is very commonly used in stochastic systems that can be influenced by actions that an agent may take. Such systems have \textit{control variables} as well as hidden state variables and observation variables. These control variables (variables which represent the actions that an agent may perform) have an influence on the transition probabilities between states. The graphical model in figure \ref{fig:HMMWithControlVariablesExample} describes the basic case. The arrows describe the conditional independence assumptions: at time t, the hidden state ($x_t$) depends on the previous state ($x_{t-1}$), and the previous control action taken ($u_t$). As with the HMM, the observation $e_t$ is conditionally dependent on the state $x_t$. This causes a slight change in the filtering algorithm: on line 2 of algorithm \ref{alg:bayes_filter_observations_only}: $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) $ is replaced with $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | u_t, x_{t-1}) p(x_{t-1} | e_{1:t-1}, u_{1:t-1}) $, which is intuitive: transition probabilities now depend on the most recent control action taken, as well as the previous state.
+The forward algorithm for \textit{state estimation}, or \textit{filtering} was presented in section \ref{section:HMMFiltering}. A slightly modified version of this algorithm is now described, which is very commonly used in stochastic systems that can be influenced by actions that an agent may take. Such systems have \textit{control variables} as well as hidden state variables and observation variables. These control variables (variables which represent the actions that an agent may perform) have an influence on the transition probabilities between states. The graphical model in figure \ref{fig:HMMWithControlVariablesExample} describes the basic case. The arrows describe the conditional independence assumptions: at time t, the hidden state ($x_t$) depends on the previous state ($x_{t-1}$), and the previous control action taken ($u_t$). As with the HMM, the observation $e_t$ is conditionally dependent on the state $x_t$. This causes a slight change in the filtering algorithm: on line 2 of algorithm \ref{alg:forwardAlgorithmHMMs}: $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) $ is replaced with $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | u_t, x_{t-1}) p(x_{t-1} | e_{1:t-1}, u_{1:t-1}) $, reflecting that transition probabilities now depend on the most recent control action taken, as well as the previous state.
 
 
 %DBNs have already been shown to be a powerful tool while modelling stochastic systems, since the hidden variables can be described by conditional independences, rather than 
@@ -206,8 +206,6 @@ This algorithm can be further generalized - if multiple control variables, hidde
 %\subsubsection{Discrete Bayes Filter}
 %\note{This is what is used in the work that I did, so it is outlined}
 
-\subsubsection{Approximate State Estimation Algorithms}
+\subsubsection{Approximate State Estimation}
 \note{Thought about using Particle filter to avoid the dimensionality problem when attempting to maintain estimated state}
-The state estimation algorithms mentioned so far maintain the exact values of the distribution $p(x_t | e_{1:t}, u_{1:t})$, but we will quickly mention some approximate methods that are also frequently used. The computational complexity of the general DBN updating algorithms is determined by how well the joint distribution of hidden state variables, observation variables and control action variables can be factored, but in the worst case the complexity is given by $O(n^2um)$, where n are the number of hidden states, u is the number of available control actions and m is the number of time steps. In some cases, this can become intractable, especially if the state space is large and the transition model cannot be efficiently factored. In this case, approximate techniques are used. By far the most common example is the \textit{particle filter}. For reference, the particle filter algorithm is provided in appendix <reference the appendix>. We will briefly discuss how the algorithm works here (p. 97 Thrun).
-
-\note{Not sure if it's worth filling out this section further, since this gives a lot of the background for the subsequent discussion}
+The state estimation algorithms mentioned so far maintain the exact values of the distribution $p(x_t | e_{1:t}, u_{1:t})$, but we will quickly mention an approximate method that is also frequently used. The computational complexity of the general DBN updating algorithms is determined by how well the joint distribution of hidden state variables, observation variables and control action variables can be factored, but in the worst case the complexity is given by $O(n^2um)$, where n are the number of hidden states, u is the number of available control actions and m is the number of time steps. In some cases, this can become intractable, especially if the state space is large and the transition model cannot be efficiently factored. In this case, approximate techniques are used. By far the most common example is the \textit{particle filter}. Details of the particle filter can be found in \cite{Thrun:2005:ProbabilisticRobotics}.

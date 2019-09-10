@@ -12,7 +12,7 @@ In order to update the estimated state of the agent, the below equations are use
 \begin{figure}[H]
 \scriptsize
 %\begin{equation}\label{eqn:SearchStatus}
-    \begin{gather}\label{eqn:SearchStatus}
+    \begin{gather}\label{eqn:AgentUpdateEquation}
         p(AgentLoc_t = x, TargetLoc_t = y | e_{1:t}, u_{1:t}) = \\
         \begin{cases}
             \eta \alpha p(AgentLoc_{t-1} = x, TargetLoc_t = y | e_{1:t-1}, u_{1:t-1}) \text{ if $e_t$ is a positive reading and $AgentLoc_t \neq TargetLoc_t$} \\

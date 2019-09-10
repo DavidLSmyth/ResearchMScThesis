@@ -22,9 +22,9 @@ A first-order discrete-time Markov process is a stochastic process that describe
 \par
 
 Some obvious results are worth pointing out; as for any stochastic matrix, by the axioms of probability theory, the sum of conditional probabilities across {$\displaystyle \sum _{j=1}^{S}T_{i,j}=1$} and the transition probabilities over $k$ timesteps can be described by the $k_{th}$ power of the transition matrix: ${(T^k)}_{i,j}$ = $P(X_{t+k} = j | X_{t} = i)$. Markov processes are often described by graphical models, for example Figure \ref{fig:markov-processes}.
-\begin{figure}[b]
+\begin{figure}[b!]
     \centering
-    \includegraphics[width=0.8\linewidth]{Chapters/MultiAgentTargetDetection/BayesianFiltering/Figs/MarkovProcesses/MarkovProcesses.png}
+    \includegraphics[width=0.8\linewidth]{Chapters/BackgroundKnowledgeAndRelatedWork/MultiAgentTargetDetectionBackground/Figs/MarkovProcesses/MarkovProcesses.png}
     \caption{First and second order Markov processes \cite{AIAMA}}
     \label{fig:markov-processes}
 \end{figure}
@@ -36,7 +36,7 @@ $P(X_{1:t}) = P(X_1, X_2, ..., X_t) = P(X_1)\times P(X_2 | X_1)\times P(X_3 | X_
 Hidden Markov Models (HMMs) are models that build on the Markov Process model, which describe the evolution of a random system in the language of probability theory. HMMs assume that the system being modeled can be described by a Markov process, but that the states of this process are unobservable. This means that it is not possible to determine the state of the system exactly at any given point in time. However, it is possible to make an observation of a random variable that is related to the hidden state which yields information about the hidden state. A graphical representation of a HMM is shown in figure \ref{fig:hmm}
 \begin{figure}[]
     \centering
-    \includegraphics[width=0.8\linewidth]{Chapters/MultiAgentTargetDetection/BayesianFiltering/Figs/HMMs/HMMObservationsOnly.png}
+    \includegraphics[width=0.8\linewidth]{Chapters/BackgroundKnowledgeAndRelatedWork/MultiAgentTargetDetectionBackground/Figs/HMMs/HMMObservationsOnly.png}
     \caption{A visualisation of a HMM \cite{AIAMA}}
     \label{fig:hmm}
 \end{figure}

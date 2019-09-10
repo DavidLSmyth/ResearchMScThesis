@@ -2,7 +2,8 @@
 \nomenclature[]{WGS84}{World Geodetic System 1984}
 
 \section{Generation of Waypoints}
-We first address the issue of finding a discrete set of waypoints, referenced above as $R$. We chose to formulate the problem using a discrete set of waypoints, rather than deal with the case of treating the region as continuous space, since it is much easier to accurately record sensor data when the RAV has settled at a given point. Discretising the space also allows the problem to be formulated in a manner that is easier to represent using software, since describing an arbitrary continuous region may take up a prohibitively large amount of memory.
+We first address the issue of finding a discrete set of waypoints, referenced above as $R$. We chose to formulate the problem using a discrete set of waypoints, rather than deal with the case of treating the region as continuous space, since it is much easier to accurately record sensor data when the RAV has settled at a given point.
+%Discretising the space also allows the problem to be formulated in a manner that is easier to represent using software, since describing an arbitrary continuous region may take up a prohibitively large amount of memory.
 %\begin{itemize}
     %\item It is more straightforward to describe the problem using a discrete set of points rather than a continuous one.
 %    \item It is much easier to process sensor information if it is known exactly where this data has been captured. The RAVs may stop at each discrete waypoint to visit these locations. *Focus on this point, expand if possible*
@@ -11,9 +12,9 @@ We first address the issue of finding a discrete set of waypoints, referenced ab
 %\end{itemize}
 
 %which are the center points of cells that partition the region of interest.
-\note{set of waypoints create a voronoi partition, might be worth talking about}
+%\note{set of waypoints create a voronoi partition, might be worth talking about}
 
-\note{Above needs revision, will come back once rest of chapter has been fleshed out a bit more}
+%\note{Above needs revision, will come back once rest of chapter has been fleshed out a bit more}
 We began by assuming that the region which is to be surveyed, $R$, can be described by a polygon on the Cartesian plane, since it allows for a discrete representation by describing the coordinates of the corners of the polygon. As mentioned above, we favour this discrete representation since it is computationally much easier to record and manipulate a set of points to represent the boundary rather than a curve. Given this polygon, the goal is to generate a set of points, $R$, which are a uniform distance from each other in the x and y directions and lie inside the polygonal grid. The goal is to form a regular tessellation of the region of interest. In order to do this, we employed the following methodology:
 \begin{enumerate}
     \item Find the circum-rectangle that tightly bounds the polygon, which is oriented with the x-y plane. This is shown in \ref{fig:PolygonWithBoundingRect}
@@ -59,9 +60,9 @@ $
 
 \hfill\pagebreak
 \STATE polygon\_points $\leftarrow$ The set of points defining the vertices of R
-\IF{x coordinate of $P$ is greater than the largest value or less than the smallest value of the x coordinates of the points in $R$}
+\IF{$P_X$ is greater than the largest value or less than the smallest value of the x coordinates of the points in $R$}
 \RETURN False
-\ELSIF{y coordinate of $P$ is greater than the largest value or less than the smallest value of the y coordinates of the points in $R$}
+\ELSIF{$P_Y$ is greater than the largest value or less than the smallest value of the y coordinates of the points in $R$}
 \RETURN False
 
 
@@ -73,19 +74,20 @@ $
 %\RETURN false
 
 \ELSE
-\STATE point\_in\_polygon $\leftarrow$ True
+\STATE point\_in\_polygon $\leftarrow$ False
 \STATE edges $\leftarrow$ the set of edges defining R
 \FOR{each edge in edges}
-\STATE p1 $\leftarrow$ the first point of edge
-\STATE p2 $\leftarrow$ the second point of edge
+\STATE P1 $\leftarrow$ the first point of edge
+\STATE P2 $\leftarrow$ the second point of edge
 
-\IF{(the y coordinate of $P$ lies between the  y coordinates of p1 and p2) \&
-     the x coordinate of $P$ is less than the x coordinate of the point of intersection between e and the ray extended to +$\infty$ from $P$ in the +x direction}
+\IF{($P_Y$ lies between $P1_y$ and  $P2_y$) \&
+     $P_X$ is less than the x coordinate of the point of intersection between edge and the ray extended to +$\infty$ from $P$ in the +x direction}
 \STATE point\_in\_polygon $\leftarrow \neg$ point\_in\_polygon
 \ENDIF
 
 \ENDFOR
 \ENDIF
+\RETURN point\_in\_polygon
 \end{algorithmic} 
 \end{algorithm}
 
@@ -119,35 +121,41 @@ $
 
 \FOR{y\_spacing\_index = 0 to no\_y\_points}
 \FOR{x\_spacing\_index = 0 to no\_x\_points}
-\STATE Add the point (min\_x + x\_spacing $\times$ x\_spacing\_index, min\_y + y\_spacing $\times$ y\_spacing\_index) to grid\_points
-\ENDFOR
-\ENDFOR
-\FOR{point in grid\_points}
-\IF{Point-in-Polygon(R, point) is false}
-\STATE Remove point from grid\_points
+\STATE p$\leftarrow$(min\_x+x\_spacing $\times$ x\_spacing\_index, min\_y+y\_spacing $\times$ y\_spacing\_index)
+\IF{Point-in-Polygon(R, p)}
+\STATE Add p to grid\_points
 \ENDIF
+\ENDFOR
 \ENDFOR
 \RETURN grid\_points
 \end{algorithmic} 
 \end{algorithm}
 
-%\begin{wrapfigure}{r}{0.5\textwidth}
-%\includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/PointOutsidePolygon.PNG}\caption{Ray extended from point outside polygon intersects an even number of times}\label{fig:PointOutsidePolygon}
-%\end{wrapfigure}
 
-%\begin{wrapfigure}{r}{0.5\textwidth}
-%\includegraphics[width=65mm]{Chapters/MultiAgentCoverage/Figs/PointInsidePolygon.PNG}\caption{Ray extended from point inside polygon intersects an odd number of times}\label{fig:PointInsidePolygon}
-%\end{wrapfigure}
+%\pagebreak
+%\begin{figure}{r}{0.5\textwidth}
+%\includegraphics[width=0.5\textwidth]{Chapters/MultiAgentCoverage/Figs/PointOutsidePolygon.PNG}\caption{Ray extended from point outside polygon intersects an even number of times}\label{fig:PointOutsidePolygon}
+%\includegraphics[width=0.5\textwidth]{Chapters/MultiAgentCoverage/Figs/PointInsidePolygon.PNG}\caption{Ray extended from point inside polygon intersects an odd number of times}\label{fig:PointInsidePolygon}
+%\end{figure}
 
-We chose to use the \textit{crossing test} \cite{Shimrat1962Algorithms}, which extends a ray from the point to be tested in the positive x-direction. If it crosses the boundary of the polygon an odd number of times, then it must be contained within it, otherwise it must lie outside it. This is illustrated in figures \ref{fig:PointOutsidePolygon} and \ref{fig:PointInsidePolygon}. The running time of this algorithm is dictated by the number of edges the polygon has and the size of the polygon relative to the desired tessellation spacing in the x and y directions. We did not make any optimizations other than the one outlined in lines 2-5 of Algorithm \ref{alg:PointInPolygon}, which checks whether the test point lies outside the largest and smallest x and y coordinates, but there is room to improve the running time significantly. This would be important if one is dealing with particularly large regions of interest or a relatively small spacing between grid points.
-
-
-\begin{figure}{}
-\subfloat[Ray extended from point outside polygon intersects an even number of times]{\includegraphics[width=60mm]{Chapters/MultiAgentCoverage/Figs/PointOutsidePolygon.PNG}\label{fig:PointOutsidePolygon}}
-%\end{wrapfigure}
-\hspace{1em}
-\subfloat[Ray extended from point inside polygon intersects an odd number of times]{\includegraphics[width=60mm]{Chapters/MultiAgentCoverage/Figs/PointInsidePolygon.PNG}\label{fig:PointInsidePolygon}}
+\begin{figure}%
+    \centering
+    \subfloat[Odd number of crossings]{{\includegraphics[width=7cm,height=5cm]{Chapters/MultiAgentCoverage/Figs/CrossingTestPos.PNG} }}%
+    \subfloat[Even number of crossings]{{\includegraphics[width=7cm,height=5cm]{Chapters/MultiAgentCoverage/Figs/CrossingTestNeg.PNG} }}%
+    \caption{Examples of a positive and negative results when applying the Crossing Test}%
+    \label{fig:CrossingTest}%
 \end{figure}
+
+\pagebreak
+In order to prune the points outside the circum-rectangle, we chose to use the \textit{crossing test} \cite{Shimrat1962Algorithms}, which extends a ray from the point to be tested in the positive x-direction. If it crosses the boundary of the polygon an odd number of times, then it must be contained within the polygon, otherwise it must lie outside. This is illustrated in Figure \ref{fig:CrossingTest}. The implementation is provided in the Point-In-Polygon routine shown in Algorithm \ref{alg:PointInPolygon}.% The running time of this algorithm is dictated by the number of edges the polygon has and the size of the polygon relative to the desired tessellation spacing in the x and y directions. We did not make any optimizations other than the one outlined in lines 2-5 of Algorithm \ref{alg:PointInPolygon}, which checks whether the test point lies outside the largest and smallest x and y coordinates, but there is room to improve the running time significantly. This would be important if one is dealing with particularly large regions of interest or a relatively small spacing between grid points.
+
+
+%\begin{figure}{}
+%\subfloat[Ray extended from point outside polygon intersects an even number of times]{\includegraphics[width=60mm]{Chapters/MultiAgentCoverage/Figs/PointOutsidePolygon.PNG}\label{fig:PointOutsidePolygon}}
+%\end{wrapfigure}
+%\hspace{1em}
+%\subfloat[Ray extended from point inside polygon intersects an odd number of times]{\includegraphics[width=60mm]{Chapters/MultiAgentCoverage/Figs/PointInsidePolygon.PNG}\label{fig:PointInsidePolygon}}
+%\end{figure}
 
 
 %From a practical perspective, the region specified is defined over the earth's surface, which is not planar. For small regions, it can be assumed that this region is planar, since at 
@@ -157,11 +165,11 @@ We chose to use the \textit{crossing test} \cite{Shimrat1962Algorithms}, which e
 
 
 \subsection{Generating Waypoints as GPS Locations}
-For the sake of real-world usage, it is necessary to refer to these points using some kind of reference coordinate system that RAVs can use. We provide a brief overview of how we accomplished this, without delving too far into Geographic Coordinate Systems (GCS). Since the \textit{Global Positioning System} (GPS) is by far the most common system that RAVs use for navigation, we chose to design an implementation based on the \textit{World Geodetic System 1984} (WGS84) coordinate system, which is the coordinate system that GPS relies upon. The WGS84 system was created by the US department of defence and is officially documented in the official government report entitled "Department of Defense World Geodetic System 1984 Its Definition and Relationships With Local Geodetic Systems". It assumes that the datum surface is an oblate spheroid.
+For the sake of real-world usage, it is necessary to refer to these points using some kind of reference coordinate system that RAVs can use. We provide a brief overview of how we accomplished this, without delving too far into Geographic Coordinate Systems (GCS). Since the \textit{Global Positioning System} (GPS) is by far the most common system that RAVs use for navigation, we chose to design an implementation based on the \textit{World Geodetic System 1984} (WGS84) coordinate system, which is the coordinate system that GPS relies upon. The WGS84 system was created by the US Department of Defence and is officially documented in the official government report entitled "\textit{Department of Defense World Geodetic System 1984 Its Definition and Relationships With Local Geodetic Systems}" \cite{ReportpreparedbytheDMAWGS84DevelopmentCommittee1991Department1984}. It assumes that the datum surface is an oblate spheroid.
 %, and the coordinate system uses Greenwich as the starting point. 
-Coordinates are referenced using latitude, longitude and altitude, where longitude measurements range between [-180$^{\circ}$, 180$^{\circ}$], latitude measurements range between [-90$^{\circ}$, 90$^{\circ}$] and altitude measurements come in the form of meters above sea level. Greenwich is used as the \textit{prime meridian} for longitude, meaning Greenwich defines 0$^{\circ}$ longitude. The equator is used to define 0$^{\circ}$ latitude. In order to generate a grid of points in a bounding polygon as coordinates that can be referenced by the RAVs' GPS sensors, we had to make some modifications to the grid point generation algorithm outlined above. The main issue that arises is that the grid point generation algorithm assumes that the Cartesian coordinate system is used, which is not valid when assuming coordinates lie on a  non-planar surface (the earth). We could treat the WGS84 coordinates that make the bounding polygon defining the region of interest as a plane and continue using the unmodified Algorithm \ref{alg:GridGeneration}, but for the sake of guaranteed accuracy we decided to make the following minor changes to the algorithm for use with WGS84 coordinates:
+Coordinates are referenced using latitude, longitude and altitude, where longitude measurements range between [-180$^{\circ}$, 180$^{\circ}$], latitude measurements range between [-90$^{\circ}$, 90$^{\circ}$] and altitude measurements come in the form of meters above sea level. Greenwich is used as the \textit{prime meridian} for longitude, meaning Greenwich defines 0$^{\circ}$ longitude. The equator is used to define 0$^{\circ}$ latitude. In order to generate a grid of points in a bounding polygon as coordinates that can be referenced by the RAVs' GPS sensors, we had to make some modifications to the grid point generation algorithm outlined above. The main issue that arose is that the grid point generation algorithm assumes that the Cartesian coordinate system is used, which is not valid when assuming coordinates lie on a  non-planar surface (the earth). We could have treated the WGS84 coordinates that make the bounding polygon defining the region of interest as a plane and continue using the unmodified Algorithm \ref{alg:GridGeneration}, but for the sake of guaranteed accuracy we decided to make the following minor changes to the algorithm for use with WGS84 coordinates:
 \begin{enumerate}
-    \item When calculating distances, the \textit{inverse solution} \cite{Vincenty1975DirectEquations} to finding geodesics (shortest paths along the earth's surface) is used. We also use the \textit{direct solution} \cite{Vincenty1975DirectEquations} to find a destination given a start point, bearing and distance. These algorithms take into account the non-planar nature of the WGS84 coordinate system. The inverse solution can be used in place of subtraction of Cartesian Coordinates and appears in lines 7 and 8 of Algorithm \ref{alg:GridGeneration} and line 12 of Algorithm \ref{alg:PointInPolygon}. The direct solution can be used in place of addition of distance to Cartesian coordinates and is used in line 11 of Algorithm \ref{alg:GridGeneration}.
+    \item When calculating distances, the \textit{inverse solution} \cite{Vincenty1975DirectEquations} to finding geodesics (shortest paths along the earth's surface) was used. We also used the \textit{direct solution} \cite{Vincenty1975DirectEquations} to find a destination given a start point, bearing and distance. These algorithms take into account the non-planar nature of the WGS84 coordinate system. The inverse solution can be used in place of subtraction of Cartesian Coordinates. It would replace the subtraction in lines 7 and 8 of Algorithm \ref{alg:GridGeneration} and line 12 of Algorithm \ref{alg:PointInPolygon}. The direct solution can be used in place of addition of distance to Cartesian coordinates and is used in line 11 of Algorithm \ref{alg:GridGeneration}.
     
     \item We created a specific WGS84 coordinate class, which can be used in place of regular Cartesian coordinates in Algorithms \ref{alg:GridGeneration} and \ref{alg:PointInPolygon}. We uploaded this to a publicly available  \href{https://github.com/DavidLSmyth/WGS84Coordinate}{github repository}\footnote{\href {https://github.com/DavidLSmyth/WGS84Coordinate}{https://github.com/DavidLSmyth/WGS84Coordinate}} with an MIT licence. If the user is not interested in generating grids which have very accurately spaced points, they can use the Cartesian solution which approximates the region of interest as a plane, otherwise the solution using Vincenty's equations in the point above can be applied.
 \end{enumerate}
@@ -171,7 +179,9 @@ Coordinates are referenced using latitude, longitude and altitude, where longitu
 \subsection{User Interface and Results of Grid Generation Algorithm}
 %to Facilitate Grid Generation
 \note{Might not be worth talking about this in a full subsection}
-We developed a User Interface (UI) in order to have the ability to quickly generate grids for use in simulations, as outlined in sections \ref{chap:targetLocalisation} and \ref{sec:SceneSurveying}. We also used the UI to visually validate that the grid generation code was performing as expected. We chose to use the  \href{https://shiny.rstudio.com/}{Shiny framework}\footnote{\href {https://shiny.rstudio.com/}{https://shiny.rstudio.com/}}, which is a web app development framework written in the \href{https://www.r-project.org/}{R language}\footnote{\href {https://www.r-project.org/}{https://www.r-project.org/}}. The Shiny framework is highly suited to prototyping web apps and abstracts away much of the more nuanced aspects of web development, at the cost of flexibility. We used the \href{https://rstudio.github.io/leaflet/}{Leaflet Package}\footnote{\href {https://rstudio.github.io/leaflet/}{https://rstudio.github.io/leaflet/}}, which provides a high-level interface to the \href{https://wiki.openstreetmap.org/wiki/Develop}{Open Street Map}\footnote{\href {https://wiki.openstreetmap.org/wiki/Develop}{https://wiki.openstreetmap.org/wiki/Develop}} API. We added an \textit{observeEvent} function to record when the user clicks on points on the map, adding an edge the previously clicked point to the current clicked point. The process of sequentially selecting the points on the map defining a polygonal region can be seen in figure \ref{fig:AddClicks}. 
+We developed a User Interface (UI) in order to have the ability to quickly generate grids for use in simulations, as outlined in Sections \ref{chap:targetLocalisation} and \ref{sec:SceneSurveying}. We also used the UI to visually validate that the grid generation code was performing as expected. We chose to use the  \href{https://shiny.rstudio.com/}{Shiny framework}\footnote{\href {https://shiny.rstudio.com/}{https://shiny.rstudio.com/}}, which is a web app development framework written in the \href{https://www.r-project.org/}{R language}\footnote{\href {https://www.r-project.org/}{https://www.r-project.org/}}.
+%The Shiny framework is highly suited to prototyping web apps and abstracts away much of the more nuanced aspects of web development, at the cost of flexibility.
+We used the \href{https://rstudio.github.io/leaflet/}{Leaflet Package}\footnote{\href {https://rstudio.github.io/leaflet/}{https://rstudio.github.io/leaflet/}}, which provides a high-level interface to the \href{https://wiki.openstreetmap.org/wiki/Develop}{Open Street Map}\footnote{\href {https://wiki.openstreetmap.org/wiki/Develop}{https://wiki.openstreetmap.org/wiki/Develop}} API. We added an \textit{observeEvent} function to record when the user clicks on points on the map, adding an edge the previously clicked point to the current clicked point. The process of sequentially selecting the points on the map defining a polygonal region can be seen in Figure \ref{fig:AddClicks}. 
 
 \begin{figure}{}
 \subfloat{\includegraphics[width=48mm]{Chapters/MultiAgentCoverage/Figs/AdditionalClicks.PNG}}
@@ -189,10 +199,12 @@ In order to actually generate and draw the grid points on the user interface, we
 
 \begin{figure}{}
 \centering
-\subfloat[Grid points with a latitude spacing of 40m and a longitude spacing of 30m.]{\includegraphics[width=70mm, height=65mm]{Chapters/MultiAgentCoverage/Figs/RegionOne.PNG}}
+%\subfloat[Grid points with a latitude spacing of 40m and a longitude spacing of 30m.]
+\subfloat{\includegraphics[width=70mm, height=65mm]{Chapters/MultiAgentCoverage/Figs/RegionOne.PNG}}
 %\end{wrapfigure}
 \hspace{0.2em}
-\subfloat[Grid points with a latitude spacing of 30m and a longitude spacing of 25m.]{\includegraphics[width=70mm, height=65mm]{Chapters/MultiAgentCoverage/Figs/RegionTwo.PNG}}
+%\subfloat[Grid points with a latitude spacing of 30m and a longitude spacing of 25m.]
+\subfloat{\includegraphics[width=70mm, height=65mm]{Chapters/MultiAgentCoverage/Figs/RegionTwo.PNG}}
 \caption{Examples of generated grid points overlaid onto the UI}
 \label{fig:GridPointsOnUI}
 \end{figure}

@@ -1,26 +1,29 @@
-\subsection{Problem Description}\label{subsec:ProbDescription}
+\section{Problem Description}\label{sec:TLocalisationProbDescription}
 As mentioned in Chapter \ref{chapter:introduction}, a major problem in hazardous scene management includes localizing sources of hazardous materials and localizing potential sources of evidence. The reasons these are difficult problems, in the context of the ROCSAFE project, are:
 \begin{itemize}
-    \item Hazardous materials may belong to different classes of threat, as outlined in the CBRN acronym. If the nature of the threat is uncertain, the wrong preventative measures may be taken and personnel may be put at risk. 
-    \item Evidence localization usually requires moving a sensor to within close proximity of the evidence. If a human is responsible for this, there is a chance that they will accidentally tamper with the evidence, possibly yielding it unusable.
+    \item Hazardous materials belong to different classes of threat (chemical, biological, radiation, nuclear). If the nature of the threat is uncertain, the wrong preventative measures may be taken and personnel may be put at risk. 
+    \item Evidence localization usually requires moving a sensor to within close proximity of the evidence. If a human is responsible for this, there is a chance that they will accidentally disturb with the evidence, possibly yielding it unusable.
     \item Since these scenarios are highly dangerous, the area to search may be large to avoid potentially missing important sources of evidences. This means that the process of localization may be painstaking and time-consuming for humans.
 \end{itemize}
-This section proposes a system that can aid the execution of these tasks using a system of automated \textbf{U}nmanned \textbf{A}erial \textbf{V}ehicles (RAVs). \par
+In the ROCSAFE project \cite{Bagherzadeh2017ROCSAFE:Incidents}, robotic aerial vehicles (RAVs) are proposed to aid the execution of these tasks. This chapter proposes a system to aid their navigation planning.
+
+  
+%This section proposes a system that can aid the execution of these tasks using a system of automated \textbf{U}nmanned \textbf{A}erial \textbf{V}ehicles (RAVs). \par
 
 
 
-Spatiotemporal localization problems have a reasonable body of literature behind them, and can be described using abstract language which allows them to be approached using a common framework, with only minor implementation details necessary to specify which instance of the problem is being addressed. The framework we have developed uses a lot of the theory outlined in the Background Knowledge chapter and builds on existing literature. The problem that this chapter (section) attempts to solve can be generally described as follows: \par
+Spatiotemporal localization problems have a reasonable body of literature behind them, and can be described using abstract language which allows them to be approached using a common framework, with only minor implementation details necessary to specify which instance of the problem is being addressed. The framework we have developed uses a lot of the theory outlined in Chapter \ref{chapter:Background} and builds on the literature that was reviewed there. The problem that this Chapter attempts to solve can be generally described as follows: \par
 
-\textit{Given a region of space to explore and a set of heterogeneous autonomous aerial vehicles with sensing capabilities, devise a search strategy which will return either the locations of the targets if one or more is present, otherwise return that no targets are present.} \par
+\textit{Given a region of space to explore and a set of heterogeneous autonomous aerial vehicles with sensing capabilities, devise a search strategy with a search cutoff criteria which will accurately return either the locations of the targets if one or more is present, or return that no targets are present, in the shortest possible time.} \par
 
-Concrete versions of this that are later addressed are:
+Concrete versions of this that the system could address are:
 \begin{itemize}
     \item \textit{Given a system of heterogeneous autonomous aerial vehicles, some of which are equipped with radiation sensors and limited battery capacity, localize multiple sources of radioactive material in a scene.}
     \item \textit{Given a system of heterogeneous autonomous aerial vehicles, some of which are equipped with high-quality cameras and limited battery capacity, localize multiple objects of a given description in a scene.}
 \end{itemize}
 %not sure whether I should mentioned about battery etc. here or to let the discussion lead to this naturally.
 \par
-In order to solve this problem, we took an approach suggested by previous works in the literature \cite{PollockSearchInterfaces} <add more here>, which break down the localisation problem into phases, between which we consider interfaces that allow the composition of various methodologies to be applied. The literature review behind this is outlined in section <reference the section>.
+%In order to solve this problem, we took an approach suggested by previous works in the literature \cite{PollockSearchInterfaces} <add more here>, which break down the localisation problem into phases, between which we consider interfaces that allow the composition of various methodologies to be applied. The literature review behind this is outlined in section <reference the section>.
 
 
-\note{Did not attempt to solve this full problem in one go, instead took a simplified version and then gradually added in constraints.}
+%\note{Did not attempt to solve this full problem in one go, instead took a simplified version and then gradually added in constraints.}

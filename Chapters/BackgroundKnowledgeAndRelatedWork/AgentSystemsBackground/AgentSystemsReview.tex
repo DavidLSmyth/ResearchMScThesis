@@ -19,8 +19,8 @@ The box containing the question mark represents the agent's internal decision-ma
 This thesis is concerned with designing a system of agents that should exhibit rational behaviour.\newline
  
  
-agent programs that
-embody the principles underlying almost all intelligent systems:
+%agent programs that
+%embody the principles underlying almost all intelligent systems:
 
 Again following the approach taken by Russell and Norvig, agents can be grouped into four common classes based on the design of the agent program, which describe the principles which underpin almost all intelligent systems \cite[p.~47]{AIAMA}: 
 \begin{enumerate}
@@ -34,11 +34,12 @@ Again following the approach taken by Russell and Norvig, agents can be grouped 
 \subsection{Multi-Agent Systems}
 Analogous to the definition of an agent, there is no universally agreed-upon definition of a \emph{Multi-Agent System} (MAS). A definition that captures the core aspects described in most MAS-related publications is provided in a field review paper by Stone and Veloso: "\textit{Multiagent Systems (MAS) is the subfield of AI that aims to provide both principles for construction of  complex  systems  involving  multiple  agents  and  mechanisms  for  coordination  of  independent  agents’ behaviors}" \cite{Stone2000MultiagentPerspective}. While the design of individual agents tends to focus on maximising a performance measure, the design of a multi-agent system is rather more multi-faceted. Weiss \cite{MAS:AModernApproachToDAI} notes that it is almost always oriented towards answering the question of "\textit{when and how to interact with whom}". Multi-agent systems have been proposed as a solution to many problems that modern AI attempts to tackle for some of the following reasons, which are outlined in more depth in \cite{Stone2000MultiagentPerspective}: 
 \begin{itemize}
-    \item Some problems by definition can be described as a multi-agent system. An example is an organization that may want to model it's internal affairs with a single system. The different departments have their own sub-systems that have differing priorities and capabilities; their interactions naturally can be thought of as interactions between independent agents, in accordance with the definition provided at the start of this section.
+    \item Some problems by definition can be described as a multi-agent system. An example is an organization that may want to model its internal affairs with a single system. The different departments have their own sub-systems that have differing priorities and capabilities; their interactions naturally can be thought of as interactions between independent agents, in accordance with the definition provided at the start of this section.
     \item The accomplishment of a task can be expedited significantly by using multiple agents. Multi-agents systems are part of the field of Distributed Artificial Intelligence (DAI) and so problem domains that decompose into several independent tasks that can be handled by separate agents can benefit from their use. The problem of efficient task allocation in multi-agent systems has been well-studied in the literature \cite{Gerkey2004ASystems}. 
     \item Robustness is an often-cited benefit of multi-agent systems. Distributed control means that failure of a single agent (mechanical or otherwise) may be tolerated.
     \item Multi-agent systems are often more scalable than single-agent systems. The necessary modularity of multi-agent systems means that adding new agents to the system can often be a solution to a more difficult problem, rather than adding new capabilities to a monolithic system. 
     \item The modularity of multi-agent systems means that the design and programming of them may be simplified. For example, rather than solving a multi-objective problem with a single agent, a single-objective problem may be solved with multiple agents. A result of this is that multiple cheap robots may be used to outperform a single, expensive robot \cite{Grabowski2000HeterogeneousExploration}.
 \end{itemize}
+We use these concepts in Chapters \ref{chapter:SceneSurveying} and \ref{chap:targetLocalisation}.
 \par
 

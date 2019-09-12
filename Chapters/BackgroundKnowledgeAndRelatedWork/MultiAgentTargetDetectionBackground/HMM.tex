@@ -14,37 +14,39 @@ HMMs appear frequently in AI literature as they provide an abstract framework to
 \subsubsection{Markov Processes}\label{subsubsec:MarkovProcesses}
 It is instructive to understand what is meant by a stochastic process for some of the concepts mentioned in this thesis. A random process can be described as a family of random variables indexed by a set $\tau$: $\{X_t\}_{t\in\tau}$ \cite{Bhattacharya2009StochasticApplications}. Commonly in AI, stochastic processes model the evolution of a random system through \textit{discrete} time steps: $\tau$=$\mathbb N$. Examples of phenomena that are frequently modelled by stochastic processes include the growth of a bacterial population and the movement of a gas molecule \cite{Bhattacharya2009StochasticApplications}.\par
 
-A first-order discrete-time Markov process is a stochastic process that describes a discrete-time stochastic process for which the first-order \textit{Markov property} holds \cite{Ghahramani2001AnNetworks}. The first-order Markov property states probability distribution of the n$_{th}$ random variable in the process is conditionally independent of all previous probability distributions in the sequence but the $n-1_{st}$: $P(X_t = x_t | X_{t-1} = x_{t-1}, X_{t-2} = x_{t-2}, ... , X_{1} = x_{1}) = P(X_t = x_t | X_{t-1} = x_{t-1})$ \cite{Ghahramani2001AnNetworks}. This is often referred to as the memoryless property of Markov processes. In order to describe a Markov process, it is therefore necessary to describe what is known as the transition function between each pair of timesteps: $P(X_t = x_t | X_{t-1} = x_{t-1})$. A common assumption is that the rules that govern state transitions are time invariant, meaning that they can be specified generally for any given pair of timesteps. This assumption will be made for the subsequent discussion. If $X_t$ is a discrete random variable defined over $S$ states, the transition function can be described by a stochastic matrix T, where T$_{i,j}$ = $P(X_t = j | X_{t-1} = i)$: 
+A first-order discrete-time Markov process is a stochastic process that describes a discrete-time stochastic process for which the first-order \textit{Markov property} holds \cite{Ghahramani2001AnNetworks}. The first-order Markov property states that the probability distribution of the n$_{th}$ random variable in the process is conditionally independent of all previous probability distributions in the sequence but the $n-1_{st}$: $P(X_t = x_t | X_{t-1} = x_{t-1}, X_{t-2} = x_{t-2}, ... , X_{1} = x_{1}) = P(X_t = x_t | X_{t-1} = x_{t-1})$ \cite{Ghahramani2001AnNetworks}. This is often referred to as the memoryless property of Markov processes. In order to describe a Markov process, it is therefore necessary to describe what is known as the transition function between each pair of timesteps: $P(X_t = x_t | X_{t-1} = x_{t-1})$. A common assumption is that the rules that govern state transitions are time invariant, meaning that they can be specified generally for any given pair of timesteps. This assumption will be made for the subsequent discussion. If $X_t$ is a discrete random variable defined over $S$ states, the transition function can be described by a stochastic matrix T, where T$_{i,j}$ = $P(X_t = j | X_{t-1} = i)$: 
 
 \begin{center}
 {$\displaystyle \left({\begin{matrix}T_{1,1}&T_{1,2}&\dots &T_{1,j}&\dots &T_{1,S}\\T_{2,1}&T_{2,2}&\dots &T_{2,j}&\dots &T_{2,S}\\\vdots &\vdots &\ddots &\vdots &\ddots &\vdots \\T_{i,1}&T_{i,2}&\dots &T_{i,j}&\dots &T_{i,S}\\\vdots &\vdots &\ddots &\vdots &\ddots &\vdots \\T_{S,1}&T_{S,2}&\dots &T_{S,j}&\dots &T_{S,S}\\\end{matrix}}\right)$}
 \end{center}
 \par
 
-Some obvious results are worth pointing out; as for any stochastic matrix, by the axioms of probability theory, the sum of conditional probabilities across {$\displaystyle \sum _{j=1}^{S}T_{i,j}=1$} and the transition probabilities over $k$ timesteps can be described by the $k_{th}$ power of the transition matrix: ${(T^k)}_{i,j}$ = $P(X_{t+k} = j | X_{t} = i)$. Markov processes are often described by graphical models, for example Figure \ref{fig:markov-processes}.
+Some obvious results are worth pointing out; as for any stochastic matrix, by the axioms of probability theory, the sum of conditional probabilities across each column sum to one: {$\displaystyle \sum _{j=1}^{S}T_{i,j}=1$} and the transition probabilities over $k$ timesteps can be described by the $k_{th}$ power of the transition matrix: ${(T^k)}_{i,j}$ = $P(X_{t+k} = j | X_{t} = i)$. 
 \begin{figure}[b!]
     \centering
     \includegraphics[width=0.8\linewidth]{Chapters/BackgroundKnowledgeAndRelatedWork/MultiAgentTargetDetectionBackground/Figs/MarkovProcesses/MarkovProcesses.png}
-    \caption{First and second order Markov processes \cite{AIAMA}}
+    \caption{A graphical model describing first and second order Markov processes}
     \label{fig:markov-processes}
 \end{figure}
 It also is possible to calculate the probability of the process experiencing a sequence of states from timesteps 1 as far as $t$, using the chain rule of probability and the Markov property:
 $P(X_{1:t}) = P(X_1, X_2, ..., X_t) = P(X_1)\times P(X_2 | X_1)\times P(X_3 | X_2, X_1) \times P(X_t | X_{t-1}, X_{t-2}, ... , X_1) = P(X_1) \times \prod_{i=2}^{t}{P(X_i | x_{i-1})}$. Marginalization over variables in this sequence allows the calculation of many useful quantities.
 \par
 
+Markov processes can described by graphical models, for example Figure \ref{fig:markov-processes} displays a graphical representation of first and second order Markov processes, where a directed arrow between nodes represents a directional dependence between those nodes.
+
 \subsubsection{HMM Description}\label{subsubsec:HMMDesc}
-Hidden Markov Models (HMMs) are models that build on the Markov Process model, which describe the evolution of a random system in the language of probability theory. HMMs assume that the system being modeled can be described by a Markov process, but that the states of this process are unobservable. This means that it is not possible to determine the state of the system exactly at any given point in time. However, it is possible to make an observation of a random variable that is related to the hidden state which yields information about the hidden state. A graphical representation of a HMM is shown in figure \ref{fig:hmm}
+Hidden Markov Models (HMMs) are models that build on the Markov Process model, which describes the evolution of a random system in the language of probability theory. HMMs assume that the system being modeled can be described by a Markov process, but that the states of this process are unobservable \cite{Ghahramani2001AnNetworks}. This means that it is not possible to determine the state of the system exactly at any given point in time. However, it is possible to make an observation of a random variable that is related to the hidden state which yields information about the hidden state. A graphical representation of a HMM is shown in Figure \ref{fig:hmm}
 \begin{figure}[]
     \centering
-    \includegraphics[width=0.8\linewidth]{Chapters/BackgroundKnowledgeAndRelatedWork/MultiAgentTargetDetectionBackground/Figs/HMMs/HMMObservationsOnly.png}
-    \caption{A visualisation of a HMM \cite{AIAMA}}
+    \includegraphics[width=0.8\linewidth]{Chapters/BackgroundKnowledgeAndRelatedWork/MultiAgentTargetDetectionBackground/Figs/HMMs/HMMGraphicalModel.png}
+    \caption{A graphical model of a HMM}
     \label{fig:hmm}
 \end{figure}
-, where the Markov Process is shown by the variables $X_i$ and the observation variables are shown by variables $E_i$. A HMM can be specified by a triple, $\lambda$ = $(T, O, \pi)$, where $T$ is the stochastic transition matrix, $\pi$ is the initial distribution $P(X_1)$ and O describes the conditional probability of an observation given that the system is in a certain state: $O(E_i, X_i) = P(E_{i} | X_{i})$. Taken together, it is then possible to specify the joint distribution of the hidden state variables and the evidence variables, analogous to the Markov Process: 
+, where the Markov Process is shown by the variables $X_i$ and the observation variables are shown by variables $E_i$. A HMM can be specified by a triple, $\lambda$ = $(T, O, \pi)$, where $T$ is the stochastic transition matrix, $\pi$ is the initial distribution $P(X_1)$ and O describes the conditional probability of an observation given that the system is in a certain state: $O(E_i, X_i) = P(E_{i} | X_{i})$ \cite{Rabiner1989ARecognition}. Taken together, it is then possible to specify the joint distribution of the hidden state variables and the evidence variables, analogous to the Markov Process: 
 $
 P(X_{1:t}, E_{1:t}) = P(X_1, X_2, ..., X_t, E_1, E_2, ..., E_t) = P(X_1) \times P(E_1 | X_1) \times
 \prod_{i=2}^{t}{(P(X_i | x_{i-1}) \times P(E_t | X_t))}.
-$Given this representation, it is then possible to answer questions such as:
+$Given this representation, it is then possible to answer questions identified in \cite{Rabiner1989ARecognition} and \cite{Murphy1994DynamicLearning}:
 \begin{itemize}
 
     \item Given the HMM, $\lambda$, determine the probability of occurrence of a particular observation sequence, $P(E_{1:t} | \lambda)$

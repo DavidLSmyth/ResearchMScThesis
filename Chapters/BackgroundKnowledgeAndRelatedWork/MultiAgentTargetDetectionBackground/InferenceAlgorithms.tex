@@ -22,7 +22,7 @@ Two well-known probability identities are used in the derivation:
 \begin{center}
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \end{center}
-
+The derivation is as follows:
 \begin{enumerate}
 \item {$ p(x_t | e_{1:t}) = p(x_t | e_{1:t-1}, e_t) $ }
 
@@ -35,6 +35,7 @@ Two well-known probability identities are used in the derivation:
 \item{$ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)\int_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1} $}
 
 \end{enumerate}
+\newline
 Note that $\eta$ is a normalizing constant that ensures that the probability distribution integrates to 1, and that the probabilities that need to be calculated can be done so from the parameters specified in the HMM; namely $p(e_t | X_t)$, specified by the sensor model, and $p(X_t | x_{t-1})$, specified by the transition model.
 
 \begin{algorithm}{}
@@ -126,7 +127,7 @@ Analagous to the filtering algorithm derivation, two well-known probability iden
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \end{center}
 
-
+The derivation is as follows:
 \begin{enumerate}
 
 \item {$p(e_{1:t}) = \sum_{x_t}p(e_{1:t}, x_t) \quad = \quad \sum_{x_t}p({e_{1:t-1}, e_t, x_t}) $
@@ -147,7 +148,7 @@ Analagous to the filtering algorithm derivation, two well-known probability iden
 }
 
 \end{enumerate}
-
+\newline
 The algorithm for calculating likelihoods uses the forward algorithm, $\alpha$, with the replacement of  $p(x_{t-1}|e_{1:t-1})$ with $p(x_{t-1}, e_{1:t-1})$ and one final summation. This means that it is possible to use the forward algorithm to calculate likelihoods: $p(e_{1:t}) = \sum_{i=1}^{n} \alpha(x_i, e_i)$, where $\alpha(x, e)$ is the result of applying the forward algorithm to the sequence of evidence variables $(e_1, ..., e_t)$.
 
 

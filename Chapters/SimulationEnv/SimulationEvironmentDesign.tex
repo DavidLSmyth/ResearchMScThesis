@@ -1,18 +1,29 @@
 \nomenclature[]{UE4}{Unreal Engine 4}
 \nomenclature[]{RAV}{Robotic Aerial Vehicle}
-\note{It might make sense to move some of this to the lit. review}
 
 \subsection{Evaluation Criteria}
 In order to design the virtual environment, it was important to first identify the criteria that would determine its usefulness. We began with identifying key physical phenomena that would need to be present, or integrated in future iterations. This was based on an operational scenario that was outlined in the ROCSAFE project specification in \href{https://www.nuigalway.ie/rocsafe/research/}{Deliverable 2.4}\footnote{\href {https://www.nuigalway.ie/rocsafe/research/}{https://www.nuigalway.ie/rocsafe/research/}}. We modelled Use Case 1, with a brief description as follows:\par
-The scene is set in a rural location, with some forest, a twin track rail line, a small town 10Km away with a small road running near to the rail tracks with access to the rail tracks. The conditions are cool and dry, with a light breeze. A train has been derailed and heavy machinery has been used to damage the tracks. Radioactive material in containers has been exposed. It is intended to use autonomous aerial and ground vehicles to remotely survey and document the scene. They will then be used to localize forensic evidence, subsequently leading to remote evidence collection. The result of modelling this scenario using UE4 is shown in Figure \ref{fig:virutalEnvDevelopment2}.
-
+"\textit{The scene is set in a rural location, with some forest, a twin track rail line, a small town 10Km away with a small road running near to the rail tracks with access to the rail tracks. The conditions are cool and dry, with a light breeze. A train has been derailed and heavy machinery has been used to damage the tracks. Radioactive material in containers has been exposed. It is intended to use autonomous aerial and ground vehicles to remotely survey and document the scene. They will then be used to localize forensic evidence, subsequently leading to remote evidence collection.}".\par
+The result of modelling this scenario using UE4 is shown in Figure \ref{fig:virutalEnvDevelopment2}.
 %Should talk about the rad. environment here but not sure of dissemination status.
-The core components that the simulation of this scenario requires were identified and we describe them in terms of evaluation criteria as follows:
+
+
+\par In relation to the research question stated above, we began by identifying the most salient data that is used in hazardous scene management and how it can be realistically generated: 
+\begin{itemize}
+    \item ROCSAFE and other CBNR scene management reference manuals frequently state the value of a visual overview of the scene \cite{StandardizationOffice2012AJP-3.8ADefence}. In order to generate realistic simulated images, the simulation will need to have high-resolution rendering capabilities.
+    \item Further to the above point, the images will need to be generated from the perspective of a RAV in order to be of use when prototyping object detection modules and other AI systems related to ROCSAFE.% This is a key aspect of the ROCSAFE project.
+    \item The scene will need to have a configurable physical layout so that occlusion, shadows and other real-world aspects will be present in images. A non-uniform topography is also important for planning potential paths to sources of evidence for sampling.
+    \item For the scene described above, a sensor which can simulate radiation readings is necessary, which will record noisy readings that are affected by real-world phenomena such as occlusion.
+    \item All data must have timestamps and spatial information associated with it. The spatial information should use a real-world coordinate reference system, such as GPS.
+\end{itemize}
+
+%The core components that the simulation of this scenario required were identified and we describe them in terms of evaluation criteria as follows:
+We took the above points and discerned some technical requirements that the simulation environment would need to achieve:
 %\note{This is probably the most important part of this chapter}
 \begin{itemize}
-    \item The ability to place arbitrary realistic virtual representations of physical objects in the scenario in various configurations
-    \item The ability to render high-quality images from the scenario from arbitrary locations at arbitrary resolutions.
-    \item There must be sufficient detail in the scene to introduce some noise to image processing problems.
+    \item The ability to place arbitrary realistic virtual representations of physical objects in the scenario in various configurations.
+    \item The ability to render high-quality images from the scenario from arbitrary locations at arbitrary resolutions, with common visual phenomena present, such as shadows and lens flare.
+    \item There must be sufficient detail in the scene to introduce some noise to image processing problems. This means avoiding a highly-uniform configuration.
     \item Multiple heterogeneous simulated aerial vehicles, with a high-level API for sensing and navigation for each vehicle. The API should not be platform-specific so that different types of vehicle may be considered.
     \item Simulated sensor readings from the aerial vehicles, including position, velocity, altitude, that depend on the state of the aerial vehicle in the environment. For example, if the aerial vehicle is close to a source of radiation, the simulated sensor reading should be high.
     \item Simulation software should have a permissive licence and should permit publications that include details of the software.
@@ -22,11 +33,11 @@ The core components that the simulation of this scenario requires were identifie
 \note{More can be added to this list.}
 
 \subsection{Existing Tools and Software}
-In order to provide this functionality, it is clear that using existing tools would be desirable, as writing low-level code for tasks such as rendering would take a prohibitive amount of time. Game engines have been increasingly used for simulations of physical phenomena, with a growing interest in niche areas. Examples include generating high-fidelity training data for computer vision algorithms, \cite{Qiu2016UnrealCV:Engine}, deep learning algorithms \cite{Gaidon2016VirtualAnalysis}, automated crowd size estimation algorithms \cite{Lee2018DigitalCrowds} and target tracking algorithms \cite{Mueller2016ATracking}. An overview of game engines and their use in creating simulation software is outlined in section \ref{GameEngineReview}. The overview describes how most modern simulation softwares that use game engine components are mature in their capabilities to model and render physical scenarios, but not all provide good support for the use of robotic vehicles.
+In order to provide this functionality, it is clear that using existing tools would be desirable, as writing low-level code for tasks such as rendering would take a prohibitive amount of time. Game engines have been increasingly used for simulations of physical phenomena, with a growing interest in niche areas. Examples include generating high-fidelity training data for computer vision algorithms, \cite{Qiu2016UnrealCV:Engine}, deep learning algorithms \cite{Gaidon2016VirtualAnalysis}, automated crowd size estimation algorithms \cite{Lee2018DigitalCrowds} and target tracking algorithms \cite{Mueller2016ATracking}. An overview of literature related to the use of game engines in creating simulation software is outlined in section \ref{subsec:GameEngineReview}. The overview describes how most modern simulation softwares that use game engine components are mature in their capabilities to model and render physical scenarios, but not all provide good support for the use of robotic vehicles.
 %\note{want to get across that basic rendering etc. is offered by many platforms, real issue is to find something to work with that can provide support for Remotely Operated Vehicles / Autonomous vehicles}
-This meant that an emphasis was placed on choosing software with some capability to implement high-fidelity simulated aerial vehicles as well as basic physics and graphics rendering.
+This meant that an emphasis was placed on choosing software with some capability to implement high-fidelity simulated aerial vehicles as well as physics and graphics rendering.
 %Specific functionality can commonly be added to games engines using plugins, which are usually specific to an individual games engine. 
-Standalone simulation tools were considered alongside tools built on top of game engines. The simulation software whose potential use for designing a custom simulation environment for disaster scene management that were investigated are show in Table \ref{table:SimulatorComparison}, with more detailed overviews provided in \cite{Ebeid2018ASimulators}. UE4, combined with the Airsim plugin, was chosen to develop the simulation since the documentation for both suggested that it was most suitable in relation to the design requirements/evaluation criteria outlined above. We give more details of the integration of AirSim in Section \ref{sec:AirSimIntegration}.\par
+Standalone simulation tools were considered alongside tools designed to be run using a game engine. The simulation software whose potential use for designing a custom simulation environment for disaster scene management that were investigated are shown in Table \ref{table:SimulatorComparison}, with more detailed overviews provided in \cite{Ebeid2018ASimulators}. UE4, combined with the Airsim plugin, was chosen to develop the simulation since the documentation for both suggested that it was most suitable in relation to the design requirements/evaluation criteria outlined above. We give more details of the integration of AirSim in Section \ref{sec:AirSimIntegration}.\par
 %\note{Might be better off presenting this as a table.
 %Format could be Simulator | Licence | Implementation Language | Supported OS | %Developer | Additional Notes}
 %\begin{itemize}
@@ -46,7 +57,8 @@ Standalone simulation tools were considered alongside tools built on top of game
 \note{might need to re-word this. This section should be about the design process that was used once Unreal Engine had be determined the platform of choice to develop with}
 The design process of any simulation or game using UE4 should follow certain good practices in order to avoid some common pitfalls that can cause serious delays in development. Once an environment has been built using UE4, it can be labor-intensive to radically alter it \cite[p.~454]{Rouse2005GamePractice}. This suggests that care should be taken to ensure to plan the design process so that consistent and efficient results can be achieved.
 
-Most material related to design of simulations and games using UE4 are highly qualitative, addressing questions like "\textit{what does the player actually want and how can that be delivered?}" rather than describing how the process of designing the simulation should be carried out. Some good level design practices are noted in \cite{Rouse2005GamePractice}, although many are not applicable to the design of a serious simulation. Notable points from \cite{Rouse2005GamePractice} include:
+%Most material related to design of simulations and games using UE4 are highly qualitative, addressing questions like "\textit{what does the player actually want and how can that be delivered?}" rather than describing how the process of designing the simulation should be carried out.
+Some good level design practices are noted in \cite{Rouse2005GamePractice}, although many are not applicable to the design of a serious simulation. Notable points from \cite{Rouse2005GamePractice} are summarised:
 \begin{itemize}
     \item Pencil and paper sketches of the level's general layout can be a very good idea in order to avoid the perils of "\textit{designing yourself into a corner}". As an example, this could manifest itself as underestimating the proximity between two high-level objects (e.g. a hall and a room), which may lead to a large-scale redesign further down the design process.
     \item During the first pass, do not worry overly about textures and geometry, focus on ensuring that the layout is realistic.
@@ -66,8 +78,8 @@ and
 \item The assets were imported into \emph{Autodesk 3DS} in order to ensure that textures were of sufficient quality to facilitate the planned image processing on collected images.
 \item They were then imported into UE4 as static meshes and placed into the scene according to the sketch. In order to ensure that this process can scale, we ensured that static meshes could be replaced by simply importing a new mesh which retains the position of the original in the environment. 
 \item Rendered images were qualitatively evaluated to determine their suitability.
-\item The environment was archived before integrating dynamics.
-\item The Airsim \cite{Shah2017AirSim:Vehicles} plugin was integrated. This step is non-trivial and details of how this was done is outlined in Section \ref{sec:AirSimIntegration}.
+\item The environment was archived before integrating the aerial vehicle simulation.
+\item The Airsim \cite{Shah2017AirSim:Vehicles} plugin was integrated with some modifications, which provides aerial vehicles simulation in UE4. This step is non-trivial and details of how this was done is outlined in Section \ref{sec:AirSimIntegration}.
 \end{enumerate} 
 \note{Would be good to discuss some of the challenges met while developing the simulation and how they were overcome}
 
@@ -79,9 +91,9 @@ This process was carried out iteratively and the results of the developed world 
     on objects.
     \item Textures were of poor quality and highly uniform.
     \item The layout of the environment was highly uniform. Note that the rail tracks are perfectly straight.
-    \item The scene was minimalist and lacking any convincing detail.
+    \item The scene was minimalist and lacking any convincing detail which would introduce noise to the AI algorithms being developed as part of ROCSAFE.
 \end{itemize}
-Although a human may recognise the semantics of the scene, it does not capture some key aspects identified in the evaluation criteria. In order to be of real value to the ROCSAFE project for tasks such as localising an object, it was necessary to address these major problems. Improvements are shown in Figures \ref{fig:virutalEnvDevelopment1} and \ref{fig:virutalEnvDevelopment2} and the techniques used to make these improvements are discussed below.
+Although a human may recognise the semantics of the scene, it does not capture some key aspects identified in the evaluation criteria. In order to be of real value to the ROCSAFE project for tasks such as training the automation of localising an object using aerial vehicles, it was necessary to address these major problems. Improvements are shown in Figures \ref{fig:virutalEnvDevelopment1} and \ref{fig:virutalEnvDevelopment2} and the techniques used to make these improvements are discussed below.
 
 %\note{Might be worth making the margins wider for table of images. Also might be worth recording images again with fixed exposure and orientations for consistency. Come back to this once talked about it with Michael and Frank. Different versions of environment listed at bottom of this file.}
 
@@ -144,28 +156,36 @@ Although a human may recognise the semantics of the scene, it does not capture s
 \begin{figure}
 \centering
 \begin{tabular}{cc}
-\subfloat{\includegraphics[width = 9cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/IsometricView1.png}} &
-\subfloat{\includegraphics[width = 9cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/LowView.png}} \\
+\subfloat{\includegraphics[width = 10.7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/IsometricView1.png}} &
+\subfloat{\includegraphics[width = 10.7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/LowView.png}} \\
 
-\subfloat{\includegraphics[width = 9cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/TopView2.png}} &
-\subfloat{\includegraphics[width = 9cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/BridgeView1.png}} \\
-
-\subfloat{\includegraphics[width = 9cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/CloseUp1.png}} &
-\subfloat{\includegraphics[width = 9cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/CloseUp2.png}}
+\subfloat{\includegraphics[width = 10.7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/TopView2.png}} &
+\subfloat{\includegraphics[width = 10.7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/BridgeView1.png}} \\
 \end{tabular}
 \caption{Images From Final Version of Simulation Environment}
-\label{fig:finalVirtualEnv}
+\end{figure}
+\label{fig:finalVirtualEnv1}
 
+
+\begin{figure}
+\begin{tabular}{cc}
+\subfloat{\includegraphics[width = 10.7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/CloseUp1.png}} &
+\subfloat{\includegraphics[width = 10.7cm]{Chapters/SimulationEnv/Figs/VirtualEnvFinal/CloseUp2.png}}
+\end{tabular}
+\caption{Images From Final Version of Simulation Environment}
+\label{fig:finalVirtualEnv2}
 \end{figure}
 \end{landscape}
 \pagebreak
 
 \subsubsection{Blueprint Visual Scripting System}\label{subsubsec:blueprints}
-UE4 uses a visual scripting system to provide a lot of functionality, known as Blueprints. Blueprints provide a node-based interface to create gameplay elements. In order to develop different aspects of a game, the system provides a visual approach to scripting, and many of the tools available in standard written scripting languages are available, such as typed variables, arrays, structs, loops, etc. Blueprints were used extensively in the subsequent sections, as well as C++ code, in order to develop the simulation.
-
+UE4 uses a visual scripting system to provide a lot of functionality, known as \textit{Blueprints}. We provide a brief summary of Blueprints based on the UE4 
+\href{https://docs.unrealengine.com/en-US/Engine/Blueprints/index.html}{documentation page}\footnote{\href {https://docs.unrealengine.com/en-US/Engine/Blueprints/index.html}{https://docs.unrealengine.com/en-US/Engine/Blueprints/index.html}}
+. Blueprints provide a node-based interface to create gameplay elements. To develop different aspects of a game, the system provides a visual approach to scripting, and many of the tools available in standard written scripting languages are available, such as typed variables, arrays, structs, loops, etc. Blueprints were used extensively to develop the simulation.
+%https://docs.unrealengine.com/en-US/Engine/Blueprints/index.html
 
 \subsubsection{Materials}
-\note{grass, rail tracks}
+%\note{grass, rail tracks}
 
 %\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/RailScenarioFirstIteration.png}} &
 %\subfloat[caption]{\includegraphics[width = 4.5cm]{Chapters/SimulationEnv/Figs/VirtualEnvV1/resized_HighresScreenshot00001.png}} \\
@@ -182,16 +202,17 @@ UE4 uses a visual scripting system to provide a lot of functionality, known as B
 \end{wrapfigure}
 
 %https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html
-Materials are made up of a number of components in UE4, which specify aspects such as colour, opacity, roughness, specularity and emissive colours. In order to produce realistic materials, it is necessary to blend and layer different textures as well as identifying the correct parameters for surface normals and specularity, among the other features. The UE4 editor is equipped with tools for modifying materials to achieve a high-fidelity output. Details of creating materials can be found in the 
-\href{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{UE4 Documentation}\footnote{\href {https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}}. The landscape in the first iteration of the virtual environment consisted of a single uniform texture, with none of the above parameters specified. The result is shown in Figure \ref{fig:PoorTextures}. Subsequent versions used multiple layers and blending in order to create a higher-fidelity material, with relevant parameters tuned. This is shown in Figure \ref{fig:LandscapeMaterialBlueprint}, where a Landscape Layer Blend node is used to combine individual textures to create the landscape material.
+The details of creating materials can be found in the 
+\href{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{UE4 Documentation}\footnote{\href {https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}{https://docs.unrealengine.com/en-US/Engine/Rendering/Materials/IntroductionToMaterials/index.html}}, which we use as a reference for the following paragraph.
+Materials are made up of a number of components in UE4, which specify aspects such as colour, opacity, roughness, specularity and emissive colours. In order to produce realistic materials, it is necessary to blend and layer different textures as well as identifying the correct parameters for surface normals and specularity, among the other features. The UE4 editor is equipped with tools for modifying materials to achieve a high-fidelity output. The landscape in the first iteration of the virtual environment consisted of a single uniform texture, with none of the above parameters specified. The result is shown in Figure \ref{fig:PoorTextures}. Subsequent versions used multiple layers and blending in order to create a higher-fidelity material, with relevant parameters tuned. The final version is shown in Figure \ref{fig:GoodTextures}. Figure \ref{fig:LandscapeMaterialBlueprint} shows how a blueprint was used to create the landscape material, where a Landscape Layer Blend node is used to combine individual textures to create the material.
 
 \begin{figure}
 \centering
 \begin{tabular}{cc}
-\subfloat[Layers blended into Landscape Layer Blend Node]{\includegraphics[width=6cm]{Chapters/SimulationEnv/Figs/BlendedMaterialsVSNotBlendedMaterials/LayerBlend.PNG}} &
+\subfloat[Layers blended into Landscape Layer Blend Node \label{fig:MaterialLayerBlend}]{\includegraphics[width=6cm]{Chapters/SimulationEnv/Figs/BlendedMaterialsVSNotBlendedMaterials/LayerBlend.PNG}} &
 
 
-\subfloat[Blueprint used to create landscape material]{\includegraphics[width=6cm]{Chapters/SimulationEnv/Figs/BlendedMaterialsVSNotBlendedMaterials/LandscapeMaterial.PNG}}
+\subfloat[Blueprint used to create landscape material\label{fig:MaterialBlueprint}]{\includegraphics[width=8.5cm]{Chapters/SimulationEnv/Figs/BlendedMaterialsVSNotBlendedMaterials/LandscapeMaterial.PNG}}
 \end{tabular}
 \caption{Blueprints used to create the landscape}
 \label{fig:LandscapeMaterialBlueprint}
@@ -216,49 +237,67 @@ Uniformity tends to be rare in the real world; perfectly straight lines don't of
 
 
 \subsubsection{Foliage}
-Similar to the argument made in relation to splines, it is rare to have uniformly configured foliage in the real world. In order to address this, there exist foliage generation and editing tools in UE4 editor. Version 4.18 of the editor onward contains the Procedural Foliage Tool, 
-%\note{maybe add a link}, 
-which is the most convenient way to add swathes of foliage to a scene. Since we were using other content dependent on UE 4.16, we opted to use the foliage painter tool, which allows the user to effectively paint foliage directly onto a landscape. It allows the user to specify a number of parameters to achieve the required density, scaling and other relevant features. The results of applying foliage to the scene are visible in figures Figure \ref{fig:RealisticFoliageBlueprints}.
-%\note{Non-uniform trees, grass, etc.}
+Similar to the argument made in relation to splines, it is rare to have uniformly configured foliage in the real world. In order to address this, there exist foliage generation and editing tools in UE4 editor. Version 4.18 of the editor onward contains the \href{https://docs.unrealengine.com/en-US/Engine/OpenWorldTools/ProceduralFoliage/QuickStart/index.html}{Procedural Foliage Tool}\footnote{\href {https://docs.unrealengine.com/en-US/Engine/OpenWorldTools/ProceduralFoliage/QuickStart/index.html}{https://docs.unrealengine.com/en-US/Engine/OpenWorldTools/ProceduralFoliage/QuickStart/index.html}}, 
+which is the most convenient way to add swathes of foliage to a scene. Since we were using other content dependent on UE 4.16, we opted to use the foliage painter tool, which allows the user to effectively paint foliage directly onto a landscape. It allows the user to specify a number of parameters to achieve the required density, scaling and other relevant features. The results of applying foliage to the scene are visible in Figure \ref{fig:RealisticFoliageBlueprints}.
+%\begin{landscape}
+%\begin{figure}
+%\centering
+%\begin{tabular}{ccc} 
+%\subfloat[Layers blended into Landscape Layer Blend Node]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage2.png}}\label{fig:Foliage3} &
 
-\begin{landscape}
-\begin{figure}
+%\subfloat[Blueprint used to create landscape material]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage5.png}}\label{fig:Foliage4} &
+%\subfloat[Blueprint used to create landscape material]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage6.png}}\label{fig:Foliage5}
+%\end{tabular}
+%\caption{Blueprints used to create realistic foliage}
+%\label{fig:RealisticFoliageBlueprints}
+%\end{figure}
+\begin{figure}[H]
 \centering
-\begin{tabular}{ccc} 
-\subfloat[Layers blended into Landscape Layer Blend Node]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage2.png}}\label{fig:Foliage3} &
+\begin{tabular}{c} 
+\subfloat[Layers blended into Landscape Layer Blend Node]{\includegraphics[width=9.2cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage2.png}}\label{fig:Foliage3} \\
 
-\subfloat[Blueprint used to create landscape material]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage5.png}}\label{fig:Foliage4} &
-\subfloat[Blueprint used to create landscape material]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage6.png}}\label{fig:Foliage5}
+\subfloat[Trees and shrubs generated with non-uniform configuration]{\includegraphics[width=9.2cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage5.png}}\label{fig:Foliage4} \\
+\subfloat[Woodland area effect]{\includegraphics[width=9.2cm]{Chapters/SimulationEnv/Figs/Foliage/Foliage6.png}}\label{fig:Foliage5}
 \end{tabular}
-\caption{Blueprints used to create realistic foliage}
+\caption{Examples of foliage in the simulation environment}
 \label{fig:RealisticFoliageBlueprints}
 \end{figure}
 
 
-\begin{figure}
+
+
+
+
+%\begin{landscape}
+
+
+%\end{landscape}
+
+\subsubsection{Landscape Editing}
+%\note{Discuss here how dirt track was created using}
+%Creating a realistic landscape in UE4 serves a number of purposes. 
+To allow the potential simulation of ground vehicles, it was necessary to model the terrain realistically so that difficulties that may be experienced in the real world, such as steep climbs or highly uneven surfaces, may be taken into account. UE4 provides a suite of landscaping tools that allows the user to create a highly variable landscape. The tools facilitate raising and flattening, smoothing, random noise and simulated erosion, as well as allowing for other more detailed modifications. These were used to create the railway embankment, the rutted path leading onto the rail tracks and the riverbank and riverbed, shown in Figure \ref{fig:LandscapeEditing}.
+
+\begin{figure}[H]
 \centering
-\begin{tabular}{ccc}
-\subfloat[Rutted Track]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/RuttedTrack.png}}\label{fig:RuttedTrack} &
+\begin{tabular}{c}
+\subfloat[Rutted Track]{\includegraphics[width=7.8cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/RuttedTrack.png}}\label{fig:RuttedTrack} \\
 
 
-\subfloat[Rail embankment]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/RailwayEmbankment.png}}\label{fig:RailEmbankment} &
+\subfloat[Rail embankment]{\includegraphics[width=7.8cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/RailwayEmbankment.png}}\label{fig:RailEmbankment} \\
 
-\subfloat[Riverbank]{\includegraphics[width=7cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/Bridge.png}}\label{fig:Riverbank}
+\subfloat[Riverbank]{\includegraphics[width=7.8cm]{Chapters/SimulationEnv/Figs/LandscapedVSNotLandscaped/Bridge.png}}\label{fig:Riverbank}
 
 \end{tabular}
 \caption{Results of using the UE4 landscape editing tools}
 \label{fig:LandscapeEditing}
 \end{figure}
 
-\end{landscape}
-
-\subsubsection{Landscape Editing}
-\note{Discuss here how dirt track was created using}
-Creating a realistic landscape in UE4 serves a number of purposes. In order to allow the potential simulation of the operation of ground vehicles, it is necessary to model the terrain realistically so that difficulties that may be experienced in the real world, such as steep climbs or highly uneven surfaces, may be taken into account. UE4 provides a suite of landscaping tools that allows the user to create a highly variable landscape. The tools facilitate raising and flattening, smoothing, random noise and simulated erosion, as well as allowing for other more detailed modifications. These were used to create the railway embankment, the rutted path leading onto the rail tracks and the riverbank and riverbed, shown in Figure \ref{fig:LandscapeEditing}.
-
 
 \subsubsection{Asset Sourcing}
-An asset can be described as a piece of content for an Unreal Engine project, which has been serialized to a file. Assets can be re-used and modified in the UE4 editor, but are usually created using external software. UE4 uses assets that come in the Filmbox (.fbx) format, which is a proprietary file format owned by Autodesk\note{Do I need to reference this?}. Conversion tools do exist from other common asset file formats to fbx, but results can vary. Due to limited funding, time and experience, we decided to avoid creating assets from scratch but rather used assets that were free to use. Searching for free assets is a labor-intensive process, as it consisted of a number of steps:
+%
+An \href{https://docs.unrealengine.com/en-US/Engine/Basics/AssetsAndPackages/index.html}{\textit{asset}}\footnote{\href{https://docs.unrealengine.com/en-US/Engine/Basics/AssetsAndPackages/index.html}{https://docs.unrealengine.com/en-US/Engine/Basics/AssetsAndPackages/index.html}} can be described as a piece of content for an Unreal Engine project, which has been serialized to a file. Assets can be re-used and modified in the UE4 editor, but are usually created using external software. UE4 uses assets that come in the Filmbox (.fbx) format, which is a proprietary file format owned by Autodesk.
+%\note{Do I need to reference this?}. Conversion tools do exist from other common asset file formats to fbx, but results can vary. Due to limited funding, time and experience, we decided to avoid creating assets from scratch but rather used assets that were free to use. Searching for free assets is a labor-intensive process, as it consisted of a number of steps:
 \begin{enumerate}
     \item First, identify possible candidates for a particular type of asset (e.g. a train) based on a search of asset stores that offer free assets. We mainly used \href{https://www.cgtrader.com/}{CGTrader}\footnote{\href {https://www.cgtrader.com/}{https://www.cgtrader.com/}} ,
     

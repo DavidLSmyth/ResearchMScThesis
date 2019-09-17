@@ -43,7 +43,7 @@ This is the \textit{multiple Travelling Salesman Problem} (mTSP).
 Due to the fact that the mTSP is at least as hard as the TSP, since it is a generalisation of the TSP, finding a polynomial time solution to the mTSP is not feasible. We explored a number of sub-optimal solutions that take advantage of the highly structured nature of the uniformly spaced grid that we use in our instance of the problem. The usual trade-off between solution quality vs. time taken to find the solution motivated our choice of implemented algorithm, as we anticipated that the time taken to execute the planned routes may be comparable to the time taken to generate some solutions (the order of minutes or hours). For example, \citeauthor{Hungerlander2018TheGrids} shows the results of using a Mixed Integer Linear Program (MILP) took hours to run for grid sizes that could be considered relatively small in many real-world domains \cite{Hungerlander2018TheGrids}.
 %which would exceed the amount of time taken to perform even a random solution. %General details of solutions that can be applied to solve the mTSP and VRP can be found in Section <> of the literature review (this will be filled in).
 
-\subsubsection{Nearest Neighbor Algorithm}
+\subsection{Nearest Neighbor Algorithm}
 There are four common heuristic algorithms that form the basis of most solutions to TSP and mTSP problems, as stated in \cite{Johnson1997TheOptimization}: the \textit{nearest neighbor} algorithm, the \textit{greedy algorithm}, the \textit{Clarke-Wright} algorithm and the \textit{Christofides} algorithm. We began by implementing an algorithm which is a modification of a TSP solution based on the nearest-neighbor heuristic. Our reasoning is based on the following premises:
 \begin{enumerate}
     \item The nearest-neighbor heuristic is a well-known heuristic that is straightforward to implement. It is known to provide good results to the TSP when the cost is defined as the Euclidean distance between points \cite{Johnson1995TheOptimization}, as in our use case.
@@ -101,7 +101,7 @@ current\_agent\_index$\leftarrow$0\\
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.65\textwidth]{Chapters/MultiAgentCoverage/Figs/RAVRoutingNUIGCropped.png}
+\includegraphics[width=0.5\textwidth]{Chapters/MultiAgentCoverage/Figs/RAVRoutingNUIGCropped.png}
 \caption{NN heuristic encourages the creation of optimal sub-tours, which are assigned to each RAV}
 \label{fig:NNPartitioning}
 \end{figure}
@@ -117,7 +117,7 @@ Since we run this algorithm over a uniformly-spaced grid, it builds agent routes
 
 
 
-\subsubsection{Analysis of the NN algorithm}
+\subsection{Analysis of the NN algorithm}
 %\note{The justification behind this choice of algo is a bit weak, might be worth running tests on file:///C:/Users/13383861/Downloads/graphsOR18.pdf}
 
 

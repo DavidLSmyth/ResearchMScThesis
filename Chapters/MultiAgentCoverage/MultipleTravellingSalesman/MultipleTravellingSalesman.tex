@@ -265,9 +265,11 @@ This experiment was again set up in a similar manner to the first, where the RAV
 
 
 
-The results show that when using two RAVs, the solution was actually 2.191\% more efficient than using the solution found when using just one RAV. When two RAVs are used, they move horizontally to the nearest grid location, meet in the middle of the hexagon and then move back to the outer edge. Once the reach the lower half of the hexagon, they move down diagonally. This is the same when using a single RAV. The key difference is when they begin moving to the top of the hexagon, they exhibit the same behaviour, wheras the single agent skips some of the "diagonal" grid points, as in the case of the triangular region using three RAVs. It must go back to visit them at a large cost, since they range from both the left and right sides of the upper hexagon. This can be seen in the first figure in Table \ref{table:NNAlgoResultsHex}.
+The results show that when using two RAVs, the longest route is 2.191\% shorter than half the route found using just one RAV. When two RAVs are used, they move horizontally to the nearest grid location, meet in the middle of the hexagon and then move back to the outer edge. Once the reach the lower third of the hexagon, they move down diagonally and then back across horizontally. This behaviour is the same when using a single RAV. The key difference is when they move to the top third of the hexagon, they exhibit the same behaviour, wheras the single agent skips some of the "diagonal" grid points, as in the case of the triangular region using three RAVs. It must go back to visit them at a relatively large cost, since the points that it missed on each from range from both the left and right sides of the upper hexagon. This can be seen in the first figure in Table \ref{table:NNAlgoResultsHex}.
 
-and three RAVs, the solutions found by the NN algorithm were 0.155\% and 36.565\% less efficient that the optimal solutions ( $\frac{1}{2}$ and $\frac{1}{3}$ of 1940.6, respectively). This can be explained by the corresponding figures displaying the agents routes in Table \ref{table:NNAlgoResultsTri}. Clearly, the NN algorithm takes advantage of the symmetry down the center axis when two RAVs are used, but when three RAVs are used, the solution the RAV beginning at the top of the triangle skips the grid points that require a "diagonal" move, instead moving down to the closer grid point. These points are picked up by the second RAV (green) once it meets the third (red).
+
+When using four RAVs, the longest route was 36.565\% longer than $\frac{1}{4}$ of the route found for a single RAV. This was mainly due to the slight imbalance in the number of points in the upper third and lower third of the hexagon and the middle third. There are 79 points in both the upper and lower third and 147 points in the middle third. This means that the two RAVs that sweep back and across the middle move to the upper and lower third to "help". This results in large jumps to finish of the final few grid points, visible in the third figure of table \ref{table:NNAlgoResultsHex}. 
+
 
 Spacing between grid points: 32m in latitude, 38m in longitude.
 Bounding coordinates: (53.2782526061, -9.0610624609), (53.2803800539, -9.06409255), (53.2781933786, -9.0671226391), (53.27621, -9.0671226391), (53.27402, -9.06409255), (53.27615, -9.0610624609)
@@ -328,59 +330,59 @@ Bounding coordinates: (53.2782526061, -9.0610624609), (53.2803800539, -9.0640925
 %\\Bounding rectangle coordinates: (53.28048,-9.069021), (53.28189,-9.066017), (53.28009,-9.065223), (53.28192,-9.064128), (53.28026,-9.061725), (53.27923,-9.063957), (53.27846,-9.063721), (53.27712,-9.063721), (53.27626,-9.060159), (53.27516,-9.061124), (53.27412,-9.061425), (53.27362,-9.061425), (53.2735,-9.062562), (53.27456,-9.06327), (53.27416,-9.064794), (53.27495,-9.06754), (53.27456,-9.067841), (53.27354,-9.067605), (53.27346,-9.06857), (53.27466,-9.06872), (53.2752,-9.06827), (53.27583,-9.070008), (53.27571,-9.07093), (53.27545,-9.074385), (53.27581,-9.074149), (53.27609,-9.07445), (53.2788,-9.069986), (53.27951,-9.069793), (53.28116,-9.071081), (53.28148,-9.069686)
 %\\
 
-\textbf{Irregular Region}
-\\Spacing between grid points: 20m in latitude, 20m in longitude.
-\\Bounding rectangle coordinates: (53.28048,-9.069021), (53.28189,-9.066017), (53.28009,-9.065223), (53.28192,-9.064128), (53.28026,-9.061725), (53.27923,-9.063957), (53.27846,-9.063721), (53.27712,-9.063721), (53.27626,-9.060159), (53.27516,-9.061124), (53.27412,-9.061425), (53.27362,-9.061425), (53.2735,-9.062562), (53.27456,-9.06327), (53.27416,-9.064794), (53.27495,-9.06754), (53.27456,-9.067841), (53.27354,-9.067605), (53.27346,-9.06857), (53.27466,-9.06872), (53.2752,-9.06827), (53.27583,-9.070008), (53.27571,-9.07093), (53.27545,-9.074385), (53.27581,-9.074149), (53.27609,-9.07445), (53.2788,-9.069986), (53.27951,-9.069793), (53.28116,-9.071081), (53.28148,-9.069686)
-\\
+%\textbf{Irregular Region}
+%\\Spacing between grid points: 20m in latitude, 20m in longitude.
+%\\Bounding rectangle coordinates: (53.28048,-9.069021), (53.28189,-9.066017), (53.28009,-9.065223), (53.28192,-9.064128), (53.28026,-9.061725), (53.27923,-9.063957), (53.27846,-9.063721), (53.27712,-9.063721), (53.27626,-9.060159), (53.27516,-9.061124), (53.27412,-9.061425), (53.27362,-9.061425), (53.2735,-9.062562), (53.27456,-9.06327), (53.27416,-9.064794), (53.27495,-9.06754), (53.27456,-9.067841), (53.27354,-9.067605), (53.27346,-9.06857), (53.27466,-9.06872), (53.2752,-9.06827), (53.27583,-9.070008), (53.27571,-9.07093), (53.27545,-9.074385), (53.27581,-9.074149), (53.27609,-9.07445), (53.2788,-9.069986), (53.27951,-9.069793), (53.28116,-9.071081), (53.28148,-9.069686)
+%\\
 
-\begin{table}[H]
-  \centering
-  \begin{tabular}{ | c | m{5cm} | }
-    \hline
-    Planned RAV Routes & Route Lengths (metres) \\
-    \hline
+%\begin{table}[H]
+%  \centering
+%  \begin{tabular}{ | c | m{5cm} | }
+%    \hline
+%    Planned RAV Routes & Route Lengths (metres) \\
+%    \hline
     
     %single RAV
-    \begin{minipage}[c][68mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=66mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/TwoRAV.PNG}
-    \end{minipage}
-    &
-    \begin{itemize}[leftmargin=*]
-       \item[] RAV 1 (blue): 14268.6
-        \item[] RAV 2 (green): 13393.6
-    \end{itemize}
-    \\
-    \hline
+%    \begin{minipage}[c][68mm][c]{.6\textwidth}
+%      \includegraphics[width=\linewidth, height=66mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/TwoRAV.PNG}
+%    \end{minipage}
+%    &
+%    \begin{itemize}[leftmargin=*]
+%       \item[] RAV 1 (blue): 14268.6
+%        \item[] RAV 2 (green): 13393.6
+%    \end{itemize}
+ %   \\
+%    \hline
     %two RAV
-    \begin{minipage}[c][68mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=66mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/ThreeRAV.PNG}
-    \end{minipage}
-    &
-    \begin{itemize}[leftmargin=*]
-        \item[] RAV 1 (blue): 8879.8
-        \item[] RAV 2 (green): 9596.4
-        \item[] RAV 3 (green): 9433.4
-    \end{itemize}
-    \\
-    \hline
+%    \begin{minipage}[c][68mm][c]{.6\textwidth}
+%      \includegraphics[width=\linewidth, height=66mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/ThreeRAV.PNG}
+%    \end{minipage}
+%    &
+%    \begin{itemize}[leftmargin=*]
+%        \item[] RAV 1 (blue): 8879.8
+%        \item[] RAV 2 (green): 9596.4
+%        \item[] RAV 3 (green): 9433.4
+%    \end{itemize}
+%    \\
+%    \hline
     
     %three RAV
-    \begin{minipage}[c][68mm][c]{.6\textwidth}
-      \includegraphics[width=\linewidth, height=66mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/FourRAVSecondAttempt.PNG}
-    \end{minipage}
-    &
-    \begin{itemize}[leftmargin=*]
-    \item[] RAV 1 (blue): 7673.2
-    \item[] RAV 2 (green): 6354.0
-    \item[] RAV 3 (red): 6860.6
-    \item[] RAV 4 (yellow): 6368.8
-    \end{itemize}
-    \\
-    \hline
-  \end{tabular}
-  \caption{Results of applying NN algorithm to an irregular region}\label{table:NNAlgoResultsIrregular}
-\end{table}
-\pagebreak
+%    \begin{minipage}[c][68mm][c]{.6\textwidth}
+%      \includegraphics[width=\linewidth, height=66mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/IrregularRegion/FourRAVSecondAttempt.PNG}
+%    \end{minipage}
+%    &
+%    \begin{itemize}[leftmargin=*]
+%    \item[] RAV 1 (blue): 7673.2
+%%    \item[] RAV 2 (green): 6354.0
+ %   \item[] RAV 3 (red): 6860.6
+%    \item[] RAV 4 (yellow): 6368.8
+%    \end{itemize}
+%    \\
+%    \hline
+%  \end{tabular}
+%  \caption{Results of applying NN algorithm to an irregular region}\label{table:NNAlgoResultsIrregular}
+%\end{table}
+%\pagebreak
 
 
 

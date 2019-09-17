@@ -204,7 +204,7 @@ We used the following configuration to run the experiment:
 This experiment was set up in a similar manner to the first, where the RAVs were dragged to an initial starting position that should allow the NN algorithm to take advantage of the axes of symmetry of the triangle.
 The results in Table \ref{table:NNAlgoResultsTri} show that the amount of work done by each RAV is approximately evenly balanced when using two RAVs, but not three. 
 
-The results show that when using two and three RAVs, the solutions found by the NN algorithm were 0.155\% and 36.565\% less efficient than that given by even splitting the solution for a single RAv ( $\frac{1}{2}$ and $\frac{1}{3}$ of 1940.6, respectively). This can be explained by the corresponding figures displaying the agents routes in Table \ref{table:NNAlgoResultsTri}. Clearly, the NN algorithm takes advantage of the symmetry down the center axis when two RAVs are used, but when three RAVs are used, the solution the RAV beginning at the top of the triangle skips the grid points that require a "diagonal" move, instead moving down to the closer grid point. These points are picked up by the second RAV (green) once it meets the third (red), adding a relatively large cost.
+The results show that when using two and three RAVs, the solutions found by the NN algorithm were 0.155\% and 36.565\% less efficient than that given by even splitting the solution for a single RAv ( $\frac{1}{2}$ and $\frac{1}{3}$ of 1940.6, respectively). This can be explained by the corresponding figures displaying the agents routes in Table \ref{table:NNAlgoResultsTri}. Clearly, the NN algorithm takes advantage of the symmetry down the vertical center axis when two RAVs are used, but when three RAVs are used, the solution the RAV beginning at the top of the triangle skips the grid points that require a "diagonal" move, instead moving down to the closer grid point. These points are picked up by the second RAV (green) once it meets the third (red), adding a relatively large cost.
 
 We used the following configuration to run the experiment:
 \\Spacing between grid points: 23m in latitude, 25m in longitude.
@@ -294,7 +294,7 @@ Bounding coordinates: (53.2782526061, -9.0610624609), (53.2803800539, -9.0640925
     \hline
     
     %single RAV
-    \begin{minipage}[c][74mm][c]{.55\textwidth}
+    \begin{minipage}[c][74mm][c]{.5\textwidth}
       \includegraphics[width=\linewidth, height=72mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Hexagon/OneRAV.PNG}
     \end{minipage}
     &
@@ -304,7 +304,7 @@ Bounding coordinates: (53.2782526061, -9.0610624609), (53.2803800539, -9.0640925
     \\
     \hline
     %two RAV
-    \begin{minipage}[c][74mm][c]{.55\textwidth}
+    \begin{minipage}[c][74mm][c]{.5\textwidth}
       \includegraphics[width=\linewidth, height=72mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Hexagon/TwoRAV.PNG}
     \end{minipage}
     &
@@ -316,7 +316,7 @@ Bounding coordinates: (53.2782526061, -9.0610624609), (53.2803800539, -9.0640925
     \hline
     
     %three RAV
-    \begin{minipage}[c][69mm][c]{.55\textwidth}
+    \begin{minipage}[c][69mm][c]{.6\textwidth}
       \includegraphics[width=\linewidth, height=67mm]{Chapters/MultiAgentCoverage/MultipleTravellingSalesman/Figs/Hexagon/FourRAV.PNG}
     \end{minipage}
     &

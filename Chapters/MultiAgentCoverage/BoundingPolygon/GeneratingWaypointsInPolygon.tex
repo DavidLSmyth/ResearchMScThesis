@@ -32,12 +32,14 @@ We began by assuming that the region which is to be surveyed, $R$, can be descri
   \includegraphics[width=73mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRect.PNG}\label{fig:PolygonWithBoundingRect}
 }
 \hspace{0mm}
-\subfloat[Grid Points Generated in Bounding Rectangle]{
+\subfloat[Candidate Grid Points Generated in Bounding Rectangle]{
   \includegraphics[width=73mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRectGridPoints.PNG}\label{fig:PolygonWithBoundingRectAndGridPoints}
 }
 \subfloat[Grid Points Outside of Polygon Pruned]{
   \includegraphics[width=73mm]{Chapters/MultiAgentCoverage/Figs/PolygonBoundingRectGridPointsPruned.PNG}\label{fig:PolygonWithBoundingRectAndGridPointsPruned}
 }
+\caption{A visualisation of the steps involved in Algorithm \ref{alg:PointInPolygon}}
+\label{fig:PointInPolygon}
 \end{figure}
 
 
@@ -83,8 +85,7 @@ $
 
 
 %\par This procedure was devised with the aim of being straightforward to implement and modify. The algorithm used to carry out these steps is outlined in Algorithm \ref{alg:GridGeneration}, which we describe here.
-We describe the grid point generation algorithm (Algorithm \ref{alg:GridGeneration}) here.
-\par First, the bounding circum-rectangle of the polygonal region of interest is constructed from the largest and smallest x and y coordinates of the points of the polygon, outlined in lines 2-6 and shown in Figure \ref{fig:PolygonWithBoundingRect}. Then candidate uniformly spaced grid points in the bounding rectangle are generated in lines 7-11. Finally in lines 12-13, a check is performed which adds the grid point to the set of grid point contained in the polygon if it passes a check. This is done using the Point-in-Polygon routine which is provided separately in Algorithm \ref{alg:PointInPolygon}. We discuss the details of the Point-In-Polygon Algorithm (Algorithm \ref{alg:PointInPolygon}) in the subsequent paragraph. 
+We describe the grid point generation algorithm (Algorithm \ref{alg:GridGeneration}) here. First, the bounding circum-rectangle of the polygonal region of interest is constructed from the largest and smallest x and y coordinates of the points of the polygon, outlined in lines 2-6 and shown in Figure \ref{fig:PolygonWithBoundingRect}. Then candidate uniformly spaced grid points in the bounding rectangle are generated in lines 7-11, shown in Figure \ref{fig:PolygonWithBoundingRectAndGridPoints}. Finally in lines 12-13, a check is performed which adds the grid point to the set of grid point contained in the polygon if it passes a check, shown in Figure \ref{fig:PolygonWithBoundingRectAndGridPointsPruned}. This is done using the Point-in-Polygon routine which is provided separately in Algorithm \ref{alg:PointInPolygon}, with the details discussed in the next paragraph.
 
 
 
@@ -146,11 +147,12 @@ $
 %\includegraphics[width=0.5\textwidth]{Chapters/MultiAgentCoverage/Figs/PointInsidePolygon.PNG}\caption{Ray extended from point inside polygon intersects an odd number of times}\label{fig:PointInsidePolygon}
 %\end{figure}
 
-\begin{figure}%
+\begin{figure}[h]%
     \centering
-    \subfloat[Odd number of crossings]{\includegraphics[width=7.4cm,height=6cm]{Chapters/MultiAgentCoverage/Figs/CrossingTestPos.PNG}}%
-    \vspace{2mm}
-    \subfloat[Even number of crossings]{\includegraphics[width=7.4cm,height=6cm]{Chapters/MultiAgentCoverage/Figs/CrossingTestNeg.PNG}}%
+    \subfloat[Odd number of crossings\label{fig:oddCrossing}]{\includegraphics[width=9cm,height=6cm]{Chapters/MultiAgentCoverage/Figs/CrossingTestPos.PNG}}%
+    %\vspace{2mm}
+    \\
+    \subfloat[Even number of crossings\label{fig:evenCrossing}]{\includegraphics[width=9cm,height=6cm]{Chapters/MultiAgentCoverage/Figs/CrossingTestNeg.PNG}}%
     \caption{Examples of a positive and negative results when applying the Crossing Test}%
     \label{fig:CrossingTest}%
 \end{figure}

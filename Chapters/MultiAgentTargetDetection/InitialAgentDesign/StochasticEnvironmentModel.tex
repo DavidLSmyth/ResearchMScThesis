@@ -1,10 +1,10 @@
 
 
-\subsection{Stochastic Environment Model}
+\subsection{Stochastic Environment Model}\label{subsec:stochasticEnvModel}
 Model-based agents require a concrete implementation of a model of their world, in order to maintain their internal state. The agent's internal state can be thought of as its opinion of what state the world might be in, and its model describes how it believes the world changes over time \cite{AIAMA}. Chapter \ref{chapter:Background} outlines the background behind potential models of the stochastic world, including both how internal state can be represented and how internal state can be updated.\par
 Hidden Markov Models and Dynamic Bayesian Networks were identified as suitable models, due to the fact that they provide a succinct and flexible representation of hidden stochastic world state, as well as efficient online state estimation updating algorithms. We chose to use a Dynamic Bayesian Network (DBN), due to the fact that it can use conditional independence relations between variables to reduce the number of probabilities needed to be calculated to perform accurate inference \cite[p.~63]{KollerPGM}. DBNs also facilitate the incorporation of extra variables with arbitrary conditional dependence relations. This was desirable, since we planned to extend the model to include extra variables, such as battery level, once a basic implementation was shown to work as intended.
 
-The 2-Time Slice DBN used is shown in figure \ref{fig:FirstDBNUsed} describes the agent's world model. A first-order Markov assumption is made, where the current state only depends on the state directly preceding it. Grey coloured variables are \textit{hidden state variables} and are assumed to not be directly observable. Green coloured variables are \textit{control actions} taken by the agent (which use the agent's estimated state) and the peach coloured variables are \textit{evidence variables}, which are assumed to be observable and depend on the hidden world state. 
+The 2-Time Slice DBN shown in Figure \ref{fig:FirstDBNUsed} describes the agent's world model. A first-order Markov assumption is made, where the current state only depends on the state directly preceding it. Grey coloured variables are \textit{hidden state variables} and are assumed to not be directly observable. Green coloured variables are \textit{control actions} taken by the agent (which use the agent's estimated state) and the peach coloured variables are \textit{evidence variables}, which are assumed to be observable and depend on the hidden world state. 
 %The agent's location and the search status hidden state variables are mainly included for technical reasons
 \note{maybe re-position figure so text wraps}
 \begin{figure}
@@ -17,7 +17,7 @@ A number of conditional probabilities are specified here in order to describe th
 
 
 
-\begin{figure}[H]
+%\begin{figure}[H]
 \scriptsize
 \begin{equation}\label{eqn:EvidenceVarsProbs}
     %\centering
@@ -33,11 +33,15 @@ A number of conditional probabilities are specified here in order to describe th
     \end{cases}
     %
 \end{equation}
-\caption{Conditional Probability Distribution for the $Evidence$ Variable}
-\end{figure}
+\begin{center}
+    \normalsize
+    Conditional Probability Distribution for the $Evidence$ Variable.
+\end{center}
+%\caption{Conditional Probability Distribution for the $Evidence$ Variable}
+%\end{figure}
 
 
-\begin{figure}[H]
+%\begin{figure}[H]
 \scriptsize
 \begin{equation}\label{eqn:TargetLocProbs}
     p(TargetLoc_{t} | TargetLoc_{t-1}) =
@@ -48,14 +52,18 @@ A number of conditional probabilities are specified here in order to describe th
     0 \quad \text { otherwise. }
     \end{cases}
 \end{equation}
-\caption{Conditional Probability Distribution for the $TargetLocation$ Variable}
-\end{figure}
+%\caption{Conditional Probability Distribution for the $TargetLocation$ Variable}
+%\end{figure}
+\begin{center}
+\normalsize
+    Conditional Probability Distribution for the $TargetLocation$ Variable
+\end{center}
 
 
 
 
 
-\begin{figure}[H]
+%\begin{figure}[H]
 \scriptsize
 %\begin{equation}\label{eqn:SearchStatus}
     \begin{gather}\label{eqn:SearchStatus}
@@ -72,14 +80,17 @@ A number of conditional probabilities are specified here in order to describe th
         \end{cases}
     \end{gather}
 %\end{equation}
-\caption{Conditional Probability Distribution for the $SearchStatus$ Variable}
-\end{figure}
+%\caption{Conditional Probability Distribution for the $SearchStatus$ Variable}
+%\end{figure}
+\begin{center}
+    \normalsize
+    Conditional Probability Distribution for the $SearchStatus$ Variable
+\end{center}
 
 
 
 
-
-\begin{figure}[H]
+%\begin{figure}[H]
 \scriptsize
     \begin{equation}\label{eqn:AgentLocation}
         p(AgentLoc_t | AgentLoc_{t-1}, Action_{t}) = 
@@ -91,9 +102,12 @@ A number of conditional probabilities are specified here in order to describe th
         0 \quad \text{otherwise}
         \end{cases}
     \end{equation}
-\caption{Conditional Probability Distribution for the $AgentLocation$ Variable}
-\end{figure}
-
+%\caption{Conditional Probability Distribution for the $AgentLocation$ Variable}
+%\end{figure}
+\begin{center}
+    \normalsize
+    Conditional Probability Distribution for the $AgentLocation$ Variable
+\end{center}
 
 \normalsize
 The semantics of the equations listed above is given here: 
@@ -105,7 +119,7 @@ The semantics of the equations listed above is given here:
 \end{enumerate}
 
 
-Note that despite the fact that some hidden state variables cannot be observed directly, it is still possible to infer their value exactly based on their starting state. For example, the position of the agent is a deterministic function of its actions and previous position. These variables could have been treated as variables that are internal to the agent rather than part of the hidden world state and could have been omitted for the sake of clarity.
+Note that despite the fact that some hidden state variables cannot be observed directly, it is still possible to infer their value exactly based on their starting state. For example, the position of the agent is a deterministic function of its actions and previous position. %These variables could have been treated as variables that are internal to the agent rather than part of the hidden world state and could have been omitted for the sake of clarity.
 %many authors 
 %\note{need to outline why I have included them - mainly because evidence probability depends on agent location as well as source location}
 

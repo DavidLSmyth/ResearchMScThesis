@@ -1,13 +1,11 @@
 \subsection{Experimental Testbed}
 Given the assumptions outlined above, rather than beginning by working on designing candidate solutions, we instead decided to set up the software that would be necessary to quickly test and evaluate a solution. This is related to the specification of the agent's environment, which is described in Section \ref{section:intial_agent_design}. This involved the following software components:
 \begin{itemize}
-    \item A 2-Dimensional grid coordinate system which can be configured to create a grid over a polygonal region. This is outlined in greater detail in section \ref{sec:GenerationOfWaypoints}.
+    \item A 2-Dimensional grid coordinate system which can be configured to create a grid over a polygonal region. This is outlined in greater detail in Section \ref{sec:GenerationOfWaypoints}.
     \item An evidence source simulator which simulates the readings that a sensor would observe given the sensitivity and specificity of the sensor.
     \item A grid manager component, which manages the positions of RAVs and targets on the grid.
     \item A simulation manager component, which constructs the agents from their configuration files and is responsible for running the simulation using the other software components.
     \item Configuration files which allow the user to specify the configurations of the sensors, the agents, environment parameters and debugging/analysis files.
 \end{itemize}
-These components were designed in a modular fashion to distinguish the agent from its environment.% shown in Figure \ref{fig:agent_env_interaction}. 
-%This seems like an obvious and intuitive practice, but can be easily overlooked while writing code. 
- The agent may have an internal representation of the grid environment in which it operates, which must be completely independent of the actual grid environment which is run in the simulation. The user can fully specify all aspects of the agent and environment (relating to the above assumptions) through configuration files. 
+These components were designed in a modular fashion to distinguish the agent from its environment. The agent may have an internal representation of the grid environment in which it operates, which must be completely independent of the actual grid environment which is run in the simulation. The user can fully specify all aspects of the agent and environment (relating to the above assumptions) through configuration files. 
 %\note{Maybe include an example figure showing a config file.}

@@ -3,5 +3,14 @@
 %*********************************** First Chapter *****************************
 %*******************************************************************************
 
-\chapter{Conclusion and Discussion}  %Title of the First Chapter
-\placeholder{}
+\chapter{Conclusion}
+At the beginning of this thesis, we identified two research questions: 
+\begin{itemize}
+    \item \input{Chapters/Introduction/ResearchQuestion1.tex} 
+    \item \input{Chapters/Introduction/ResearchQuestion2.tex}
+\end{itemize}
+These were identified based on the ROCSAFE project and we aimed to find answers to them with the work done as part of this thesis.
+
+\par The second question was addressed in Chapter \ref{chap:HighFidelitySim}, where we provided the details of a custom-built high-fidelity simulation environment using the UE4 game engine. We identified realistic data that was relevant to hazardous real-world scenarios, which included images taken from the perspective of a RAV and CBRN sensor data. We simulated this data through the use of tools that are part of UE4 as well as the use of the Airsim \cite{Shah2017AirSim:Vehicles} plugin for UE4. This aided the tasks of developing techniques to solve the problem scene surveying and target localisation, identified in the second research questions, by ensuring that the developed methods could be tested at low cost and high speed.
+
+\par We can also answer the first research question positively, based on the the work outlined in Chapters \ref{chapter:SceneSurveying} and \ref{chap:targetLocalisation}. We developed a software system that built on previous related work which was highly modular and could be calibrated to reflect realistic varying parameters among aerial vehicles, such as operational speed. The task of scene surveying was addressed in Chapter \ref{chapter:SceneSurveying} and we devised a method of discretising the region to be surveyed along with algorithms that would set out routes for the aerial vehicles. We tested this using our developed high-fidelity simulation environment, which closely mirrored intended real-world usage. The task of target localisation was tackled in Chapter \ref{chap:targetLocalisation}. We provided the details of a system that could use multiple RAVs to effectively find the hidden location of one or more targets, based on sensor data. We used the Sequential Probability Ratio Test as a cutoff criterion for the search termination. We implemented a number of sampling strategies and investigated the effects of varying key parameters in the search, such as the prior distribution and the number of targets present. The results indicate that for "reasonable" choices of these parameters, the search could localise one or more targets according to the error rates set out by the SPRT.

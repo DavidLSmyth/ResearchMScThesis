@@ -2,8 +2,8 @@
 As mentioned in Chapter \ref{chapter:introduction}, a major problem in hazardous scene management includes localizing sources of hazardous materials and localizing potential sources of evidence. The reasons these are difficult problems, in the context of the ROCSAFE project, are:
 \begin{itemize}
     \item Hazardous materials belong to different classes of threat (chemical, biological, radiation, nuclear). If the nature of the threat is uncertain, the wrong preventative measures may be taken and personnel may be put at risk. 
-    \item Evidence localization usually requires moving a sensor to within close proximity of the evidence. If a human is responsible for this, there is a chance that they will accidentally disturb with the evidence, possibly yielding it unusable.
-    \item Since these scenarios are highly dangerous, the area to search may be large to avoid potentially missing important sources of evidences. This means that the process of localization may be painstaking and time-consuming for humans.
+    \item Evidence localisation usually requires moving a sensor to within close proximity of the evidence. If a human is responsible for this, there is a chance that they will accidentally disturb with the evidence, possibly yielding it unusable.
+    \item Since these scenarios are highly dangerous, the area to search may be large to avoid potentially missing important sources of evidences. This means that the process of localisation may be painstaking and time-consuming for humans.
 \end{itemize}
 In the ROCSAFE project, the use of RAVs is proposed to aid the execution of these tasks \cite{Bagherzadeh2017ROCSAFE:Incidents}. This chapter proposes a system to aid their navigation planning.
 
@@ -12,7 +12,7 @@ In the ROCSAFE project, the use of RAVs is proposed to aid the execution of thes
 
 
 
-Spatiotemporal localization problems have a reasonable body of literature behind them, and can be described using abstract language which allows them to be approached using a common framework, with only minor implementation details necessary to specify which instance of the problem is being addressed. The framework we have developed uses a lot of the theory outlined in Chapter \ref{chapter:Background} and builds on the literature that was reviewed there. The problem that this Chapter attempts to solve can be generally described as follows: \par
+Spatiotemporal localisation problems have a reasonable body of literature behind them, and can be described using abstract language which allows them to be approached using a common framework, with only minor implementation details necessary to specify which instance of the problem is being addressed. The framework we have developed uses a lot of the theory outlined in Chapter \ref{chapter:Background} and builds on the literature that was reviewed there. The problem that this Chapter attempts to solve can be generally described as follows: \par
 
 \textit{Given a region of space to explore and a set of heterogeneous autonomous aerial vehicles with sensing capabilities, devise a search strategy with a search cutoff criterion which will accurately return either the locations of the targets if one or more is present, or return that no targets are present, in the shortest possible time.} \par
 

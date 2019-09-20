@@ -1,4 +1,6 @@
-\begin{table}[h!]
+This experiment explored the consequences of varying the number of targets present in the search region. We ran the experiment with 1-3 targets present, anticipating that the results could suggest the behaviour that would result for more than 3 targets. Tables \ref{table:MultipleTargetEGSweep} and \ref{table:MultipleTargetSaccadicRandom} contain decision matrices which show the proportion of targets correctly localised vs. the number of returned target locations. Since the agent can return either a target location or that the target is not present, there is scope two potential sources of error: returning an incorrect target location or returning that the target is not present. For example, for the $\epsilon$-Greedy search strategy with 3 targets present, 5.10\% of the time, the agent made 3 guesses for the target locations and 2 of these were correct. For the same case, 31.7\% of the runs ended with the agent correctly returning 2 target locations before concluding that a third target was not present (mistakenly), as seen in the cell intersecting the third row and third column.
+
+\begin{table}[H]
     \centering
     \begin{tabular}{| >{\centering} m{17mm} | >{\centering}m{13mm} | >{\centering}m{14mm} | >{\centering}m{15mm} | m{72mm} <{\centering}|}
     \hline

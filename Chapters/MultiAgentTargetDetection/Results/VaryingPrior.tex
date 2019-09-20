@@ -3,11 +3,12 @@
 %Sweep & 1 & 601.5697 & 183.4529 & 0.1254 & 0.0454 \\
 %$\epsilon$-Greedy & 1 & 112.9258 & 62.3798 & 0.1516 & 0.0398 \\
 
+This experiment explored the consequences of varying the initial distribution of the agent's belief while keeping all other parameters at their default values, outlined in \ref{sec:SimulationResults}. We chose to vary the initial distribution between a peaked Gaussian and non-peaked Uniform, as examples of two common use cases representing the presence of some prior information and no prior information respectively.
 
 %\begin{landscape}
 %\centering
 %\vspace*{\fill}
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{| >{\centering} m{18mm} | >{\centering}m{22mm} | >{\centering}m{22mm} | >{\centering}m{22mm} | >{\centering}m{20mm} | m{20mm} <{\centering}|}
     \hline
@@ -30,7 +31,16 @@
     \label{table:VaryingPriorDistribution}
 \end{table}
     
-Table \ref{table:VaryingPriorDistribution} displays the results of running a simulation with a single agent and a single target while varying the initial belief distribution that the target is present in the search region. 
+\begin{figure}[H]
+\centering
+    \subfloat[Uniform initial belief distribution\label{fig:InitialUniform}]{{\includegraphics[width=7.5cm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Uniform/UniformInitialDistribution.png} }}%
+    %\qquad
+    \subfloat[Gaussian initial belief distribution\label{fig:InitialGaussian}]{{\includegraphics[width=7.5cm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Gaussian/GaussianInitialDistribution.png} }}%
+    \caption{Initial belief distributions}%
+    \label{fig:initialBeliefDistribution}%
+\end{figure}
+
+\par Table \ref{table:VaryingPriorDistribution} displays the results of running a simulation with a single agent and a single target while varying the initial belief distribution that the target is present in the search region. 
 %The following parameters are fixed: Simulated Sensor False Negative Rate = 0.15, Simulated Sensor False Positive Rate = 0.2, Sensor model False Negative Rate = 0.15, Sensor Model False Positive Rate = 0.2, Initial belief that target is present in region = 0.5, SPRT Type \Romannum{1} error rate = 0.1, SPRT Type \Romannum{2} error rate = 0.15.
 %\begin{itemize}
 %    \item Simulated Sensor False Negative Rate = 0.15
@@ -40,20 +50,13 @@ Table \ref{table:VaryingPriorDistribution} displays the results of running a sim
 %    \item Initial belief that target is present in region = 0.5
 %    \item SPRT T\Romannum{1} error rate = 0.1, SPRT T\Romannum{2} error rate = 0.15.
 %\end{itemize}
-\begin{figure}
-\centering
-    \subfloat[Uniform initial belief distribution]{{\includegraphics[width=6cm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Uniform/UniformInitialDistribution.png} }}%
-    \qquad
-    \subfloat[Gaussian initial belief distribution]{{\includegraphics[width=6cm]{Chapters/MultiAgentTargetDetection/Figs/Results/Prior/Gaussian/GaussianInitialDistribution.png} }}%
-    \caption{Initial belief distributions}%
-    \label{fig:initialBeliefDistribution}%
-\end{figure}
+
 For each search strategy, we ran the simulation with both a Uniform and Gaussian initial belief distribution. The Gaussian mean coincided with the target location and the covariance matrix was $\begin{pmatrix} 3 & 0\\ 0 & 3\end{pmatrix}$, which is visualised in Figure \ref{fig:initialBeliefDistribution}. This represents a correct suspicion about the location of the target, which is the case in scenarios where some prior information may suggest clues to the target location. As expected, for all of the search strategies the expected time until a decision reduces dramatically when using the Gaussian prior relative to the Uniform prior. 
 %In the case of the two non-adaptive search methods (random and sweep), the effect is lessened as the search process is not influenced by new observations. 
 Since the shape of the Gaussian distribution is aligned more closely to the true distribution that the Uniform distribution, it takes fewer samples to reach a sufficiently peaked distribution to reach the acceptance region for the SPRT. 
 %This is visible by examining the evolution of the cumulative agent belief that the target is present in the region, shown in figures x and y.
 
-\par It can also be seen that the false negative rate (the rate at which the agent incorrectly concludes that the target is not present in the region) drops in the case of the Gaussian prior relative to the Uniform prior. This is also a result of using a prior distribution that matches the shape of the true distribution, since it requires a significant number of false positive/negative samples to modify the distribution enough to reach a negative conclusion.
+\par It can also be seen in Table \ref{table:VaryingPriorDistribution} that the false negative rate (the rate at which the agent incorrectly concludes that the target is not present in the region) drops in the case of the Gaussian prior relative to the Uniform prior. This is also a result of using a prior distribution that matches the shape of the true distribution, since it requires a significant number of false positive/negative samples to modify the distribution enough to reach a negative conclusion.
 
 %This is due to the unbiased sampling method of the non-adaptive strategies, which 
 

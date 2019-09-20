@@ -11,10 +11,11 @@ Assuming that targets cannot occupy the same grid cell, the update rule can be m
 Otherwise the update rule would be slightly modified to reflect the possibility of multiple targets: 
 
 
-\begin{figure}[H]
+%\begin{figure}[H]
 \scriptsize
 
-\begin{gather*}\label{eqn:JointTargetDistUpdate}
+\begin{gather}\label{eqn:JointTargetDistUpdate}
+    \begin{split}
     %\centering
     p(SensorReading_t | AgentLoc_{t}, TOneLoc_{t}, ..., TKLoc_{t})  = 
     \\
@@ -43,9 +44,13 @@ Otherwise the update rule would be slightly modified to reflect the possibility 
     \text{ and }...\text{ and }
     TKLoc_t \neq AgentLoc_t
     \end{cases}
-\end{gather*}
-\caption{Modifications to update rule for joint distribution accounting for multiple targets.}
-\end{figure}
+    \end{split}
+\end{gather}
+\begin{center}
+\small
+Modifications to update rule for joint distribution accounting for multiple targets.
+\end{center}
+%\end{figure}
 
 \normalsize
 
@@ -60,9 +65,9 @@ Section \ref{sec:StochasticTargetLocalisationRelatedLiterature} of the literatur
 %The estimated state of each grid cell, $m_i$, is maintained by the agent. 
 The update rule simply updates only the estimated state of the grid cell at which the reading was taken, as outlined in \cite{Waharte2009CoordinatedUAVs}.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics[width = 0.75\linewidth]{Chapters/MultiAgentTargetDetection/Figs/DBNs/DBNWithMultipleIndependentSources.png}
+    \includegraphics[width = 0.8\linewidth]{Chapters/MultiAgentTargetDetection/Figs/DBNs/DBNWithMultipleIndependentSources.png}
     \caption{The DBN which takes into account that there could be a target in each of the grid cells}
     \label{fig:DBNWithMultipleIndependent}
 \end{figure}
@@ -73,7 +78,7 @@ The major drawback of this approach is that there is no clear way to apply the S
 Instead, we chose to use a simple extension to the approach proposed in this chapter in the sections prior to this one.
 %We took inspiration from the way that searching for multiple targets would intuitively be carried out: we keep searching for another target until we are "satisfied" that we have enough information to conclude there are no more targets left to find.
 We chose to run a sequential search, which locates sources one-by-one, using information from the previous search to begin the subsequent search for the next target. This uses the advantages of using the sequential search procedure with the SPRT while avoiding the dimensionality problems that arise with introducing extra targets that would arise from a simultaneously searching for multiple targets. The search procedure we propose for multiple sources is given in Algorithm \ref{alg:MultiTargetLocalisation}. 
-\begin{algorithm}{}
+\begin{algorithm}[H]
 \caption{Multiple Target Localisation Algorithm}
 \label{alg:MultiTargetLocalisation}
 
@@ -104,6 +109,7 @@ We chose to run a sequential search, which locates sources one-by-one, using inf
 \RETURN target\_locations
 \end{algorithmic} 
 \end{algorithm}
+\normalsize
 The algorithm maintains a list of located targets in the variable $target\_locations$ and runs the $find\_next\_target$ procedure until the SPRT returns that there is no target present using the most recent state estimate. Lines 9 and 10 effectively restart the search procedure for a single source with the probability at the location where the last target was located set to zero. This means that it will continue to be zero, due to the multiplicative update formula, which effectively removes it from the process of localising subsequent targets. This allows us to extend the framework developed for the search procedure so far, which greatly simplifies the process of writing the implementation code to perform the search and the subsequent analysis of results.
 
 %\note{Talk about how prior can be specified to guide search to certain regions before others - Maybe this should be in conclusion/discussion section?}

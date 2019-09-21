@@ -16,7 +16,7 @@ DBNs are a generalization of HMMs and are used to model time series. The key dif
 p(Z_t | Z_{t-1}) = \prod_{i=1}^{N}p(Z_t^i | Parents(Z_t^i)
 \]
 \citeauthor{KollerPGM} provide a technical definition of DBNs: 
-"\textit{A dynamic Bayesian network (DBN) is a pair $\langle B_0, B_\rightarrow \rangle$, where $B_0$ is a Bayesian network over $X^{(0)}$, representing the initial distribution over states, and $B_\rightarrow$ is a 2-TBN for the process. For any desired time span T $\geq$ 0, the distribution over $X^{(0:T)}$ is defined as a unrolled Bayesian network, where,for any i = 1, . . . , n:
+"\textit{A dynamic Bayesian network (DBN) is a pair $\langle B_0, B_\rightarrow \rangle$, where $B_0$ is a Bayesian network over $X^{(0)}$, representing the initial distribution over states, and $B_\rightarrow$ is a 2-TBN for the process. For any desired time span T $\geq$ 0, the distribution over $X^{(0:T)}$ is defined as a unrolled Bayesian network, where, for any $i$ = 1, . . . , $n$:
 \begin{itemize}
     \item The structure and CPDs of $X^{(0)}_i$ are the same as those for $X_i$ in $B_0$,
     \item The structure and CPD of $X^{(t)}_i$ for $t > 0$ are the same as those for $X^{'}_i$ in $B_\rightarrow$.

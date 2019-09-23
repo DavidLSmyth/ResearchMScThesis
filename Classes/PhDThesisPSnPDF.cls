@@ -896,14 +896,9 @@ wish to left align your text}
 \newcommand{\@abstracttitle}{Abstract}
 
 % Names for the nomenclature groups
-\newcommand{\@nomenclatureromans}{Roman Symbols}
-\newcommand{\@nomenclaturegreeks}{Greek Symbols}
+
 \newcommand{\@nomenclatureacronyms}{Acronyms / Abbreviations}
-\newcommand{\@nomenclaturesuperscripts}{Superscripts}
-\newcommand{\@nomenclaturesubscripts}{Subscripts}
 \newcommand{\@nomenclatureothers}{Other Symbols}
-\newcommand{\@nomenclatureagent}{Agent terminology}
-\newcommand{\@nomenclatureprobability}{Probability terminology}
 \newcommand{\@nomenclatureforensics}{Forensic terminology}
 
 
@@ -1044,25 +1039,15 @@ wish to left align your text}
 \RequirePackage[intoc]{nomencl}
 \makenomenclature
 \renewcommand{\nomgroup}[1]{%
-\ifthenelse{\equal{#1}{A}}{\item[\textbf{\@nomenclatureromans}]}{% 
-\ifthenelse{\equal{#1}{G}}{\item[\textbf{\@nomenclaturegreeks}]}{%
-\ifthenelse{\equal{#1}{Z}}{\item[\textbf{\@nomenclatureacronyms}]}{%
-\ifthenelse{\equal{#1}{R}}{\item[\textbf{\@nomenclaturesuperscripts}]}{%
-\ifthenelse{\equal{#1}{S}}{\item[\textbf{\@nomenclaturesubscripts}]}{%
+
+\ifthenelse{\equal{#1}{A}}{\item[\textbf{\@nomenclatureacronyms}]}{%
 \ifthenelse{\equal{#1}{X}}{\item[\textbf{\@nomenclatureothers}]}{%
-\ifthenelse{\equal{#1}{F}}{\item[\textbf{\@nomenclatureforensics}]}{%
-\ifthenelse{\equal{#1}{P}}{\item[\textbf{\@nomenclatureprobability}]}{%
-\ifthenelse{\equal{#1}{Y}}{\item[\textbf{\@nomenclatureagent}]}
+\ifthenelse{\equal{#1}{F}}{\item[\textbf{\@nomenclatureforensics}]}
 {}
 }% matches mathematical symbols > X
 }% matches Subscripts           > S
 }% matches Superscripts         > R
-}% matches Abbreviations        > Z
-}% matches Greek Symbols        > G
-}% matches Roman Symbols        > A
-} % matches Forensic Symbols    > F
-} % matches Probability Symbols       > P
-}% matches Agent Symbols       > Y
+
 
 % To add nomenclature in the header
 \renewcommand{\nompreamble}{\markboth{\nomname}{\nomname}}

@@ -1,6 +1,6 @@
-\nomenclature[]{MLE}{Maximum Likelihood Estimate}
-\note{Make sure it's clear whether using random variables or not}
-\note{Might need to make clear Markov assumptions }
+%\nomenclature[]{MLE}{Maximum Likelihood Estimate}
+%\note{Make sure it's clear whether using random variables or not}
+%\note{Might need to make clear Markov assumptions }
 As discussed, HMMs and DBNs are useful tools for modelling complex random dynamic processes. Typically, models are used to provide some kind of inference about a process, to gain insight into its inner workings. By inference, we mean calculating the probability distributions over variables of interest. Some algorithms will be outlined here that will demonstrate how to calculate both exact and approximate inferences, using general structures for HMMs and DBNs. \par
 
 First, inference algorithms commonly used with HMMs are discussed, as their representation is more rigid, meaning that it is easier to exploit their structure generally to perform inference. As previously stated, HMMs and DBNs are routinely used to model systems that have state variables that cannot be directly observed. In most cases, we are interested in inferring what the state of the system might be, given the observed evidence variables received. This is the first and arguably the most useful inference challenge that we inspect.

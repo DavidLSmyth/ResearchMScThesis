@@ -7,7 +7,7 @@ First, inference algorithms commonly used with HMMs are discussed, as their repr
 
 The actual quantity that we want to compute is 
 \[P(X_t | e_1, e_2, ..., e_t) = P(X_t | e_{1:t})\]
-that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. The notation $e_{1:t}$ denotes the joint distribution of $e_1, e_2, ..., e_t$. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because we cannot observe the state directly, but we can observe the evidence variables. The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering} \cite{AIAMA}, \cite{Thrun:2005:ProbabilisticRobotics}, \cite{KollerPGM}. The \textit{forward algorithm} is frequently used to calculate the value of $P(X_t | e_{1:t})$ \cite[p.~572]{AIAMA}. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The forward algorithm for HMMs is shown in Algorithm \ref{alg:forwardAlgorithmHMMs} and is based on the algorithm outlined in \cite[p~.27]{Thrun:2005:ProbabilisticRobotics}. The derivation is useful to follow as an exercise, so we present it in the subsequent sub-section.
+that is, the probability distribution of the hidden state variable, given all previously observed evidence variables. The notation $e_{1:t}$ denotes the joint distribution of $e_1, e_2, ..., e_t$. We are interested in computing this value, rather than the unconditional state distribution, $P(X_t)$, because we cannot observe the state directly, but we can observe the evidence variables. The conditional distribution $P(X_t | e_{1:t})$ is frequently referred to as the \textit{belief state} and the process of calculation of this distribution is frequently referred to as \textit{state estimation} or \textit{filtering} \cite{AIAMA}, \cite{Thrun:2005:ProbabilisticRobotics}, \cite{KollerPGM}. The \textit{forward algorithm} can be used to calculate the value of $P(X_t | e_{1:t})$ \cite[p.~572]{AIAMA}. It is a recursive algorithm, and takes advantage of the fact that the underlying process is Markovian. The forward algorithm for HMMs is shown in Algorithm \ref{alg:forwardAlgorithmHMMs} and is based on the algorithm outlined in \cite[p~.27]{Thrun:2005:ProbabilisticRobotics}. The derivation is useful to follow as an exercise, so we present it in the subsequent sub-section.
 \subsubsection{HMM Filtering Algorithm Derivation} 
 \label{section:HMMFiltering}
 \note{Might be better to put this in an appendix.}
@@ -24,15 +24,15 @@ Two well-known probability identities are used in the derivation:
 \end{center}
 The derivation is as follows:
 \begin{enumerate}
-\item {$ p(x_t | e_{1:t}) = p(x_t | e_{1:t-1}, e_t) $ }
+\item {$ p(X_t | e_{1:t}) = p(X_t | e_{1:t-1}, e_t) $ }
 
-\item{$ \text{applying (a) and letting} \quad \eta = \frac{1}{p(e_t | e_{1:t-1})} \quad = \quad \eta p(e_t | e_{1:t-1}, x_t)p(x_t|e_{1:t-1}) $ }
+\item{$ \text{applying (a) and letting} \quad \eta = \frac{1}{p(e_t | e_{1:t-1})} \quad = \quad \eta p(e_t | e_{1:t-1}, X_t)p(X_t|e_{1:t-1}) $ }
 
-\item{$ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)p(x_t|e_{1:t-1})$}
+\item{$ \text{by the Markov property} \quad = \quad \eta p(e_t | X_t)p(X_t|e_{1:t-1})$}
 
-\item{$\text{applying (b)} \quad =  \quad \eta p(e_t | X_t)\int_{x_{t-1}}p(x_t|e_{1:t-1}, x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1}$}
+\item{$\text{applying (b)} \quad =  \quad \eta p(e_t | X_t)\int_{X_{t-1}}p(X_t|e_{1:t-1}, X_{t-1}) p(X_{t-1}|e_{1:t-1})dX_{t-1}$}
 
-\item{$ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)\int_{x_{t-1}}p(x_t|x_{t-1}) p(x_{t-1}|e_{1:t-1})dx_{t-1} $}
+\item{$ \text{by the Markov property} \quad = \quad \eta p(e_t | x_t)\int_{X_{t-1}}p(X_t|X_{t-1}) p(X_{t-1}|e_{1:t-1})dX_{t-1} $}
 
 \end{enumerate}
 Note that $\eta$ is a normalizing constant that ensures that the probability distribution integrates to 1, and that the probabilities that need to be calculated can be done so from the parameters specified in the HMM; namely $p(e_t | X_t)$, specified by the sensor model, and $p(X_t | x_{t-1})$, specified by the transition model.
@@ -54,7 +54,7 @@ Note that $\eta$ is a normalizing constant that ensures that the probability dis
 \hfill\pagebreak
 
 \FOR{all $x_t$}
-\STATE $\overline{bel}(x_t) = \int p(X_t | x_{t-1}) p(X_{t-1} | e_{1:t-1}) d x_{t-1}$
+\STATE $\overline{bel}(x_t) = \int p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) d x_{t-1}$
 \STATE $bel(x_t) = p(e_t | x_t) \overline{bel}(x_t)$
 \ENDFOR
 \STATE $ \eta = 1 / \int_{x_t}{bel(x_t)}dx_t$
@@ -69,7 +69,7 @@ Note that $\eta$ is a normalizing constant that ensures that the probability dis
 
 \note{Don't forget to mention: Sufficient statistics, forward algorithm}
 
-Algorithm \ref{alg:forwardAlgorithmHMMs} uses integrals to account for the fact that the distribution being used may be continuous. The work done in this thesis only uses discrete distributions, and so summations are used instead of integrals for the subsequent discussion. A consequence of using discrete distributions is that it is possible to formulate the forward algorithm using vector and matrix notation. As outlined in Section \ref{subsec:BGHMM}, the transition model for a HMM can be written down in matrix form, as can the observation model. This allows for a highly compact notation: denoting $p(x_t | e_{1:t})$ as $f_{1:t}$, we can write $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, where $f_{1:t}$ contains the vector of values of $p(x_t | e_{1:t})$ for every possible $x_t$ \cite[p.~579]{AIAMA}. Note that the observation model, $O_t$ is time dependent, as opposed to the transition model, which is assumed to be stationary. \par
+Algorithm \ref{alg:forwardAlgorithmHMMs} uses integrals to account for the fact that the distribution of the hidden state, $X_t$, may be continuous. The work done in this thesis only uses discrete distributions, and so summations are used instead of integrals for the subsequent discussion. A consequence of using discrete distributions is that it is possible to formulate the forward algorithm using vector and matrix notation. As outlined in Section \ref{subsec:BGHMM}, the transition model $T=p(X_t | X_{t-1})$ for a HMM can be written down in matrix form, as can the observation model $O_t=p(E_t | X_T)$. This allows for a highly compact notation: denoting $p(x_t | e_{1:t})$ as $f_{1:t}$, we can write $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, where $f_{1:t}$ contains the vector of values of $p(x_t | e_{1:t})$ for every possible $x_t$ \cite[p.~579]{AIAMA}. Note that the observation model, $O_t$ is time dependent, as opposed to the transition model, which is assumed to be stationary. \par
 
 Some insight can be gained from studying Algorithm \ref{alg:forwardAlgorithmHMMs}. There are three main steps to this algorithm, and the intuition behind them is explained based on explanations in \cite{AIAMA}, \cite{Thrun:2005:ProbabilisticRobotics} and \cite{Murphy1994DynamicLearning}: 
 \note{These are highly verbose, edit to make less wordy}
@@ -189,7 +189,7 @@ The algorithm for calculating likelihoods uses the forward algorithm, $\alpha$, 
     \caption{A DBN with Hidden State variables (grey), Observation variables (orange) and Control variables (green).}
     \label{fig:HMMWithControlVariablesExample}
 \end{wrapfigure}
-The forward algorithm for state estimation was presented in section \ref{section:HMMFiltering}. A slightly modified version of this algorithm is now described, which is very commonly used in stochastic systems that can be influenced by actions that an agent may take. Such systems have \textit{control variables} as well as hidden state variables and observation variables. These control variables (variables which represent the actions that an agent may perform) have an influence on the transition probabilities between states. The graphical model in Figure \ref{fig:HMMWithControlVariablesExample} describes the basic case. The arrows describe the conditional independence assumptions: at time t, the hidden state ($x_t$) depends on the previous state ($x_{t-1}$), and the previous control action taken ($u_t$). As with the HMM, the observation $e_t$ is conditionally dependent on the state $x_t$. This causes a slight change in the filtering algorithm: on line 2 of algorithm \ref{alg:forwardAlgorithmHMMs}: $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) $ is replaced with $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | u_t, x_{t-1}) p(x_{t-1} | e_{1:t-1}, u_{1:t-1}) $, reflecting that transition probabilities now depend on the most recent control action taken, as well as the previous state.
+The forward algorithm for state estimation was presented in Section \ref{section:HMMFiltering}. A slightly modified version of this algorithm is now described, which is very commonly used in stochastic systems that can be influenced by actions that an agent may take. Such systems have \textit{control variables} as well as hidden state variables and observation variables. These control variables (variables which represent the actions that an agent may perform) have an influence on the transition probabilities between states. The graphical model in Figure \ref{fig:HMMWithControlVariablesExample} describes the basic case. The arrows describe the conditional independence assumptions: at time t, the hidden state ($x_t$) depends on the previous state ($x_{t-1}$), and the previous control action taken ($u_t$). As with the HMM, the observation $e_t$ is conditionally dependent on the state $x_t$. This causes a slight change in the filtering algorithm: on line 2 of algorithm \ref{alg:forwardAlgorithmHMMs}: $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) $ is replaced with $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | u_t, x_{t-1}) p(x_{t-1} | e_{1:t-1}, u_{1:t-1}) $, reflecting that transition probabilities now depend on the most recent control action taken, as well as the previous state.
 
 
 %DBNs have already been shown to be a powerful tool while modelling stochastic systems, since the hidden variables can be described by conditional independences, rather than 
@@ -213,4 +213,4 @@ It is worth noting that there are many filtering algorithms that deal with data 
 The state estimation algorithms mentioned so far maintain the exact values of the distribution $p(x_t | e_{1:t}, u_{1:t})$, but we will quickly mention an approximate method that is also frequently used. The computational complexity of the filtering algorithms is determined by how well the joint distribution of hidden state variables, observation variables and control action variables can be factored, but in the worst case the complexity is given by the case where the joint distribution of the hidden state variables cannot be factored at all. The forward algorithm, described in Algorithm \ref{alg:forwardAlgorithmHMMs} for a HMM performs the update from each time state in O($n^2$), where $n$ is the dimension of the hidden state variable \cite{Smyth1997ProbabilisticModels}.
 %$O(n^2ut)$, where n are the number of hidden states, u is the number of available control actions and t is the number of time steps.
 In some cases, this can become intractable if the state space is large enough. % and the transition model cannot be factored. 
-In this case, approximate techniques are used. By far the most common example is the \textit{particle filter}. Details of the particle filter can be found in \cite[p~.96]{Thrun:2005:ProbabilisticRobotics} and \cite[p~.665]{KollerPGM}.
+In this case, approximate techniques are used. An example is the \textit{particle filter}. Details of the particle filter can be found in \cite[p.~96]{Thrun:2005:ProbabilisticRobotics} and \cite[p~.665]{KollerPGM}.

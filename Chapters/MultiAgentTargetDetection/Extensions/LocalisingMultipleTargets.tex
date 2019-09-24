@@ -67,7 +67,7 @@ The update rule simply updates only the estimated state of the grid cell at whic
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 0.8\linewidth]{Chapters/MultiAgentTargetDetection/Figs/DBNs/DBNWithMultipleIndependentSources.png}
+    \includegraphics[width = 0.86\linewidth]{Chapters/MultiAgentTargetDetection/Figs/DBNs/DBNWithMultipleIndependentSources.png}
     \caption{The DBN which takes into account that there could be a target in each of the grid cells}
     \label{fig:DBNWithMultipleIndependent}
 \end{figure}
@@ -86,9 +86,9 @@ We chose to run a sequential search, which locates sources one-by-one, using inf
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 %Input
-\REQUIRE $ \newline initial\_est\_state = p(x_{0} | e_{0}, u_0)=bel(x_{0}), \quad\text{ The initial estimated state distribution}
-\newline K, \quad \text{ The maximum number of targets to be localised.}
-\newline find\_next\_target, \quad \text{ The procedure for locating targets described in Algorithm \ref{alg:SingleTargetLocalisation}}$
+\REQUIRE $ \newline initial\_est\_state = p(x_{0} | e_{0}, u_0)=bel(x_{0}): \quad\text{ The initial estimated state distribution}
+\newline K: \quad \text{ The maximum number of targets to be localised.}
+\newline find\_next\_target: \quad \text{ The procedure for locating targets described in Algorithm \ref{alg:SingleTargetLocalisation}}$
 %Output
 \ENSURE $\newline \text{A set of target locations, of size }\leq \text{ K}$
 

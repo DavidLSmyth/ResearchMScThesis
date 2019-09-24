@@ -86,7 +86,7 @@ Note that since the values of $\alpha$ and $\beta$ are significantly smaller in 
 %3-Dimensional plot to show how A and B vary with alpha and beta
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 0.8\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/AandBAsFunctionOfAlphaAndBetaLogTransform.png}
+    \includegraphics[width = 0.78\linewidth]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/AandBAsFunctionOfAlphaAndBetaLogTransform.png}
     \caption{The upper and lower SPRT bounds for acceptance and rejection of $H_0$, as functions of the significance and power of the test. Values are shown on a log scale.}
     \label{fig:SPRTCutoffFunctionOfAlphaAndBeta}
 \end{figure}
@@ -102,10 +102,14 @@ Note that since the values of $\alpha$ and $\beta$ are significantly smaller in 
 %showing how A and B create upper and lower limits for terminating the search
 \begin{figure}[H]%
     \centering
-    \subfloat[]{{\includegraphics[width=7.5cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/CutoffRegionsAlphaPointZeroFiveBetaPointZeroEight.png} }}%
+    \subfloat[SPRT cutoff regions for $\alpha=0.05$, $\beta=0.08$]{{\includegraphics[width=11.5cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/CutoffRegionsAlphaPointZeroFiveBetaPointZeroEight.png} }}%
+    \caption{} \label{fig:SPRTProjected1}
     %\qquad
-    \subfloat[]{{\includegraphics[width=7.5cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/CutoffRegionsAlphaPointOneBetaPointZeroTwo.png} }}%
-    \caption{The cutoff regions of the SPRT for $\alpha=0.05$, $\beta=0.08$ (a) and $\alpha=0.01$, $\beta=0.02$ (b) as a function of agent belief in whether target is present or not. Values are shown on a log scale.}%
+\end{figure}
+\begin{figure}[H]\ContinuedFloat
+    \centering
+    \subfloat[SPRT cutoff regions for $\alpha=0.01$, $\beta=0.02$ \label{fig:SPRTProjected2}]{{\includegraphics[width=11.5cm]{Chapters/MultiAgentTargetDetection/Figs/SearchTermination/CutoffRegionsAlphaPointOneBetaPointZeroTwo.png} }}%
+    \caption{The cutoff regions of the SPRT for (a) $\alpha=0.05$, $\beta=0.08$ and (b) $\alpha=0.01$, $\beta=0.02$ as a function of agent belief in whether target is present or not. Values are shown on a log scale.}%
     \label{fig:VaryingSPRTParametersProjected2}%
 \end{figure}
 

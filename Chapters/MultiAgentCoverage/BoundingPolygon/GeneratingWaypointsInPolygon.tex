@@ -51,12 +51,12 @@ We began by assuming that the region which is to be surveyed, $R$, can be descri
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 %Input
-\REQUIRE $ \newline R \quad\text{ The set of (x, y) points defining the polygon which covers the region of interest}
-\newline x\_spacing \quad\text{ The desired spacing between points in the x direction}
-\newline y\_spacing \quad\text{ The desired spacing between points in the y direction}
+\REQUIRE $ \newline R: \quad\text{ The set of (x, y) points defining the polygon which covers the region of interest}
+\newline x\_spacing: \quad\text{ The desired spacing between points in the x direction}
+\newline y\_spacing: \quad\text{ The desired spacing between points in the y direction}
 $
 %Output
-\ENSURE $\newline grid\_points \quad \text{ A set of uniformly spaced (x, y) points, which define a regular } \newline \text{ tessellation of the region of interest}$
+\ENSURE $\newline grid\_points: \quad \text{ A set of uniformly spaced (x, y) points, which define a regular } \newline \text{ tessellation of the region of interest}$
 
 \hfill\pagebreak
 \STATE grid\_points $\leftarrow$ empty array
@@ -101,9 +101,9 @@ We describe the grid point generation algorithm (Algorithm \ref{alg:GridGenerati
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 %Input
-\REQUIRE $ \newline R \quad \text{ The polygon which covers the region of interest}
+\REQUIRE $ \newline R: \quad \text{ The polygon which covers the region of interest}
 %\newline R \quad \text{ The set of (x, y) points defining the polygon which covers the region of interest}
-\newline P \quad \text{ A point which will be tested for containment in the polygon }
+\newline P: \quad \text{ A point which will be tested for containment in the polygon }
 $
 %Output
 \ENSURE $\newline \text{True if P is contained in R else False }$

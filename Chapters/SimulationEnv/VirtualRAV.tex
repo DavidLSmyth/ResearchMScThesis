@@ -195,7 +195,7 @@ $\sigma$\si{\micro\sievert\per\second}, the ionizing radiation in \si{\micro\sie
 %\[strength(d) = \frac{\frac{1}{360} \times 4 \times \pi}{(d)^2 \times 4 \times \pi} = \frac{1}{360 \times (d)^2} \si{\micro\sievert\per\second}\] 
 \[strength(d) = \frac{\sigma \times 4 \times \pi}{d^2 \times 4 \times \pi} = \frac{\sigma}{d^2} \si{\micro\sievert\per\second}\]
 
-We found that the GameplayStatics library in the Engine module (link in comment) %https://api.unrealengine.com/INT/API/Runtime/Engine/index.html
+We found that the GameplayStatics library in the \href{https://api.unrealengine.com/INT/API/Runtime/Engine/index.html}{Engine module}\footnote{\href{https://api.unrealengine.com/INT/API/Runtime/Engine/index.html}{https://api.unrealengine.com/INT/API/Runtime/Engine/index.html}}  %https://api.unrealengine.com/INT/API/Runtime/Engine/index.html
 could provide a large part of the functionality. The simulated emission of radiation was modelled in UE4 by using the built-in blueprint node,
 \href{https://api.unrealengine.com/INT/API/Runtime/Engine/Kismet/UGameplayStatics/ApplyRadialDamageWithFalloff/index.html}{\emph{Apply Radial Damage with Falloff}}\footnote{\href{https://api.unrealengine.com/INT/API/Runtime/Engine/Kismet/UGameplayStatics/ApplyRadialDamageWithFalloff/index.html}{https://api.unrealengine.com}}, since it provides a ready-made inverse-square equation that can be parameterised to match the equation identified above to give the level of ionizing radiation.
 

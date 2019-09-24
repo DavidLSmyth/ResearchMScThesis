@@ -10,7 +10,7 @@ We present statistics related to the Monte Carlo simulations, which reveal how m
     \centering
     \begin{tabular}{|c|c|c|c|}
     \hline
-         Parameter&  Run1 & Run2 & Run3 \\
+         Parameter& Configuration 1 & Configuration 2 & Configuration 3 \\
          \hline
          Initial Distribution & Guassian & Uniform & - \\
          
@@ -36,8 +36,8 @@ We present statistics related to the Monte Carlo simulations, which reveal how m
 The meaning of each of these parameters is outlined as follows:
 \begin{enumerate}
     \item The initial belief distribution of each agent describes the distribution of $p(x_0 | e_0, u_0)$, which corresponds to the probability distribution describing its initial belief of the location of the target, prior to gathering any evidence. This may come from prior information about the scene. A Gaussian distribution is peaked, meaning that prior information suggests that some grid cells are more likely to contain the target than others. This can be seen in Figure \ref{fig:InitialGaussian}. A Uniform distribution is not peaked, reflecting no prior information related to the location of the target. This can be seen in Figure \ref{fig:InitialUniform}.
-    \item The initial cumulative belief that the target is present in the region is the agent's belief in whether the target is present in the region, prior to gathering any evidence. It is the cumulative sum of the probabilities of the target presence in each of the grid cells.
-    \item The sensor model false positive rate and false negative rate and the parameters $\alpha$ and $\beta$ set out in Section \ref{subsec:stochasticEnvModel}. These can differ from the true rate at which the sensor will observe positive and negative observations.
+    \item The initial cumulative belief that the target is present in the region is the agent's belief in whether the target is present in the region, prior to gathering any evidence. It is the cumulative sum of the probabilities of the target presence in each of the grid cells. An initial cumulative belief of 0.25 means that initially, the agent is 25\% sure that the target is present in the region. 
+    \item The sensor model false positive rate and false negative rate and the parameters $\alpha$ and $\beta$ are set out in Section \ref{subsec:stochasticEnvModel}. These can differ from the true rate at which the sensor will observe positive and negative observations. For example, given that the sensor actually outputs false positives and false negatives at a rate of 0.2 and 0.15 respectively, if the sensor model is calibrated with a false positive rate and false negative rate of 0.05 and 0.02 respectively, it will drastically under-estimate the rate at which false readings are recorded, which is reflected in the way it updates its estimated state.
     \item \# of Targets Present gives the number of distinct targets present in the search region. These are assumed to exist in distinct locations.
     \item \# of Agents Used is the number of agents participating in the search.
 \end{enumerate}

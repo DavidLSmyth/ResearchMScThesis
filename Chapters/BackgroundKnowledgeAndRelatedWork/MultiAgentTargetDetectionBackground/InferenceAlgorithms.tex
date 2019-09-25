@@ -45,7 +45,7 @@ Note that $\eta$ is a normalizing constant that ensures that the probability dis
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 %Input
-\REQUIRE $\newline P(x_{t-1} | e_{1:t-1})=bel(x_{t-1}): \quad \text{The belief distribution as far as the previous timestep}
+\REQUIRE $\newline P(x_{t-1} | e_{1:t-1})=bel(x_{t-1}): \quad \text{The belief distribution as far as the previous time-step}
 \newline e_t: \quad \text{The most recent observation}
 \newline hmm: \quad \text{A Hidden Markov Model specifying the transition and observation probabilities,} \newline p(X_t | x_{t-1}) \text{ and } p(E_t | x_t)$
 %Output
@@ -99,7 +99,7 @@ Some insight can be gained from studying Algorithm \ref{alg:forwardAlgorithmHMMs
     
     
 \end{enumerate}
-An key strength of this algorithm is the fact it allows updates to be performed online. The reason for this is that the information-state vector, $p(x_t | e_{1:t})$ is a sufficient statistic for the past history of observations. For a full proof of this property, the reader is referred to Appendix A of \cite{Smallwood1973TheHorizon}, which also provides insight into the update rule itself. In relation to the update rule, note that an initial distribution of the estimated state must be provided to this algorithm before the first update can be performed. The complexity of the forward algorithm is $\theta (nm^2)$, where m is the size of the joint distribution of the hidden variables, x, and n is the number of timesteps that have occurred. This is clear to see when viewing the update as the matrix-vector multiplication $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, as the size of T is $m^2$.
+An key strength of this algorithm is the fact it allows updates to be performed online. The reason for this is that the information-state vector, $p(x_t | e_{1:t})$ is a sufficient statistic for the past history of observations. For a full proof of this property, the reader is referred to Appendix A of \cite{Smallwood1973TheHorizon}, which also provides insight into the update rule itself. In relation to the update rule, note that an initial distribution of the estimated state must be provided to this algorithm before the first update can be performed. The complexity of the forward algorithm is $\theta (nm^2)$, where m is the size of the joint distribution of the hidden variables, x, and n is the number of time-steps that have occurred. This is clear to see when viewing the update as the matrix-vector multiplication $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, as the size of T is $m^2$.
 
 
 

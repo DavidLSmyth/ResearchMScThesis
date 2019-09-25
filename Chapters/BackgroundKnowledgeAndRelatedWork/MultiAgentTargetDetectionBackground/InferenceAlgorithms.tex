@@ -99,7 +99,7 @@ Some insight can be gained from studying Algorithm \ref{alg:forwardAlgorithmHMMs
     
     
 \end{enumerate}
-An key strength of this algorithm is the fact it allows updates to be performed online. The reason for this is that the information-state vector, $p(x_t | e_{1:t})$ is a sufficient statistic for the past history of observations. For a full proof of this property, the reader is referred to Appendix A of \cite{Smallwood1973TheHorizon}, which also provides insight into the update rule itself. In relation to the update rule, note that an initial distribution of the estimated state must be provided to this algorithm before the first update can be performed. The complexity of the forward algorithm is $\theta (nm^2)$, where m is the size of the joint distribution of the hidden variables, x, and n is the number of time-steps that have occurred. This is clear to see when viewing the update as the matrix-vector multiplication $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, as the size of T is $m^2$.
+A key strength of this algorithm is the fact it allows updates to be performed online. The reason for this is that the information-state vector, $p(x_t | e_{1:t})$ is a sufficient statistic for the past history of observations. For a full proof of this property, the reader is referred to Appendix A of \cite{Smallwood1973TheHorizon}, which also provides insight into the update rule itself. In relation to the update rule, note that an initial distribution of the estimated state must be provided to this algorithm before the first update can be performed. The complexity of the forward algorithm is $\theta (nm^2)$, where m is the size of the joint distribution of the hidden variables, x, and n is the number of time-steps that have occurred. This is clear to see when viewing the update as the matrix-vector multiplication $f_{1:t} = \eta O_{t} T^{T} f_{1:t-1}$, as the size of T is $m^2$.
 
 
 
@@ -115,7 +115,7 @@ given the fixed set of parameters provided by the HMM. A brief outline of the de
 
 \subsubsection{HMM Evidence Likelihood Algorithm Derivation}\label{subsubsec:BGEvidenceLikelihood}
 
-Analagous to the filtering algorithm derivation, two well-known probability identities are used in the derivation: 
+Analogous to the filtering algorithm derivation, two well-known probability identities are used in the derivation: 
 \begin{center}
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \end{center}

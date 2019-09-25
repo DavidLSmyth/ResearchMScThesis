@@ -37,7 +37,7 @@ In order to provide this functionality, it is clear that using existing tools wo
 %\note{want to get across that basic rendering etc. is offered by many platforms, real issue is to find something to work with that can provide support for Remotely Operated Vehicles / Autonomous vehicles}
 This meant that an emphasis was placed on choosing software with some capability to implement high-fidelity simulated aerial vehicles as well as physics and graphics rendering.
 %Specific functionality can commonly be added to games engines using plugins, which are usually specific to an individual games engine. 
-Standalone simulation tools were considered alongside tools designed to be run using a game engine. The simulation software whose potential use for designing a custom simulation environment for disaster scene management that were investigated are shown in Table \ref{table:SimulatorComparison}, with more detailed overviews provided in \cite{Ebeid2018ASimulators}. UE4, combined with the Airsim plugin, was chosen to develop the simulation since the documentation for both suggested that it could meet all of the the evaluation criteria outlined above. We give more details of the integration of AirSim in Section \ref{sec:AirSimIntegration}.\par
+Standalone simulation tools were considered alongside tools designed to be run using a game engine. The simulation software whose potential use for designing a custom simulation environment for disaster scene management that were investigated are shown in Table \ref{table:SimulatorComparison}, with more detailed overviews provided in \cite{Ebeid2018ASimulators}. UE4, combined with the Airsim plugin, was chosen to develop the simulation since the documentation for both suggested that it could meet all of the evaluation criteria outlined above. We give more details of the integration of AirSim in Section \ref{sec:AirSimIntegration}.\par
 %\note{Might be better off presenting this as a table.
 %Format could be Simulator | Licence | Implementation Language | Supported OS | %Developer | Additional Notes}
 %\begin{itemize}
@@ -56,7 +56,7 @@ Standalone simulation tools were considered alongside tools designed to be run u
 \subsection{Virtual Simulation Environment Design Using UE4}
 %\note{might need to re-word this. This section should be about the design process that was used once Unreal Engine had be determined the platform of choice to develop with}
 %The design process of any simulation or game using UE4 should follow certain good practices in order to avoid some common pitfalls that can cause serious delays in development. 
-Once an environment has been built using UE4, it can be labor-intensive to radically alter it \cite[p.~454]{Rouse2004GamePractice}. This suggests that care should be taken to ensure to plan the design process so that consistent and efficient results can be achieved.
+Once an environment has been built using UE4, it can be labour-intensive to radically alter it \cite[p.~454]{Rouse2004GamePractice}. This suggests that care should be taken to ensure to plan the design process so that consistent and efficient results can be achieved.
 
 %Most material related to design of simulations and games using UE4 are highly qualitative, addressing questions like "\textit{what does the player actually want and how can that be delivered?}" rather than describing how the process of designing the simulation should be carried out.
 Some good level design practices are noted in \cite{Rouse2004GamePractice}, although many are not applicable to the design of a serious simulation. Notable points from \cite{Rouse2004GamePractice} are summarised:
@@ -85,7 +85,7 @@ and
 %\note{Would be good to discuss some of the challenges met while developing the simulation and how they were overcome}
 
 
-\subsection{Design Process Without Dynamic Elements}
+\subsection{Design Process without Dynamic Elements}
 This process was carried out iteratively and the results of the developed world excluding the dynamic elements are discussed here. Most changes took place directly within the UE4 Editor. The chronological development of the virtual world is shown in Figures \ref{fig:virutalEnvDevelopment1} and \ref{fig:virutalEnvDevelopment2}. The Figures on the i$_{th}$ row corresponds to the i$_{th}$ distinct version of the physical layout of the virtual world. The first iteration has flaws that were improved throughout the development process. The major problems that we addressed were:
 \begin{itemize}
     \item Rendered images were of poor quality due to incorrect UV texture mappings %UV mapping is a technique used to "wrap" a 2D image texture onto a 3D mesh. 

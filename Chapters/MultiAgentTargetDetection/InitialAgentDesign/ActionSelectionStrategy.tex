@@ -11,7 +11,7 @@ A simple greedy search was implemented next, where the agent chooses to visit th
 Action_t = \argmax_{NewLoc \in N(AgentLoc)}{p(TargetLoc = NewLoc, SearchStatus, AgentLocation| e_{1:t}, u_{1:t})}
 \]
 \normalsize
-$N(AgentLoc)$ is a function that returns a neighborhood of locations around the agent's location and can be calibrated to trade off the cost of saccading between grid cells that may be far from each other against the cost of limiting the agents range to a narrow and possibly "cold" region.This method is designed bearing in mind that there may be motivation to explore some areas before others based on prior knowledge. 
+$N(AgentLoc)$ is a function that returns a neighbourhood of locations around the agent's location and can be calibrated to trade off the cost of saccading between grid cells that may be far from each other against the cost of limiting the agents range to a narrow and possibly "cold" region.This method is designed bearing in mind that there may be motivation to explore some areas before others based on prior knowledge. 
 
 %\textbf{$\epsilon$-greedy Search} Greedy search  simplest method to implement was an $\epsilon$-greedy action selection method, whereby the agent moves to the grid cell with the highest estimated probability in a pre-defined radius with probability 1-$\epsilon$ and a random grid cell in the pre-defined with probability $\epsilon$. This encourages the agent to exploit it's current know\par
 

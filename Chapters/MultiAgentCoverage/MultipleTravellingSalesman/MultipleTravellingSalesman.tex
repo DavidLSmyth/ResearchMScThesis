@@ -43,20 +43,20 @@ This is the \textit{multiple Travelling Salesman Problem} (mTSP).
 Due to the fact that the mTSP is at least as hard as the TSP, since it is a generalisation of the TSP, finding a polynomial time solution to the mTSP is not feasible. We explored a number of sub-optimal solutions that take advantage of the highly structured nature of the uniformly spaced grid that we use in our instance of the problem. The usual trade-off between solution quality vs. time taken to find the solution motivated our choice of implemented algorithm, as we anticipated that the time taken to execute the planned routes may be comparable to the time taken to generate some solutions (the order of minutes or hours). For example, \citeauthor{Hungerlander2018TheGrids} shows the results of using a Mixed Integer Linear Program (MILP) took hours to run for grid sizes that could be considered relatively small in many real-world domains \cite{Hungerlander2018TheGrids}.
 %which would exceed the amount of time taken to perform even a random solution. %General details of solutions that can be applied to solve the mTSP and VRP can be found in Section <> of the literature review (this will be filled in).
 
-\subsection{Nearest Neighbor Algorithm}
-There are four common heuristic algorithms that form the basis of most solutions to TSP and mTSP problems, as stated in \cite{Johnson1997TheOptimization}: the \textit{nearest neighbor} algorithm, the \textit{greedy algorithm}, the \textit{Clarke-Wright} algorithm and the \textit{Christofides} algorithm. We began by implementing an algorithm which is a modification of a TSP solution based on the nearest-neighbor heuristic. Our reasoning is based on the following premises:
+\subsection{Nearest Neighbour Algorithm}
+There are four common heuristic algorithms that form the basis of most solutions to TSP and mTSP problems, as stated in \cite{Johnson1997TheOptimization}: the \textit{nearest neighbour} algorithm, the \textit{greedy algorithm}, the \textit{Clarke-Wright} algorithm and the \textit{Christofides} algorithm. We began by implementing an algorithm which is a modification of a TSP solution based on the nearest-neighbour heuristic. Our reasoning is based on the following premises:
 \begin{enumerate}
-    \item The nearest-neighbor heuristic is a well-known heuristic that is straightforward to implement. It is known to provide good results to the TSP when the cost is defined as the Euclidean distance between points \cite{Johnson1997TheOptimization}, as in our use case.
-    \item The nearest-neighbor solution to the TSP can be very easily modified to be applied to the mTSP by implementing it in a round-robin manner, as detailed in Algorithm \ref{alg:NNHeuristic}.
-    \item The nearest-neighbor heuristic is known to have a running time which is O($n^2$) \cite{Rosenkrantz1977AnProblem}, which means it can scale well to reasonably large problem instances compared to other algorithms which have a far worse performance complexity. For example, the Christofides algorithm is known to be within a factor of $\frac{3}{2}$ of the optimal solution, but its running time is O($n^3$) \cite{Christofides1976WORST-CASEPROBLEM}, which quickly becomes prohibitively long.
+    \item The nearest-neighbour heuristic is a well-known heuristic that is straightforward to implement. It is known to provide good results to the TSP when the cost is defined as the Euclidean distance between points \cite{Johnson1997TheOptimization}, as in our use case.
+    \item The nearest-neighbour solution to the TSP can be very easily modified to be applied to the mTSP by implementing it in a round-robin manner, as detailed in Algorithm \ref{alg:NNHeuristic}.
+    \item The nearest-neighbour heuristic is known to have a running time which is O($n^2$) \cite{Rosenkrantz1977AnProblem}, which means it can scale well to reasonably large problem instances compared to other algorithms which have a far worse performance complexity. For example, the Christofides algorithm is known to be within a factor of $\frac{3}{2}$ of the optimal solution, but its running time is O($n^3$) \cite{Christofides1976WORST-CASEPROBLEM}, which quickly becomes prohibitively long.
     %\item Partitioning a TSP solution can give very good mTSP solutions on the same graph.
 \end{enumerate}
 
-The nearest-neighbor (NN) heuristic algorithm for the multiple Travelling Salesman problem is shown in Algorithm \ref{alg:NNHeuristic}.
+The nearest-neighbour (NN) heuristic algorithm for the multiple Travelling Salesman problem is shown in Algorithm \ref{alg:NNHeuristic}.
 
 
 \begin{algorithm}[h]
-\caption{The Nearest-Neighbor Solution to the mTSP Problem}
+\caption{The Nearest-Neighbour Solution to the mTSP Problem}
 \label{alg:NNHeuristic}
 \begin{algorithmic}[1]
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
@@ -85,10 +85,10 @@ current\_agent\_index$\leftarrow$0\\
 \hfill\pagebreak
 \WHILE {pointsToVisit is not empty}
 \STATE agent\_position $\leftarrow$ last value in agent\_paths.get(current\_agent\_index)
-\STATE nearest\_neighbor$\leftarrow$\(\displaystyle \min_{neighbor \in points\_to\_visit}\)cost(agent\_position, neighbor)
-\STATE Update current\_agent value in agent\_paths to include nearest\_neighbor
-\STATE Add nearest\_neighbor to visited\_points.
-\STATE Remove nearest\_neighbor from remaining\_points\_to\_visit.
+\STATE nearest\_neighbour$\leftarrow$\(\displaystyle \min_{neighbour \in points\_to\_visit}\)cost(agent\_position, neighbour)
+\STATE Update current\_agent value in agent\_paths to include nearest\_neighbour
+\STATE Add nearest\_neighbour to visited\_points.
+\STATE Remove nearest\_neighbour from remaining\_points\_to\_visit.
 \STATE current\_agent\_index$\leftarrow$(currentAgentIndex+1) $\mathbf{mod}$$\vert$List of Agents$\vert$
 
 %\STATE currentAgent$\leftarrow$agents.get(currentAgentIndex)
@@ -106,7 +106,7 @@ current\_agent\_index$\leftarrow$0\\
 \label{fig:NNPartitioning}
 \end{figure}
 
-The algorithm can be seen to be a very straightforward extension of the single agent NN algorithm. The while loop iteratively cycles through the list of RAVs and assigns the nearest non-assigned neighbor to the next RAVs partially assembled route.
+The algorithm can be seen to be a very straightforward extension of the single agent NN algorithm. The while loop iteratively cycles through the list of RAVs and assigns the nearest non-assigned neighbour to the next RAVs partially assembled route.
 
 Since we run this algorithm over a uniformly-spaced grid, it builds agent routes in a lawn-cutting pattern, which provides good results as long as the routes do not begin to overlap. The idea is to take the NN algorithm TSP solution and apply it exhaustively in a round-robin manner, so that each RAV is encouraged to find a non-overlapping optimal sub-tour. These non-overlapping optimal sub-tours partition the region and therefore offer a solution to the mTSP. Section 4 of \cite{Hungerlander2018TheGrids} gives an insight to how optimal solutions can be found for a uniformly spaced rectangular grid when RAVs are assumed to start in the corners of the rectangle, which provides further motivation to using Algorithm \ref{alg:NNHeuristic}. In practice non-overlapping optimal sub-tours are not found, but solutions may come close, as illustrated in Figure \ref{fig:NNPartitioning}.
 
@@ -426,7 +426,7 @@ Bounding coordinates: (53.2782526061, -9.0610624609), (53.2803800539, -9.0640925
 
 
 
-%\subsubsection{Proof of Lower Bound of Nearest Neighbor Solution}
+%\subsubsection{Proof of Lower Bound of Nearest Neighbour Solution}
 %Let O be a tour that is an optimal solution to the Travelling Salesperson Problem (TSP) for  a graph G(V, E), where E $\subseteq$ V $\times$ V, with a cost function c$(p_i, p_j)$ defined for all $(p_i, p_j)$ $\in$ E and an induced cost function 
 %C($T$) = $\sum\limits_{(p_i, p_j)\in }$C$(p_i, p_j)$ defined for any tour $T$ of G.
 %The optimal tour O is an ordered tuple (($p_i, p_j$), ($p_j, p_k$),..., ($p_m, p_n$)) $\subseteq$ E which satisfies:

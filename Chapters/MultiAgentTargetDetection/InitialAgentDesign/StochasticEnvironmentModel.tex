@@ -115,7 +115,7 @@ The semantics of the equations listed above is given here:
     \item Equation \ref{eqn:EvidenceVarsProbs} uses two parameters, $\alpha$ and $\beta$, to represent the probability of making a false positive and false negative sensor reading, respectively. These are assumed to have been calculated by using pre-calibrated values of the sensor. This model is does not stipulate any restrictions on the sensor other than that it must return a reading indicating that the target is present or not.
     \item  Equation \ref{eqn:TargetLocProbs} simply states that the location of the target does not change, even though it is hidden. This could be modified to allow for mobile target detection in the case of a non-stationary target by introducing non-unity probabilities in a transition matrix for different values of $TargetLoc_t$ and $TargetLoc_{t-1}$.
     \item The first line of Equation \ref{eqn:SearchStatus} states that once the agent terminates the search, it remains over. The second line states that if the agent requests an ongoing search to terminate, then it does so deterministically. The third line states that if the agent chooses to move in an ongoing search, then the search remains ongoing.
-    \item Equation \ref{eqn:AgentLocation} states that the agent moves to new locations deteministically. It also indicates that should the agent choose to terminate the search, then the environment enters a terminal state, indicating that the search is over.
+    \item Equation \ref{eqn:AgentLocation} states that the agent moves to new locations deterministically. It also indicates that should the agent choose to terminate the search, then the environment enters a terminal state, indicating that the search is over.
 \end{enumerate}
 
 

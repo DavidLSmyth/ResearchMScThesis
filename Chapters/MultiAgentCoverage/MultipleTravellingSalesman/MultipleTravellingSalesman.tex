@@ -125,7 +125,7 @@ The results and analysis of applying the NN heuristic algorithm to the symmetric
 illustrate some of the results, with the configuration of each listed below. The experiments are intended to demonstrate practical use cases where the NN algorithm will provide qualitatively good results.
 
 \pagebreak
-\subsection{Qualitative Behaviour of the NN Algorithm With a Rectangular Grid}
+\subsection{Qualitative Behaviour of the NN Algorithm with a Rectangular Grid}
 We set up this experiment with the aim of showing that if the RAVs can be placed in the configuration suggested by \citeauthor{Hungerlander2018TheGrids}, they will partition the region in a close to optimal fashion \cite{Hungerlander2018TheGrids}, minimising the longest distance any one RAV needs to travel to complete its mission. We ran the experiment using 1-4 RAVs, placing them in the corners of the rectangles. This was done in an approximate fashion by manually dragging the RAVs to their starting position using the UI mentioned in Section \ref{subsec:SceneSurveyingUI}. The results in Table \ref{table:NNAlgoResultsRect} show that the amount of work done by each RAV is approximately evenly balanced. Theoretically, the minimum amount of work done by each RAV would be $\frac{1}{2}$, $\frac{1}{3}$ and $\frac{1}{4}$ of the total work done by a single RAV when using 2, 3 and 4 RAVs respectively.
 \par The results show that when using 2, 3 and 4 RAVs, the solutions found by the NN algorithm were 2.701\%, 4.500\% and 17.315\% less efficient than evenly splitting up the solution for a single RAV ( $\frac{1}{2}$, $\frac{1}{3}$ and $\frac{1}{4}$ of 3576.6m of the single-RAV route length, respectively). This was partly due to the extra distance added from the starting positions. Note that when using 4 RAVs, there was some overlap in the routes which added a significantly higher overhead to the cost of the route in relation to that given by even splitting the solution found for a single RAV.
 
@@ -200,11 +200,11 @@ We used the following configuration to run the experiment:
 
 
 \pagebreak
-\subsection{Qualitative Behaviour of the NN Algorithm With a Triangular Grid}
+\subsection{Qualitative Behaviour of the NN Algorithm with a Triangular Grid}
 This experiment was set up in a similar manner to the first, where the RAVs were dragged to an initial starting position that should allow the NN algorithm to take advantage of the axes of symmetry of the triangle.
 The results in Table \ref{table:NNAlgoResultsTri} show that the amount of work done by each RAV is approximately evenly balanced when using two RAVs, but not three. 
 
-The results show that when using two and three RAVs, the solutions found by the NN algorithm were 0.155\% and 36.565\% less efficient than that given by even splitting the solution for a single RAv ( $\frac{1}{2}$ and $\frac{1}{3}$ of 1940.6, respectively). This can be explained by the corresponding figures displaying the agents routes in Table \ref{table:NNAlgoResultsTri}. Clearly, the NN algorithm takes advantage of the symmetry down the vertical centre axis when two RAVs are used, but when three RAVs are used, the solution the RAV beginning at the top of the triangle skips the grid points that require a "diagonal" move, instead moving down to the closer grid point. These points are picked up by the second RAV (green) once it meets the third (red), adding a relatively large cost.
+The results show that when using two and three RAVs, the solutions found by the NN algorithm were 0.155\% and 36.565\% less efficient than that given by even splitting the solution for a single RAv ( $\frac{1}{2}$ and $\frac{1}{3}$ of 1940.6, respectively). This can be explained by the corresponding figures displaying the agents' routes in Table \ref{table:NNAlgoResultsTri}. Clearly, the NN algorithm takes advantage of the symmetry down the vertical centre axis when two RAVs are used, but when three RAVs are used, the solution the RAV beginning at the top of the triangle skips the grid points that require a "diagonal" move, instead moving down to the closer grid point. These points are picked up by the second RAV (green) once it meets the third (red), adding a relatively large cost.
 
 We used the following configuration to run the experiment:
 \\Spacing between grid points: 23m in latitude, 25m in longitude.
@@ -267,7 +267,7 @@ We used the following configuration to run the experiment:
 
 
 \pagebreak
-\subsection{Qualitative Behaviour of the NN Algorithm With a Hexagonal Grid}
+\subsection{Qualitative Behaviour of the NN Algorithm with a Hexagonal Grid}
 This experiment was again set up in a similar manner to the first, where the RAVs were dragged to starting positions that should allow the NN algorithm to take advantage of the axes of symmetry of the hexagon. In this case, we had to vary their starting locations depending on the number of RAVs used in order to encourage the generation of non-overlapping solutions. We found that the NN algorithm could find (approximately) symmetrical solutions using two or four RAVs, shown in Table \ref{table:NNAlgoResultsHex}.
 
 

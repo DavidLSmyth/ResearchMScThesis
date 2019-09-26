@@ -24,10 +24,10 @@ A first-order discrete-time Markov process is a stochastic process that describe
 Some obvious results are worth pointing out; as for any stochastic matrix, by the axioms of probability theory, the sum of conditional probabilities across each column sum to one: {$\displaystyle \sum _{j=1}^{S}T_{i,j}=1$} and the transition probabilities over $k$ time-steps can be described by the $k_{th}$ power of the transition matrix: ${(T^k)}_{i,j}$ = $P(X_{t+k} = j | X_{t} = i)$. 
 
 It also is possible to calculate the probability of the process experiencing a sequence of states from time-steps 1 as far as $t$, using the chain rule of probability and the Markov property:
-$P(X_{1:t}) = P(X_1, X_2, ..., X_t) = P(X_1)\times P(X_2 | X_1)\times P(X_3 | X_2, X_1) \times P(X_t | X_{t-1}, X_{t-2}, ... , X_1) = P(X_1) \times \prod_{i=2}^{t}{P(X_i | x_{i-1})}$. Marginalization over variables in this sequence allows the calculation of many useful quantities.
+$P(X_{1:t}) = P(X_1, X_2, ..., X_t) = P(X_1)\times P(X_2 | X_1)\times P(X_3 | X_2, X_1) \times ... \times P(X_t | X_{t-1}, X_{t-2}, ... , X_1) = P(X_1) \times \prod_{i=2}^{t}{P(X_i | x_{i-1})}$. Marginalization over variables in this sequence allows the calculation of many useful quantities.
 \par
 
-Markov processes can described by graphical models, for example Figure \ref{fig:markov-processes} displays a graphical representation of first and second order Markov processes, where a directed arrow between nodes represents a directional dependence between those nodes.
+Markov processes can described by graphical models. For example Figure \ref{fig:markov-processes} displays a graphical representation of first and second order Markov processes, where a directed arrow between nodes represents a directional dependence between those nodes.
 
 \begin{figure}[h]
     \centering
@@ -37,20 +37,20 @@ Markov processes can described by graphical models, for example Figure \ref{fig:
 \end{figure}
 
 \subsubsection{HMM Description}\label{subsubsec:HMMDesc}
-Hidden Markov Models (HMMs) are models that build on the Markov Process model, which describes the evolution of a random system in the language of probability theory. HMMs assume that the system being modelled can be described by a Markov process, but that the states of this process are unobservable \cite{Ghahramani2001AnNetworks}. This means that it is not possible to determine the state of the system exactly at any given point in time. However, it is possible to make an observation of a random variable that is related to the hidden state which yields information about the hidden state. A graphical representation of a HMM is shown in Figure \ref{fig:hmm}
+Hidden Markov Models (HMMs) are models that build on the Markov Process model, which describes the evolution of a random system in the language of probability theory. HMMs assume that the system being modelled can be described by a Markov process, but that the states of this process are unobservable \cite{Ghahramani2001AnNetworks}. This means that it is not possible to determine the state of the system exactly at any given point in time. However, it is possible to make an observation of a random variable that is related to the hidden state which yields information about the hidden state. A graphical representation of a HMM is shown in Figure \ref{fig:hmm},
 \begin{figure}[]
     \centering
     \includegraphics[width=0.8\linewidth]{Chapters/BackgroundKnowledgeAndRelatedWork/MultiAgentTargetDetectionBackground/Figs/HMMs/HMMGraphicalModel.png}
     \caption{A graphical model of a HMM}
     \label{fig:hmm}
-\end{figure}, where the Markov Process is shown by the variables $X_i$ and the observation variables are shown by variables $E_i$. A HMM can be specified by a triple, $\lambda$ = $(T, O, \pi)$, where $T$ is the stochastic transition matrix, $\pi$ is the initial distribution $P(X_1)$ and O describes the conditional probability of an observation given that the system is in a certain state: $O(E_i, X_i) = P(E_{i} | X_{i})$ \cite{Rabiner1989ARecognition}. Taken together, it is then possible to specify the joint distribution of the hidden state variables and the evidence variables, analogous to the Markov Process: 
+\end{figure} where the Markov Process is shown by the variables $X_i$ and the observation variables are shown by variables $E_i$. A HMM can be specified by a triple, $\lambda$ = $(T, O, \pi)$, where $T$ is the stochastic transition matrix, $\pi$ is the initial distribution $P(X_1)$ and O describes the conditional probability of an observation given that the system is in a certain state: $O(E_i, X_i) = P(E_{i} | X_{i})$ \cite{Rabiner1989ARecognition}. Taken together, it is then possible to specify the joint distribution of the hidden state variables and the evidence variables, analogous to the Markov Process: 
 $
 P(X_{1:t}, E_{1:t}) = P(X_1, X_2, ..., X_t, E_1, E_2, ..., E_t) = P(X_1) \times P(E_1 | X_1) \times
 \prod_{i=2}^{t}{(P(X_i | x_{i-1}) \times P(E_t | X_t))}.
-$Given this representation, it is then possible to answer questions identified in \cite{Rabiner1989ARecognition} and \cite{Murphy1994DynamicLearning}:
+$ Given this representation, it is then possible to answer questions identified in \cite{Rabiner1989ARecognition} and \cite{Murphy1994DynamicLearning}:
 \begin{itemize}
 
-    \item Given the HMM, $\lambda$, determine the probability of occurrence of a particular observation sequence, $P(E_{1:t} | \lambda)$
+    \item Given the HMM, $\lambda$, what is the probability of occurrence of a particular observation sequence, $P(E_{1:t} | \lambda)$?
     
     \item Given a sequence of observations $(E_1, E_2, ..., E_n)$, what is the most likely sequence of hidden states that led to these observations? i.e. find \[\argmax_{X_{1:t}} P(X_{1:t} | E_{1:t})\]
     

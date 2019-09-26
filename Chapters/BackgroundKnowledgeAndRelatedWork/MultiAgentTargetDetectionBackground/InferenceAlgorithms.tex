@@ -80,7 +80,7 @@ Some insight can be gained from studying Algorithm \ref{alg:forwardAlgorithmHMMs
     $\overline{bel}(x_t) = \sum_{x_{t-1}} p(x_t | x_{t-1}) p(x_{t-1} | e_{1:t-1}) d x_{t-1}$
     \end{center}
 
-    This step carries out the first part of the calculation of the belief value for a given state $x_t$, by marginalizing over all possible hidden states ($x_{t-1}$) that could have preceded the current one ($x_t$). This reflects intuition: probability of being in state $x_t$ should depend on the probability of transitioning from all possible previous states to $x_t$. 
+    This step carries out the first part of the calculation of the belief value for a given state $x_t$, by marginalizing over all possible hidden states ($x_{t-1}$) that could have preceded the current one ($x_t$). This reflects intuition: the probability of being in state $x_t$ should depend on the probability of transitioning from all possible previous states to $x_t$. 
     %\note{this sentence doesn't seem necessary}
     Think "\textit{the probability that I am in location x is the sum of probabilities of starting at all other possible locations and subsequently ending up in location x, weighted against my belief that I began in each other possible location}".
     
@@ -93,7 +93,7 @@ Some insight can be gained from studying Algorithm \ref{alg:forwardAlgorithmHMMs
     \end{center}
     This step takes the projected belief in step 1 and multiplies it by the probability of observing the data that we did in the given hidden state, $x_t$. This can be thought of as a correction because the use of the measurement data narrows the probabilities of the possible states that the system could have transitioned to. 
     \note{Need to re-word this to make more concise}
-    For example, if the value of a transition probability from state x to state y is low, and there is a low probability that the system was previously in state x, a high probability of observing the observed sensor reading given state y can still result in a relatively high posterior probability of the system being in state y given the new evidence.
+    %For example, if the value of a transition probability from state x to state y is low, and there is a low probability that the system was previously in state x, a high probability of observing the observed sensor reading given state y can still result in a relatively high posterior probability of the system being in state y given the new evidence.
     
     \item The final step is to ensure that the distribution sums to 1. This is done by multiplying by a normalizing constant, $\eta$.
     

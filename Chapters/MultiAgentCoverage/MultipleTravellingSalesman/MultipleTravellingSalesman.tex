@@ -106,7 +106,7 @@ current\_agent\_index$\leftarrow$0\\
 \label{fig:NNPartitioning}
 \end{figure}
 
-The algorithm can be seen to be a very straightforward extension of the single agent NN algorithm. The while loop iteratively cycles through the list of RAVs and assigns the nearest non-assigned neighbour to the next RAVs partially assembled route.
+The algorithm can be seen to be a very straightforward extension of the single agent NN algorithm. The while loop iteratively cycles through the list of RAVs and assigns the nearest non-assigned neighbour to the next RAV's partially assembled route.
 
 Since we run this algorithm over a uniformly-spaced grid, it builds agent routes in a lawn-cutting pattern, which provides good results as long as the routes do not begin to overlap. The idea is to take the NN algorithm TSP solution and apply it exhaustively in a round-robin manner, so that each RAV is encouraged to find a non-overlapping optimal sub-tour. These non-overlapping optimal sub-tours partition the region and therefore offer a solution to the mTSP. Section 4 of \cite{Hungerlander2018TheGrids} gives an insight to how optimal solutions can be found for a uniformly spaced rectangular grid when RAVs are assumed to start in the corners of the rectangle, which provides further motivation to using Algorithm \ref{alg:NNHeuristic}. In practice non-overlapping optimal sub-tours are not found, but solutions may come close, as illustrated in Figure \ref{fig:NNPartitioning}.
 

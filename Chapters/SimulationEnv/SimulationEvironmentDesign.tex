@@ -79,8 +79,8 @@ and
 \item We imported into \emph{Autodesk 3DS} in order to ensure that textures were of sufficient quality to facilitate the planned image processing on collected images.
 \item We then imported into UE4 as static meshes and placed into the scene according to the sketch. In order to ensure that this process can scale, we ensured that static meshes could be replaced by simply importing a new mesh which retains the position of the original in the environment. 
 \item We qualitatively evaluated the rendered images to determine their suitability.
-\item We archived the environment before integrating the aerial vehicle simulation.
-\item We integrated the Airsim \cite{Shah2017AirSim:Vehicles} with some modifications, which provided aerial vehicles simulation in UE4. This step is non-trivial and details of how this was done is outlined in Section \ref{sec:AirSimIntegration}.
+\item We archived the environment before integrating the Airsim aerial vehicle simulator plugin.
+\item We then integrated the Airsim \cite{Shah2017AirSim:Vehicles} with some modifications, which provided aerial vehicles simulation in UE4. This step is non-trivial and details of how this was done is outlined in Section \ref{sec:AirSimIntegration}.
 \end{enumerate} 
 %\note{Would be good to discuss some of the challenges met while developing the simulation and how they were overcome}
 
@@ -317,7 +317,8 @@ To realistically model the configuration of physical objects and their correspon
 \subsubsection{Asset Sourcing}
 %
 An \href{https://docs.unrealengine.com/en-US/Engine/Basics/AssetsAndPackages/index.html}{\textit{asset}}\footnote{\href{https://docs.unrealengine.com/en-US/Engine/Basics/AssetsAndPackages/index.html}{https://docs.unrealengine.com/en-US/Engine/Basics/AssetsAndPackages/index.html}} can be described as a piece of content for an Unreal Engine project, which has been serialized to a file. Assets can be re-used and modified in the UE4 editor, but are usually created using external software. UE4 uses assets that come in the Filmbox (.fbx) format, which is a proprietary file format owned by Autodesk.
-%\note{Do I need to reference this?}. Conversion tools do exist from other common asset file formats to fbx, but results can vary. Due to limited funding, time and experience, we decided to avoid creating assets from scratch but rather used assets that were free to use. Searching for free assets is a labor-intensive process, as it consisted of a number of steps:
+%\note{Do I need to reference this?}. Conversion tools do exist from other common asset file formats to fbx, but results can vary. Due to limited funding, time and experience, we decided to avoid creating assets from scratch but rather used assets that were free to use. 
+Searching for free assets was a labor-intensive process, which consisted of a number of steps:
 \begin{enumerate}
     \item First, identify possible candidates for a particular type of asset (e.g. a train) based on a search of asset stores that offer free assets. We mainly used \href{https://www.cgtrader.com/}{CGTrader}\footnote{\href {https://www.cgtrader.com/}{https://www.cgtrader.com/}} ,
     

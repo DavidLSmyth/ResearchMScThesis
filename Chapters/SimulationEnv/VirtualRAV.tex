@@ -97,7 +97,8 @@ The RPCLibServerBase class uses the \textbf{P}ointer to \textbf{Impl}ementation 
     \caption{RAV path visualised mid-way through planned mission.}
     \label{fig:DebuggingLinesPlannedMission}
 \end{wrapfigure}
-The first modification made to AirSim was to extend the API to allow the user to visualize planned routes using debugging lines. This functionality had already been requested on the repository page and since we also wanted the functionality, we decided to add this to the AirSim API. The end result can be seen in Figure \ref{fig:DebuggingLines}. We used a top-down approach to make the appropriate changes. First, we specified the functionality that we wanted to expose through the AirSim API. This was determined to be as follows: given 2 points in the 3-Dimensional Unreal Engine Frame of Reference (NED), a line thickness, a line colour and a time which the line will be shown for, display the specified line in the simulation environment. We wanted this to be available in both the global frame of reference and the local RAV frame of reference. This was planned to allow the user to visualise a series of lines form one specified waypoint to the next, on aggregate creating a visualisation of a planned path.
+The first modification made to AirSim was to extend the API to allow the user to visualize planned routes using debugging lines. %This functionality had already been requested on the repository page and since we also wanted the functionality, we decided to add this to the AirSim API. 
+The end result can be seen in Figure \ref{fig:DebuggingLines}. We used a top-down approach to make the appropriate changes. First, we specified the functionality that we wanted to expose through the AirSim API. This was determined to be as follows: given 2 points in the 3-Dimensional Unreal Engine Frame of Reference (NED), a line thickness, a line colour and a time which the line will be shown for, display the specified line in the simulation environment. We wanted this to be available in both the global frame of reference and the local RAV frame of reference. This was planned to allow the user to visualise a series of lines from one specified waypoint to the next, on aggregate creating a visualisation of a planned path.
 \newline
 
 
@@ -134,12 +135,13 @@ pimpl_->server.bind("simShowDebugLines", [&](double x1,
 double y1, double z1, double x2, double y2, double z2,
 double thickness, double lifetime, 
 const std::string debug_line_color) -> void {
-		//vector<Vector3r> conv_path;
-		//RpcLibAdapatorsBase::to(path, conv_path);
-		getWorldSimApi()->showDebugLine(x1, y1, z1, x2, y2, z2, thickness, 
-		lifetime, debug_line_color);
+        getWorldSimApi()->showDebugLine(x1, y1, z1, x2, y2, z2, 
+        thickness, lifetime, debug_line_color);
 });
 \end{verbatim}
+%//vector<Vector3r> conv_path;
+%//RpcLibAdapatorsBase::to(path, conv_path);
+		
 
 \begin{verbatim}
 pimpl_->server.bind("simShowPlannedWaypoints", [&](double x1, 

@@ -15,14 +15,16 @@ We first address the issue of finding a discrete set of waypoints, referenced ab
 %\note{set of waypoints create a voronoi partition, might be worth talking about}
 
 %\note{Above needs revision, will come back once rest of chapter has been fleshed out a bit more}
-We began by assuming that the region which is to be surveyed, $R$, can be described by a polygon on the Cartesian plane, since it allows for a discrete representation by describing the coordinates of the corners of the polygon. As mentioned above, we favour statically recording images and sensor readings at fixed discrete locations will ensure the data can be accurately recorded and spatially referenced. Given this polygon, the goal is to generate a set of points, $R$, which are a uniform distance from each other in the x and y directions and lie inside the polygonal grid. The set $R$ forms a regular tessellation of the region of interest. In order to do this, we employed the following methodology:
+We began by assuming that the region which is to be surveyed, $R$, can be described by a polygon on the Cartesian plane, since it allows for a discrete representation by describing the coordinates of the corners of the polygon. 
+%As mentioned above, we favour statically recording images and sensor readings at fixed discrete locations will ensure the data can be accurately recorded and spatially referenced. 
+Given this polygon, the goal is to generate a set of points, $R$, which are a uniform distance from each other in the x and y directions and lie inside the polygonal grid. The set $R$ forms a regular tessellation of the region of interest. In order to do this, we employed the following methodology:
 \begin{enumerate}
     \item Find the circum-rectangle that tightly bounds the polygon, which is oriented with the x-y plane. This is shown in \ref{fig:PolygonWithBoundingRect}
     \item Generate a set of grid points in the bounding rectangle. This is shown in \ref{fig:PolygonWithBoundingRectAndGridPoints}
     \item Prune the points that lie inside the rectangle but outside the polygon. This is shown in \ref{fig:PolygonWithBoundingRectAndGridPointsPruned}
 \end{enumerate}
 
-
+\vspace*{45mm}
 \begin{figure}[H]
 \centering
 \subfloat[Arbitrary Polygonal Region]{
@@ -177,7 +179,7 @@ Algorithm \ref{alg:PointInPolygon} tests whether a point lies within a polygon, 
 \subsection{Generating Waypoints as GPS Locations}
 For the sake of real-world usage, it is necessary to refer to these points using some kind of reference coordinate system that RAVs can use. We provide a brief overview of how we accomplished this, without delving too far into Geographic Coordinate Systems (GCS). Since the \textit{Global Positioning System} (GPS) is by far the most common system that RAVs use for navigation, we chose to design an implementation based on the \textit{World Geodetic System 1984} (WGS84) coordinate system, which is the coordinate system that GPS relies upon. The WGS84 system was created by the US Department of Defence and is officially documented in the official government report entitled "\textit{Department of Defense World Geodetic System 1984 Its Definition and Relationships With Local Geodetic Systems}" \cite{ReportpreparedbytheDMAWGS84DevelopmentCommittee1991Department1984}. It assumes that the datum surface is an oblate spheroid.
 %, and the coordinate system uses Greenwich as the starting point. 
-Coordinates are referenced using latitude, longitude and altitude, where longitude measurements range between [-180$^{\circ}$, 180$^{\circ}$], latitude measurements range between [-90$^{\circ}$, 90$^{\circ}$] and altitude measurements come in the form of meters above sea level. Greenwich is used as the \textit{prime meridian} for longitude, meaning Greenwich defines 0$^{\circ}$ longitude. The equator is used to define 0$^{\circ}$ latitude. In order to generate a grid of points in a bounding polygon as coordinates that can be referenced by the RAVs' GPS sensors, we had to make some modifications to the grid point generation algorithm outlined above. The main issue that arose is that the grid point generation algorithm assumes that the Cartesian coordinate system is used, which is not valid when assuming coordinates lie on a  non-planar surface (the earth). As an example, we present results quoted from Robert G. Chamberlain, reviewed on the comp.infosystems.gis newsgroup in October 1996 \cite{GISL_LISTSERVER}:
+Coordinates are referenced using latitude, longitude and altitude, where longitude measurements range between [-180$^{\circ}$, 180$^{\circ}$], latitude measurements range between [-90$^{\circ}$, 90$^{\circ}$] and altitude measurements come in the form of meters above sea level. Greenwich is used as the \textit{prime meridian} for longitude, meaning Greenwich defines 0$^{\circ}$ longitude. The equator is used to define 0$^{\circ}$ latitude. In order to generate a grid of points in a bounding polygon as coordinates that can be referenced by the RAVs' GPS sensors, we had to make some modifications to the grid point generation algorithm outlined above. The main issue that arose was that the grid point generation algorithm assumes that the Cartesian coordinate system is used, which is not valid when assuming coordinates lie on a non-planar surface (the earth). As an example, we present results quoted from Robert G. Chamberlain, reviewed on the comp.infosystems.gis newsgroup in October 1996 \cite{GISL_LISTSERVER}:
 
 "\textit{If the distance is less than about 20 km (12 mi) and the locations of the
  two points in Cartesian coordinates are X1,Y1 and X2,Y2 then using Pythogoras' theorem with Cartesian coordinates can generate errors of 
@@ -185,7 +187,7 @@ Coordinates are referenced using latitude, longitude and altitude, where longitu
     \item less than 30 meters (100 ft) for latitudes less than 70 degrees
     \item less than 20 meters ( 66 ft) for latitudes less than 50 degrees
     \item less than  9 meters ( 30 ft) for latitudes less than 30 degrees
-\end{enumerate}}".
+\end{enumerate}}"
 
 This is due to the non-uniform curvature of the earth and shows that the accuracy of the using Cartesian coordinates with Pythagoras' theorem depends on the latitude at which it is applied. 
 %We could have treated the WGS84 coordinates that make the bounding polygon defining the region of interest as a plane and continue using the unmodified Algorithm \ref{alg:GridGeneration}, but 
@@ -197,7 +199,7 @@ Based on this, we made the following minor changes to the algorithm for use with
 \begin{enumerate}
     \item When calculating distances, the \textit{inverse solution} \cite{Vincenty1975DirectEquations} to finding geodesics (shortest paths along the earth's surface) was used. We also used the \textit{direct solution} \cite{Vincenty1975DirectEquations} to find a destination given a start point, bearing and distance. These algorithms take into account the non-planar nature of the WGS84 coordinate system. The inverse solution can be used in place of subtraction of Cartesian Coordinates. It would replace the subtraction in lines 7 and 8 of Algorithm \ref{alg:GridGeneration} and line 12 of Algorithm \ref{alg:PointInPolygon}. The direct solution can be used in place of addition of distance to Cartesian coordinates and is used in line 11 of Algorithm \ref{alg:GridGeneration}.
     
-    \item We created a specific WGS84 coordinate class, which can be used in place of regular Cartesian coordinates in Algorithms \ref{alg:GridGeneration} and \ref{alg:PointInPolygon}. We uploaded this to a publicly available  \href{https://github.com/DavidLSmyth/WGS84Coordinate}{github repository}\footnote{\href {https://github.com/DavidLSmyth/WGS84Coordinate}{https://github.com/DavidLSmyth/WGS84Coordinate}} with an MIT licence. If the user is not interested in generating grids which have very accurately spaced points, they can use the Cartesian solution which approximates the region of interest as a plane, otherwise the solution using Vincenty's equations in the point above can be applied.
+    \item We created a specific WGS84 coordinate class, which can be used in place of regular Cartesian coordinates in Algorithms \ref{alg:GridGeneration} and \ref{alg:PointInPolygon}. We uploaded this to a publicly available  \href{https://github.com/DavidLSmyth/WGS84Coordinate}{Github repository}\footnote{\href {https://github.com/DavidLSmyth/WGS84Coordinate}{https://github.com/DavidLSmyth/WGS84Coordinate}} with an MIT licence. If the user is not interested in generating grids which have very accurately spaced points, they can use the Cartesian solution which approximates the region of interest as a plane, otherwise the solution using Vincenty's equations in the point above can be applied.
 \end{enumerate}
 
 %The code which allows the user to generate grids is hosted on github at <> \note{might be worth referencing how to pull it down using maven}
